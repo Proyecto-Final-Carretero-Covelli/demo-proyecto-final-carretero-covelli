@@ -2,7 +2,8 @@
 
 ## Deploy Firebase 
 https://vue-tesis-carretero-covelli.web.app/
-Siguiendo el instructivo: https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4
+####Siguiendo el instructivo
+https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4
 
 ## Vue
 ### Project setup
