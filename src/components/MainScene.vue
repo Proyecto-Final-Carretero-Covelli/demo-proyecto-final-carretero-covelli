@@ -24,8 +24,11 @@
                     <div class="div-interactive-view div-centralizar-contenido">
                         <div>
                             <strong>Variables</strong>
-                            <ul>
-                                <li>Uno</li>
+
+                            <ul id="example-1">
+                                <li v-for="variable in variables" :key="variable.id">
+                                    {{ variable.id }} = {{ variable.value }}
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -58,7 +61,10 @@
 
 <script>
 
-    import * as ts from "typescript";
+    //import * as ts from "typescript";
+    import * as acorn from 'acorn';
+    import {Interpreter} from '../interpreter/interpreter.js';
+    import {Visitor} from '../interpreter/visitor.js';
 
     export default {
         name: 'MainScene',
@@ -70,11 +76,15 @@
         },
         data: function() {
             return {
-                editorContent: ''
+                acorn: acorn,
+                editorContent: '',
+                variables: []
             };
         },
         methods: {
+
             editorInit: function() {
+
                 require('brace/ext/language_tools') //language extension prerequsite...
                 require('brace/mode/html')                
                 require('brace/mode/javascript')
@@ -86,8 +96,24 @@
             },
     
             onPlayClicked: function() {
-                let result = ts.transpile(this.editorContent);
-                eval(result);
+
+                this.variables = [];
+
+                let parsedCode;
+                try {
+                    parsedCode = this.acorn.parse(this.editorContent).body;
+
+                    eval(this.editorContent);
+
+                    const jsInterpreter = new Interpreter(new Visitor(this.variables));
+                    jsInterpreter.interpret(parsedCode);
+                } catch (error) {
+                    alert(error);
+                }
+                
+                
+
+                //var myCode = this.editorContent + '//@ sourceURL=foo.js';
             }
         },
     }
