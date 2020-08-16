@@ -25,11 +25,11 @@
                         <div>
                             <strong>Variables</strong>
 
-                            <ul id="example-1">
+                            <!-- <ul id="example-1">
                                 <li v-for="variable in variables" :key="variable.id">
                                     {{ variable.id }} = {{ variable.value }}
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
 
@@ -62,9 +62,7 @@
 <script>
 
     //import * as ts from "typescript";
-    import * as acorn from 'acorn';
-    import {Interpreter} from '../interpreter/interpreter.js';
-    import {Visitor} from '../interpreter/visitor.js';
+    import {Debugger} from '../debugger/debugger.js';
 
     export default {
         name: 'MainScene',
@@ -76,9 +74,9 @@
         },
         data: function() {
             return {
-                acorn: acorn,
                 editorContent: '',
-                variables: []
+                parsedNodes: [],
+                debugger: undefined
             };
         },
         methods: {
@@ -97,23 +95,11 @@
     
             onPlayClicked: function() {
 
-                this.variables = [];
-
-                let parsedCode;
-                try {
-                    parsedCode = this.acorn.parse(this.editorContent).body;
-
-                    eval(this.editorContent);
-
-                    const jsInterpreter = new Interpreter(new Visitor(this.variables));
-                    jsInterpreter.interpret(parsedCode);
-                } catch (error) {
-                    alert(error);
+                if (!this.debugger) {
+                    this.debugger = new Debugger(this.editorContent);
                 }
-                
-                
+                this.debugger.next();
 
-                //var myCode = this.editorContent + '//@ sourceURL=foo.js';
             }
         },
     }
