@@ -9,55 +9,56 @@ export class Debugger {
         this.interpreter = new Sval();
         this.parsedNodes = this.interpreter.parse(jsCode).body;
 
-        this.parsedNodes.forEach(node => {
-            if (!node.body) {
-                node.body = node;
-            }
-        });
+        this.setNodesBody(this.parsedNodes);
 
         console.log(this.parsedNodes);
 
     }
 
+    setNodesBody(nodes) {
+        nodes.forEach(node => {
+            if (!node.body) {
+                node.body = node;
+            }
+        });
+    }
+
+    isTrueCondition(conditionCode) {
+        this.interpreter.run('exports.isTrueCondition=' + conditionCode +  ';');
+        return this.interpreter.exports.isTrueCondition;
+    }
+
     next() {
 
         if (this.parsedNodes) {
-            const nodeToInterpret = this.parsedNodes[0];
+            const nodeToInterpret = this.parsedNodes.shift();
 
             if (nodeToInterpret.type === 'IfStatement') {
-
-                const conditionNode = nodeToInterpret.test;
-                const conditionCode = this.jsCode.substring(conditionNode.start, conditionNode.end);
-
-                this.interpreter.run('exports.isTrueCondition=' + conditionCode +  ';');
-
-                if (this.interpreter.exports.isTrueCondition) {
-                    const thenStatement = nodeToInterpret.consequent;
-                    thenStatement.body.forEach(node => {
-                        node.body = node;
-                    });
-                    this.parsedNodes.shift();
-                    this.parsedNodes = thenStatement.body.concat(this.parsedNodes);
-                } else {
-                    const elseStatement = nodeToInterpret.alternate;
-
-                    if (elseStatement) {
-                        elseStatement.body.forEach(node => {
-                            node.body = node;
-                        });
-                        this.parsedNodes.shift();
-                        this.parsedNodes = elseStatement.body.concat(this.parsedNodes);
-                    } else {
-                        this.parsedNodes.shift();
-                    }
-                }
-
+                this.debugIfStatement(nodeToInterpret);
             } else {
-                this.interpreter.run(this.parsedNodes[0]);
-                this.parsedNodes.shift();
+                this.interpreter.run(nodeToInterpret);
             }
         }
 
+    }
+
+    debugIfStatement(nodeToInterpret) {
+        const conditionNode = nodeToInterpret.test;
+        const conditionCode = this.jsCode.substring(conditionNode.start, conditionNode.end);
+
+        if (this.isTrueCondition(conditionCode)) {
+            this.concatBlockStatement(nodeToInterpret.consequent);
+        } else {
+            this.concatBlockStatement(nodeToInterpret.alternate);
+        }
+    }
+
+    concatBlockStatement(blockStatement) {
+        if (blockStatement) {
+            const blockStatementBody = blockStatement.body;
+            this.setNodesBody(blockStatementBody);
+            this.parsedNodes = blockStatementBody.concat(this.parsedNodes);
+        }
     }
 
 }
