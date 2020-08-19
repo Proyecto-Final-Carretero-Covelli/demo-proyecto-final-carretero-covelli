@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-    <MainScene />
+    <main-container></main-container>
   </div>
 </template>
 
 <script>
-import MainScene from "./components/MainScene.vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+// import MainScene from "./components/MainScene.vue";
+import MainContainer from "./views/main-container.vue";
 
 export default {
   name: "App",
   components: {
-    MainScene
-  }
+    MainContainer,
+  },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
