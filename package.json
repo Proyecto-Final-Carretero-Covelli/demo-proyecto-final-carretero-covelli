@@ -17,6 +17,7 @@
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
+    "es6-promise": "^4.2.8",
     "sval": "^0.4.7",
     "typescript": "^3.9.7",
     "vue": "^2.6.11",
