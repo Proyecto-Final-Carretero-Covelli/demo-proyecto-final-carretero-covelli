@@ -1,5 +1,7 @@
+import Konva from "../components/konva/konva.vue";
+
 export default {
-  components: { aceeditor: require("vue2-ace-editor") },
+  components: { aceeditor: require("vue2-ace-editor"), Konva },
 
   data: function() {
     return {

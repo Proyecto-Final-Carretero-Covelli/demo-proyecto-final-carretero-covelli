@@ -12,7 +12,7 @@
         ></template
       >
       <template slot="paneR">
-        {{ $store.getters.getCount }}
+        <konva></konva>
       </template>
     </split-pane>
   </div>

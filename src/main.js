@@ -4,6 +4,7 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import splitPane from "vue-splitpane";
+import VueKonva from "vue-konva";
 import store from "./store";
 
 //Icons
@@ -18,6 +19,7 @@ Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(VueKonva);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("split-pane", splitPane);
