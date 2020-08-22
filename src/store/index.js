@@ -1,11 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import "es6-promise/auto";
+//import { Debugger } from "../debugger/debugger.js";
 Vue.use(Vuex);
+
 export default new Vuex.Store({
   state: {
     title: "Título / Consigna",
-    count: 5,
+    editorContent: "",
+    parsedNodes: [],
+    debugger: undefined,
   },
   getters: {
     getTitle: (state) => {
@@ -13,6 +17,15 @@ export default new Vuex.Store({
     },
     getCount: (state) => {
       return state.count;
+    },
+    getEditorContent: (state) => {
+      return state.editorContent;
+    },
+  },
+
+  mutations: {
+    setEditorContent: (state, newValue) => {
+      state.editorContent = newValue;
     },
   },
 });

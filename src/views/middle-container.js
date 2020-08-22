@@ -4,9 +4,7 @@ export default {
   components: { aceeditor: require("vue2-ace-editor"), Konva },
 
   data: function() {
-    return {
-      editorContent: "",
-    };
+    return {};
   },
 
   methods: {
@@ -19,6 +17,17 @@ export default {
       require("brace/theme/dracula");
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
+    },
+  },
+
+  computed: {
+    editorContent: {
+      get() {
+        return this.$store.getters.getEditorContent;
+      },
+      set(newValue) {
+        this.$store.commit("setEditorContent", newValue);
+      },
     },
   },
 
