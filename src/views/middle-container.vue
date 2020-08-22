@@ -12,7 +12,7 @@
         ></template
       >
       <template slot="paneR">
-        B
+        {{ $store.getters.getCount }}
       </template>
     </split-pane>
   </div>

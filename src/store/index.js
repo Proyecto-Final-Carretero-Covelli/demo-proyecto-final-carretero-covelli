@@ -4,6 +4,15 @@ import "es6-promise/auto";
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
-    count: 1,
+    title: "Título / Consigna",
+    count: 5,
+  },
+  getters: {
+    getTitle: (state) => {
+      return state.title;
+    },
+    getCount: (state) => {
+      return state.count;
+    },
   },
 });

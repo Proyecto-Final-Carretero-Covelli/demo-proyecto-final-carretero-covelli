@@ -11,6 +11,8 @@ import { faAngellist } from "@fortawesome/free-brands-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { faChartBar } from "@fortawesome/free-solid-svg-icons";
 import { faLifeRing } from "@fortawesome/free-solid-svg-icons";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faStop } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
 
@@ -25,7 +27,8 @@ library.add(faAngellist);
 library.add(faCog);
 library.add(faChartBar);
 library.add(faLifeRing);
-
+library.add(faPlay);
+library.add(faStop);
 new Vue({
   store,
   render: (h) => h(App),
