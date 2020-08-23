@@ -1,42 +1,76 @@
+import { mapGetters } from "vuex";
+import Variable from "./variable/variable.vue";
+
 const width = window.innerWidth;
 const height = window.innerHeight;
 
 export default {
+  components: { Variable },
+
   data: function() {
     return {
+      stageScale: 1,
+      stageX: 0,
+      stageY: 0,
       configKonva: {
         width: width,
         height: height,
-      },
-      configCircle: {
-        x: 100,
-        y: 100,
-        radius: 70,
-        fill: "red",
-        stroke: "black",
-        strokeWidth: 4,
+        draggable: true,
+        onWheel: this.handleWheel,
+        scaleX: "",
+        scaleY: "",
+        x: "",
+        y: "",
       },
     };
   },
   methods: {
     changeRect: function() {
       const container = this.$refs.container;
-
       if (!container) {
         return;
       }
-
       const height = container.offsetHeight;
       const width = container.offsetWidth;
-
-      console.log(height, height);
-      this.stageSize.width = width;
-      this.stageSize.height = height;
+      this.configKonva.width = width;
+      this.configKonva.height = height;
     },
+    handleWheel: function(event) {
+      event.evt.preventDefault();
+      const scaleBy = 1.1;
+      const stage = event.target.getStage();
+      const oldScale = stage.scaleX();
+      const mousePointTo = {
+        x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+        y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+      };
+      const newScale =
+        event.evt.deltaY > 0 ? oldScale / scaleBy : oldScale * scaleBy;
+      this.stageScale = newScale;
+      this.stageX =
+        -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale;
+      this.stageY =
+        -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale;
+      this.configKonva.scaleX = this.stageScale;
+      this.configKonva.scaleY = this.stageScale;
+      this.configKonva.x = this.stageX;
+      this.configKonva.y = this.stageY;
+    },
+  },
+
+  computed: {
+    ...mapGetters(["getDeclaredVariables", "getDeclaredArrays"]),
   },
 
   created: function() {
     window.addEventListener("resize", this.changeRect);
     this.changeRect();
+  },
+
+  mounted() {
+    this.configKonva.scaleX = this.stageScale;
+    this.configKonva.scaleY = this.stageScale;
+    this.configKonva.x = this.stageX;
+    this.configKonva.y = this.stageY;
   },
 };

@@ -2,7 +2,14 @@
   <div class="konva" ref="container">
     <v-stage ref="stage" :config="configKonva">
       <v-layer>
-        <v-circle :config="configCircle"></v-circle>
+        <template v-for="(variable,i) in getDeclaredVariables">
+          <variable
+            :key="'variable-key-'+i"
+            :name="variable.name"
+            :value="variable.value"
+            :elementIndex="i"
+          >{{variable}}</variable>
+        </template>
       </v-layer>
     </v-stage>
   </div>
