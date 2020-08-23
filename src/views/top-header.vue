@@ -1,25 +1,13 @@
 <template>
-  <div class="top-header ">
+  <div class="top-header">
     <div class="w-25">
       <img class="top-header__logo" src="../assets/logo-small-light.png" />
-      <b-dropdown
-        text="File"
-        id="dropdown-left"
-        size="sm"
-        class="m-2 top-header__drop"
-        no-caret
-      >
+      <b-dropdown text="File" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
         <b-dropdown-item href="#">Action</b-dropdown-item>
         <b-dropdown-item href="#">Another action</b-dropdown-item>
         <b-dropdown-item href="#">Something else here</b-dropdown-item>
       </b-dropdown>
-      <b-dropdown
-        text="Edit"
-        id="dropdown-left"
-        size="sm"
-        class="m-2 top-header__drop"
-        no-caret
-      >
+      <b-dropdown text="Edit" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
         <b-dropdown-item href="#">Action</b-dropdown-item>
         <b-dropdown-item href="#">Another action</b-dropdown-item>
         <b-dropdown-item href="#">Something else here</b-dropdown-item>
@@ -35,13 +23,7 @@
         <b-dropdown-item href="#">Another action</b-dropdown-item>
         <b-dropdown-item href="#">Something else here</b-dropdown-item>
       </b-dropdown>
-      <b-dropdown
-        text="Help"
-        id="dropdown-left"
-        size="sm"
-        class="m-2 top-header__drop"
-        no-caret
-      >
+      <b-dropdown text="Help" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
         <b-dropdown-item href="#">Action</b-dropdown-item>
         <b-dropdown-item href="#">Another action</b-dropdown-item>
         <b-dropdown-item href="#">Something else here</b-dropdown-item>
@@ -54,17 +36,14 @@
 
     <div class="top-header__controll w-25">
       <font-awesome-icon
-        class="top-header__controll-icon"
+        class="top-header__controll-icon top-header__controll-icon--play"
         :icon="['fas', 'play']"
       />
       <font-awesome-icon
-        class="top-header__controll-icon"
+        class="top-header__controll-icon top-header__controll-icon--stop"
         :icon="['fas', 'stop']"
       />
-      <font-awesome-icon
-        class="top-header__controll-icon"
-        :icon="['fab', 'angellist']"
-      />
+      <font-awesome-icon class="top-header__controll-icon" :icon="['fab', 'angellist']" />
     </div>
   </div>
 </template>

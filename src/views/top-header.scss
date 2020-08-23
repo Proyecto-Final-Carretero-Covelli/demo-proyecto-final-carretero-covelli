@@ -44,6 +44,18 @@
 
     &-icon {
       margin: 0px 6px;
+
+      &--play {
+        :hover {
+          color: #3cb371;
+        }
+      }
+
+      &--stop {
+        :hover {
+          color: #ff4500;
+        }
+      }
     }
   }
 }
