@@ -1,7 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import "es6-promise/auto";
-//import { Debugger } from "../debugger/debugger.js";
+import { Debugger } from "../debugger/debugger.js";
+
+import {
+  declaredVariables,
+  declaredArrays,
+} from "../mocks/structures-from-parsed-code";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -10,6 +16,8 @@ export default new Vuex.Store({
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
+    declaredVariables: declaredVariables,
+    declaredArrays: declaredArrays,
   },
   getters: {
     getTitle: (state) => {
@@ -21,11 +29,26 @@ export default new Vuex.Store({
     getEditorContent: (state) => {
       return state.editorContent;
     },
+    getDeclaredVariables: (state) => {
+      return state.declaredVariables;
+    },
+    getDeclaredArrays: (state) => {
+      return state.declaredArrays;
+    },
   },
 
   mutations: {
     setEditorContent: (state, newValue) => {
       state.editorContent = newValue;
+    },
+  },
+
+  actions: {
+    play: (context) => {
+      if (!context.state.debugger) {
+        context.state.debugger = new Debugger(context.state.editorContent);
+      }
+      context.state.debugger.next();
     },
   },
 });
