@@ -7,8 +7,16 @@
             :key="'variable-key-'+i"
             :name="variable.name"
             :value="variable.value"
-            :elementIndex="i"
+            :elementIndex="getItemCount"
           >{{variable}}</variable>
+        </template>
+        <template v-for="(array,i) in getDeclaredArrays">
+          <array
+            :key="'array-key-'+i"
+            :name="array.name"
+            :arrayItems="array.value"
+            :elementIndex="getItemCount"
+          ></array>
         </template>
       </v-layer>
     </v-stage>

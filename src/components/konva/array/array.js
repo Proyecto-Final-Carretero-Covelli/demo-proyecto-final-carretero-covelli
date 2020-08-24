@@ -1,20 +1,20 @@
 const sizeRect = 50;
 
 export default {
-  props: ["name", "value", "elementIndex"],
+  props: ["name", "arrayItems", "elementIndex"],
   data: function() {
     return {
       elementStartX: 0,
-      configVariableGroup: { draggable: true },
-      configVariableName: {},
-      configVariableRect: {},
-      configVariableValue: {},
+      configArrayGroup: { draggable: true },
+      configArrayName: {},
+      configArrayRect: {},
+      configArrayValue: {},
     };
   },
 
   mounted() {
     this.elementStartX = this.elementIndex() * 100;
-    this.configVariableName = {
+    this.configArrayName = {
       x: this.elementStartX,
       y: 50,
       text: this.name,
@@ -24,17 +24,17 @@ export default {
       verticalAlig: "middle",
       fill: "white",
     };
-    this.configVariableRect = {
+    this.configArrayRect = {
       x: this.elementStartX,
       y: 100,
       width: sizeRect,
       height: sizeRect,
       fill: "#3b6978",
     };
-    this.configVariableValue = {
+    this.configArrayValue = {
       x: this.elementStartX,
       y: 100,
-      text: this.value,
+      text: this.arrayItems,
       width: sizeRect,
       height: sizeRect,
       align: "center",
