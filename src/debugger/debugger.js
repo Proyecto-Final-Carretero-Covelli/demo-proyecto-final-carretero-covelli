@@ -11,8 +11,6 @@ export class Debugger {
 
         this.setNodesBody(this.parsedNodes);
 
-        console.log(this.parsedNodes);
-
     }
 
     setNodesBody(nodes) {
@@ -26,6 +24,26 @@ export class Debugger {
     isTrueCondition(conditionCode) {
         this.interpreter.run('exports.isTrueCondition=' + conditionCode +  ';');
         return this.interpreter.exports.isTrueCondition;
+    }
+
+    runAllCode() {
+        this.interpreter.run(this.jsCode);
+    }
+
+    getVariables() {
+        const variables = this.interpreter.scope.context;
+        const userVariables = [];
+
+        for (let variableName in variables) {
+            const variable = {name: variableName, value: variables[variableName].value};
+
+            // If var does not have ob property, then it was defined by the user.
+            if (!variable.value.__ob__) {
+                userVariables.push(variable);
+            }
+        }
+
+        return userVariables;
     }
 
     next() {
