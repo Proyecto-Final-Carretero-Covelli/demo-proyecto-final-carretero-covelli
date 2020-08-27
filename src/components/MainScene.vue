@@ -25,11 +25,11 @@
                         <div>
                             <strong>Variables</strong>
 
-                            <!-- <ul id="example-1">
-                                <li v-for="variable in variables" :key="variable.id">
-                                    {{ variable.id }} = {{ variable.value }}
+                            <ul id="example-1">
+                                <li v-for="variable in variables" :key="variable.name">
+                                    {{ variable.name }} = {{ variable.value }}
                                 </li>
-                            </ul> -->
+                            </ul>
                         </div>
                     </div>
 
@@ -76,7 +76,8 @@
             return {
                 editorContent: '',
                 parsedNodes: [],
-                debugger: undefined
+                debugger: undefined,
+                variables: undefined
             };
         },
         methods: {
@@ -95,10 +96,19 @@
     
             onPlayClicked: function() {
 
-                if (!this.debugger) {
-                    this.debugger = new Debugger(this.editorContent);
-                }
-                this.debugger.next();
+                // if (!this.debugger) {
+                //     this.debugger = new Debugger(this.editorContent);
+                // }
+                // this.debugger.next();
+
+                //ts.transpile(this.editorContent);
+
+                this.debugger = new Debugger(this.editorContent);
+                this.debugger.runAllCode();
+
+                console.log(this.debugger.getVariables());
+
+                this.variables = this.debugger.getVariables();
 
             }
         },

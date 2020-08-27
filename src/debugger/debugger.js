@@ -8,8 +8,6 @@ export class Debugger {
     this.parsedNodes = this.interpreter.parse(jsCode).body;
 
     this.setNodesBody(this.parsedNodes);
-
-    console.log(this.parsedNodes);
   }
 
   setNodesBody(nodes) {
@@ -25,6 +23,29 @@ export class Debugger {
     return this.interpreter.exports.isTrueCondition;
   }
 
+  runAllCode() {
+    this.interpreter.run(this.jsCode);
+  }
+
+  getVariables() {
+    const variables = this.interpreter.scope.context;
+    const userVariables = [];
+
+    for (let variableName in variables) {
+      const variable = {
+        name: variableName,
+        value: variables[variableName].value,
+      };
+
+      // If var does not have ob property, then it was defined by the user.
+      if (!variable.value.__ob__) {
+        userVariables.push(variable);
+      }
+    }
+
+    return userVariables;
+  }
+
   next() {
     if (this.parsedNodes) {
       const nodeToInterpret = this.parsedNodes.shift();
@@ -34,20 +55,6 @@ export class Debugger {
       } else {
         this.interpreter.run(nodeToInterpret);
       }
-    }
-  }
-
-  debugIfStatement(nodeToInterpret) {
-    const conditionNode = nodeToInterpret.test;
-    const conditionCode = this.jsCode.substring(
-      conditionNode.start,
-      conditionNode.end
-    );
-
-    if (this.isTrueCondition(conditionCode)) {
-      this.concatBlockStatement(nodeToInterpret.consequent);
-    } else {
-      this.concatBlockStatement(nodeToInterpret.alternate);
     }
   }
 
