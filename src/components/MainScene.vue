@@ -62,7 +62,8 @@
 <script>
 
     //import * as ts from "typescript";
-    import {Debugger} from '../debugger/debugger.js';
+    import {Debugger} from '../debugger/debugger';
+    import {db} from '../db/firebase';
 
     export default {
         name: 'MainScene',
@@ -109,6 +110,19 @@
                 console.log(this.debugger.getVariables());
 
                 this.variables = this.debugger.getVariables();
+
+                const exercises = db.ref('exercises');
+
+                exercises.once('value').then(function(snapshot) {
+                    console.log(snapshot.val());
+                });
+
+                if (this.editorContent) {
+                    db.ref('exercises').push({
+                        typescript: this.editorContent,
+                        javascript: 'javascript code'
+                    });
+                }
 
             }
         },
