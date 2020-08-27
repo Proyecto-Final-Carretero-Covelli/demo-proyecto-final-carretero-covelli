@@ -1,82 +1,67 @@
-import Sval from 'sval';
+import Sval from "sval";
 
 export class Debugger {
+  constructor(jsCode) {
+    this.jsCode = jsCode;
 
-    constructor(jsCode) {
+    this.interpreter = new Sval();
+    this.parsedNodes = this.interpreter.parse(jsCode).body;
 
-        this.jsCode = jsCode;
+    this.setNodesBody(this.parsedNodes);
+  }
 
-        this.interpreter = new Sval();
-        this.parsedNodes = this.interpreter.parse(jsCode).body;
+  setNodesBody(nodes) {
+    nodes.forEach((node) => {
+      if (!node.body) {
+        node.body = node;
+      }
+    });
+  }
 
-        this.setNodesBody(this.parsedNodes);
+  isTrueCondition(conditionCode) {
+    this.interpreter.run("exports.isTrueCondition=" + conditionCode + ";");
+    return this.interpreter.exports.isTrueCondition;
+  }
 
+  runAllCode() {
+    this.interpreter.run(this.jsCode);
+  }
+
+  getVariables() {
+    const variables = this.interpreter.scope.context;
+    const userVariables = [];
+
+    for (let variableName in variables) {
+      const variable = {
+        name: variableName,
+        value: variables[variableName].value,
+      };
+
+      // If var does not have ob property, then it was defined by the user.
+      if (!variable.value.__ob__) {
+        userVariables.push(variable);
+      }
     }
 
-    setNodesBody(nodes) {
-        nodes.forEach(node => {
-            if (!node.body) {
-                node.body = node;
-            }
-        });
+    return userVariables;
+  }
+
+  next() {
+    if (this.parsedNodes) {
+      const nodeToInterpret = this.parsedNodes.shift();
+      if (nodeToInterpret.type === "IfStatement") {
+        this.debugIfStatement(nodeToInterpret);
+      } else {
+        this.interpreter.run(nodeToInterpret);
+      }
     }
+  }
 
-    isTrueCondition(conditionCode) {
-        this.interpreter.run('exports.isTrueCondition=' + conditionCode +  ';');
-        return this.interpreter.exports.isTrueCondition;
+  concatBlockStatement(blockStatement) {
+    if (blockStatement) {
+      const blockStatementBody = blockStatement.body;
+      this.setNodesBody(blockStatementBody);
+      this.parsedNodes = blockStatementBody.concat(this.parsedNodes);
     }
-
-    runAllCode() {
-        this.interpreter.run(this.jsCode);
-    }
-
-    getVariables() {
-        const variables = this.interpreter.scope.context;
-        const userVariables = [];
-
-        for (let variableName in variables) {
-            const variable = {name: variableName, value: variables[variableName].value};
-
-            // If var does not have ob property, then it was defined by the user.
-            if (!variable.value.__ob__) {
-                userVariables.push(variable);
-            }
-        }
-
-        return userVariables;
-    }
-
-    next() {
-
-        if (this.parsedNodes) {
-            const nodeToInterpret = this.parsedNodes.shift();
-
-            if (nodeToInterpret.type === 'IfStatement') {
-                this.debugIfStatement(nodeToInterpret);
-            } else {
-                this.interpreter.run(nodeToInterpret);
-            }
-        }
-
-    }
-
-    debugIfStatement(nodeToInterpret) {
-        const conditionNode = nodeToInterpret.test;
-        const conditionCode = this.jsCode.substring(conditionNode.start, conditionNode.end);
-
-        if (this.isTrueCondition(conditionCode)) {
-            this.concatBlockStatement(nodeToInterpret.consequent);
-        } else {
-            this.concatBlockStatement(nodeToInterpret.alternate);
-        }
-    }
-
-    concatBlockStatement(blockStatement) {
-        if (blockStatement) {
-            const blockStatementBody = blockStatement.body;
-            this.setNodesBody(blockStatementBody);
-            this.parsedNodes = blockStatementBody.concat(this.parsedNodes);
-        }
-    }
-
+  }
 }

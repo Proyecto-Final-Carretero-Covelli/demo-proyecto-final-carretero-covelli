@@ -1,0 +1,27 @@
+@import "../scss/variables";
+
+.sidebar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  position: fixed;
+  top: 48px;
+  bottom: 22px;
+  left: 0px;
+  height: 100%;
+  font-size: 1.4rem;
+  padding: 24px 8px;
+  border-right: 1px solid $border-grey;
+
+  &__icon {
+    color: $border-grey;
+    width: 48px;
+    font-size: xx-large;
+    padding: 2px;
+    margin-right: 6px;
+    margin-left: 6px;
+    margin-bottom: 1.5rem;
+  }
+}
