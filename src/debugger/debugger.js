@@ -49,7 +49,6 @@ export class Debugger {
   next() {
     if (this.parsedNodes) {
       const nodeToInterpret = this.parsedNodes.shift();
-
       if (nodeToInterpret.type === "IfStatement") {
         this.debugIfStatement(nodeToInterpret);
       } else {

@@ -4,7 +4,7 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 
 import {
-  declaredVariables,
+  //declaredVariables,
   declaredArrays,
 } from "../mocks/structures-from-parsed-code";
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
-    declaredVariables: declaredVariables,
+    declaredVariables: [],
     declaredArrays: declaredArrays,
   },
   getters: {
@@ -41,6 +41,9 @@ export default new Vuex.Store({
     setEditorContent: (state, newValue) => {
       state.editorContent = newValue;
     },
+    getDeclaredVariables: (state, newValue) => {
+      state.declaredVariables = newValue;
+    },
   },
 
   actions: {
@@ -48,7 +51,11 @@ export default new Vuex.Store({
       if (!context.state.debugger) {
         context.state.debugger = new Debugger(context.state.editorContent);
       }
-      context.state.debugger.next();
+      context.state.debugger.runAllCode();
+      context.commit(
+        "getDeclaredVariables",
+        context.state.debugger.getVariables()
+      );
     },
   },
 });
