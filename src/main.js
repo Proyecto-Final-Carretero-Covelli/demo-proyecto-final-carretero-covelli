@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import splitPane from "vue-splitpane";
 import VueKonva from "vue-konva";
 import store from "./store";
+import './db/firebase';
 
 //Icons
 import { faAngellist } from "@fortawesome/free-brands-svg-icons";
