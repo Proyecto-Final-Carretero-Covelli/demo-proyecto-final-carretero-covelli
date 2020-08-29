@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
+import { db } from "../db/firebase";
 
 import {
   //declaredVariables,
@@ -56,6 +57,18 @@ export default new Vuex.Store({
         "getDeclaredVariables",
         context.state.debugger.getVariables()
       );
+      const exercises = db.ref("exercises");
+
+      exercises.once("value").then(function(snapshot) {
+        console.log(snapshot.val());
+      });
+
+      if (this.editorContent) {
+        db.ref("exercises").push({
+          typescript: context.state.editorContent,
+          javascript: "javascript code",
+        });
+      }
     },
   },
 });
