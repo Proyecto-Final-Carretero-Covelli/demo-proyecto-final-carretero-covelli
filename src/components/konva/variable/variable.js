@@ -16,7 +16,7 @@ export default {
     this.elementStartX = this.elementIndex() * 100;
     this.configVariableName = {
       x: this.elementStartX,
-      y: 50,
+      y: 70,
       text: this.name,
       width: sizeRect,
       height: sizeRect,

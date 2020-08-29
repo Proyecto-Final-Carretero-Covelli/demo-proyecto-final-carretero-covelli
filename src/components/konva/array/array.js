@@ -1,5 +1,3 @@
-const sizeRect = 50;
-
 export default {
   props: ["name", "arrayItems", "elementIndex"],
   data: function() {
@@ -9,6 +7,7 @@ export default {
       configArrayName: {},
       configArrayRect: {},
       configArrayValue: {},
+      sizeRect: 50,
     };
   },
 
@@ -16,29 +15,12 @@ export default {
     this.elementStartX = this.elementIndex() * 100;
     this.configArrayName = {
       x: this.elementStartX,
-      y: 50,
+      y: 70,
       text: this.name,
-      width: sizeRect,
-      height: sizeRect,
+      width: this.sizeRect,
+      height: this.sizeRect,
       align: "center",
       verticalAlig: "middle",
-      fill: "white",
-    };
-    this.configArrayRect = {
-      x: this.elementStartX,
-      y: 100,
-      width: sizeRect,
-      height: sizeRect,
-      fill: "#3b6978",
-    };
-    this.configArrayValue = {
-      x: this.elementStartX,
-      y: 100,
-      text: this.arrayItems,
-      width: sizeRect,
-      height: sizeRect,
-      align: "center",
-      verticalAlign: "middle",
       fill: "white",
     };
   },

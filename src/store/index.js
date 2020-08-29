@@ -4,10 +4,10 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { db } from "../db/firebase";
 
-import {
-  //declaredVariables,
-  declaredArrays,
-} from "../mocks/structures-from-parsed-code";
+// import {
+//   declaredVariables,
+//   declaredArrays,
+// } from "../mocks/structures-from-parsed-code";
 
 Vue.use(Vuex);
 
@@ -18,7 +18,10 @@ export default new Vuex.Store({
     parsedNodes: [],
     debugger: undefined,
     declaredVariables: [],
-    declaredArrays: declaredArrays,
+    declaredArrays: [],
+    // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
+    // declaredVariables: declaredVariables,
+    // declaredArrays: declaredArrays,
   },
   getters: {
     getTitle: (state) => {
