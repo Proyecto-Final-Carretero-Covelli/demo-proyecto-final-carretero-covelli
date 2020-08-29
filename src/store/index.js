@@ -5,7 +5,7 @@ import { Debugger } from "../debugger/debugger.js";
 import { db } from "../db/firebase";
 
 import {
-  //declaredVariables,
+  declaredVariables,
   declaredArrays,
 } from "../mocks/structures-from-parsed-code";
 
@@ -17,7 +17,9 @@ export default new Vuex.Store({
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
-    declaredVariables: [],
+    //declaredVariables: [],
+    // - Mock visualización -
+    declaredVariables: declaredVariables,
     declaredArrays: declaredArrays,
   },
   getters: {
