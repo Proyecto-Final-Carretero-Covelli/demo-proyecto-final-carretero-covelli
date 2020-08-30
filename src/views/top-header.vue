@@ -31,7 +31,21 @@
     </div>
 
     <div class="top-header__title w-50">
-      <p>{{ $store.getters.getTitle }}</p>
+      <div class="d-flex justify-content-center align-items-center">
+        <p>{{ $store.getters.getTitle }}</p>
+        <font-awesome-icon
+          v-if="!$store.getters.isTitleShow"
+          class="top-header__controll-icon top-header__title--shows"
+          :icon="['fas', 'angle-down']"
+          @click="$store.commit('toggleTitleShow')"
+        />
+        <font-awesome-icon
+          v-if="$store.getters.isTitleShow"
+          class="top-header__controll-icon top-header__title--shows"
+          :icon="['fas', 'angle-up']"
+          @click="$store.commit('toggleTitleShow')"
+        />
+      </div>
     </div>
 
     <div class="top-header__controll w-25">

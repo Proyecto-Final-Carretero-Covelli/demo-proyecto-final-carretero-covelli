@@ -18,6 +18,10 @@ export default {
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
     },
+
+    resizeHandler(event) {
+      console.log("Event", event);
+    },
   },
 
   computed: {
@@ -27,6 +31,15 @@ export default {
       },
       set(newValue) {
         this.$store.commit("setEditorContent", newValue);
+      },
+    },
+    resize: {
+      get() {
+        return this.$store.getters.getResize;
+      },
+      set(newValue) {
+        console.log("Resize", newValue);
+        this.$store.commit("setResize", newValue);
       },
     },
   },

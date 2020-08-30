@@ -4,28 +4,33 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { db } from "../db/firebase";
 
-// import {
-//   declaredVariables,
-//   declaredArrays,
-// } from "../mocks/structures-from-parsed-code";
+import {
+  declaredVariables,
+  declaredArrays,
+} from "../mocks/structures-from-parsed-code";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     title: "Título / Consigna",
+    titleShow: false,
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
-    declaredVariables: [],
-    declaredArrays: [],
+    // declaredVariables: [],
+    // declaredArrays: [],
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
-    // declaredVariables: declaredVariables,
-    // declaredArrays: declaredArrays,
+    declaredVariables: declaredVariables,
+    declaredArrays: declaredArrays,
+    resize: null,
   },
   getters: {
     getTitle: (state) => {
       return state.title;
+    },
+    isTitleShow: (state) => {
+      return state.titleShow;
     },
     getCount: (state) => {
       return state.count;
@@ -39,14 +44,23 @@ export default new Vuex.Store({
     getDeclaredArrays: (state) => {
       return state.declaredArrays;
     },
+    getResize: (state) => {
+      return state.resize;
+    },
   },
 
   mutations: {
     setEditorContent: (state, newValue) => {
       state.editorContent = newValue;
     },
-    getDeclaredVariables: (state, newValue) => {
+    toggleTitleShow: (state) => {
+      state.titleShow = !state.titleShow;
+    },
+    setDeclaredVariables: (state, newValue) => {
       state.declaredVariables = newValue;
+    },
+    setResize: (state, newValue) => {
+      state.resize = newValue;
     },
   },
 
