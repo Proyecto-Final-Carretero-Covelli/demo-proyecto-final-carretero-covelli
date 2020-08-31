@@ -16,7 +16,7 @@
                         <img class="profile-img" src="../assets/expand-arrow.png" alt="Boton para expandir/contraier consigna"/>
                     </div>
                     <div class="div-editor-contract">
-                        <editor v-model="editorContent" @init="editorInit" lang="typescript" theme="chrome" width="768" height="628"></editor>
+                        <editor v-model="implementationEditor" @init="editorInit" lang="typescript" theme="chrome" width="768" height="628"></editor>
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
         },
         data: function() {
             return {
-                editorContent: '',
+                implementationEditor: '',
                 parsedNodes: [],
                 debugger: undefined,
                 variables: undefined
@@ -98,13 +98,13 @@
             onPlayClicked: function() {
 
                 // if (!this.debugger) {
-                //     this.debugger = new Debugger(this.editorContent);
+                //     this.debugger = new Debugger(this.implementationEditor);
                 // }
                 // this.debugger.next();
 
-                //ts.transpile(this.editorContent);
+                //ts.transpile(this.implementationEditor);
 
-                this.debugger = new Debugger(this.editorContent);
+                this.debugger = new Debugger(this.implementationEditor);
                 this.debugger.runAllCode();
 
                 console.log(this.debugger.getVariables());
@@ -117,9 +117,9 @@
                     console.log(snapshot.val());
                 });
 
-                if (this.editorContent) {
+                if (this.implementationEditor) {
                     db.ref('exercises').push({
-                        typescript: this.editorContent,
+                        typescript: this.implementationEditor,
                         javascript: 'javascript code'
                     });
                 }

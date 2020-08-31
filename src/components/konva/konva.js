@@ -59,9 +59,7 @@ export default {
       this.configKonva.y = this.stageY;
     },
     getItemCount: function() {
-      console.log("ItemCount", this.itemCount);
       this.itemCount = this.itemCount + 1;
-      console.log("ItemCount++", this.itemCount);
       return this.itemCount;
     },
   },
