@@ -1,33 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Demo Proyecto Final Carretero-Covelli" />
+    <!-- <MainScene /> -->
+    <main-container />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+// import MainScene from "./components/MainScene.vue";
+import MainContainer from "./views/main-container.vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
-  }
+    // MainScene
+    MainContainer,
+  },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  background-color: #2c3e50;
-  color: white;
-  margin-top: 60px;
-}
-
-body {
-  background-color: #2c3e50;
-}
-</style>
+<style></style>

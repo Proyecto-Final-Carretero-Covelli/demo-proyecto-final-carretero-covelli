@@ -1,0 +1,12 @@
+@import "../scss/variables";
+
+body {
+  margin: 0px;
+}
+
+.main-container {
+  background-color: $primary;
+  width: 100%;
+  height: 100vh;
+  color: white;
+}
