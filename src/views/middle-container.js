@@ -32,6 +32,8 @@ export default {
   },
 
   mounted() {
+    this.$store.commit("setResizeTitle", this.$refs.resizeTitle);
+
     let editor = this.$refs.myEditor.editor;
     editor.setShowPrintMargin(false);
     console.log(editor);
