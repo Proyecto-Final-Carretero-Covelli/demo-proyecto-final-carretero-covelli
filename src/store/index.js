@@ -14,7 +14,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     title: "Título / Consigna",
-    titleShow: false,
+    resizeTitle: null,
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
@@ -23,17 +23,13 @@ export default new Vuex.Store({
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     declaredVariables: declaredVariables,
     declaredArrays: declaredArrays,
-    resize: null,
   },
   getters: {
     getTitle: (state) => {
       return state.title;
     },
-    isTitleShow: (state) => {
-      return state.titleShow;
-    },
-    getCount: (state) => {
-      return state.count;
+    getResizeTitle: (state) => {
+      return state.resizeTitle;
     },
     getEditorContent: (state) => {
       return state.editorContent;
@@ -44,23 +40,24 @@ export default new Vuex.Store({
     getDeclaredArrays: (state) => {
       return state.declaredArrays;
     },
-    getResize: (state) => {
-      return state.resize;
-    },
   },
 
   mutations: {
     setEditorContent: (state, newValue) => {
       state.editorContent = newValue;
     },
+    setResizeTitle: (state, newValue) => {
+      state.resizeTitle = newValue;
+    },
     toggleTitleShow: (state) => {
-      state.titleShow = !state.titleShow;
+      if (state.resizeTitle.percent > 1) {
+        state.resizeTitle.percent = 0;
+      } else {
+        state.resizeTitle.percent = 20;
+      }
     },
     setDeclaredVariables: (state, newValue) => {
       state.declaredVariables = newValue;
-    },
-    setResize: (state, newValue) => {
-      state.resize = newValue;
     },
   },
 

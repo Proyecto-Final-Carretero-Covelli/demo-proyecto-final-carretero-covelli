@@ -1,12 +1,7 @@
 <template>
   <div class="middle-container">
     <template>
-      <split-pane
-        v-on:resize="resizeHandler"
-        :min-percent="0"
-        :default-percent="20"
-        split="horizontal"
-      >
+      <split-pane ref="resizeTitle" :min-percent="0" :default-percent="20" split="horizontal">
         <template slot="paneL">
           <div class="middle-container__title-background">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

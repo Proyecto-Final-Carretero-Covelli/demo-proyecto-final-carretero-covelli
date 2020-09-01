@@ -34,16 +34,16 @@
       <div class="d-flex justify-content-center align-items-center">
         <p>{{ $store.getters.getTitle }}</p>
         <font-awesome-icon
-          v-if="!$store.getters.isTitleShow"
+          v-if="$store.getters.getResizeTitle.percent <= 1"
           class="top-header__controll-icon top-header__title--shows"
           :icon="['fas', 'angle-down']"
-          @click="$store.commit('toggleTitleShow')"
+          @click="toggleTitleShow"
         />
         <font-awesome-icon
-          v-if="$store.getters.isTitleShow"
+          v-if="$store.getters.getResizeTitle.percent > 1"
           class="top-header__controll-icon top-header__title--shows"
           :icon="['fas', 'angle-up']"
-          @click="$store.commit('toggleTitleShow')"
+          @click="toggleTitleShow"
         />
       </div>
     </div>
