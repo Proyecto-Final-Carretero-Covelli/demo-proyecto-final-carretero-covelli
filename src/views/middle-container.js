@@ -24,7 +24,7 @@ export default {
       exercisesRef.once("value").then(function(snapshot) {
         const exercises = snapshot.val();
         const sumExercise = exercises[Object.keys(exercises)[0]].javascript;
-        
+
         self.implementationEditor = sumExercise;
       });
     },
@@ -37,7 +37,7 @@ export default {
       },
       set(newValue) {
         this.$store.commit("setImplementationEditor", newValue);
-      }
+      },
     },
 
     variablesEditor: {
@@ -46,14 +46,16 @@ export default {
       },
       set(newValue) {
         this.$store.commit("setVariablesEditor", newValue);
-      }
-    }
+      },
+    },
   },
 
   mounted() {
     this.$store.commit("setResizeTitle", this.$refs.resizeTitle);
 
-    let editor = this.$refs.myEditor.editor;
-    editor.setShowPrintMargin(false);
+    let variablesEditor = this.$refs.myVariablesEditor.editor;
+    let implementationEditor = this.$refs.myImplementationEditor.editor;
+    variablesEditor.setShowPrintMargin(false);
+    implementationEditor.setShowPrintMargin(false);
   },
 };

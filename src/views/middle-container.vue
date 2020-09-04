@@ -16,7 +16,7 @@
                       @init="editorInit"
                       lang="typescript"
                       theme="dracula"
-                      ref="myEditor"
+                      ref="myVariablesEditor"
                     ></aceeditor>
                   </template>
 
@@ -26,7 +26,7 @@
                       @init="editorInit"
                       lang="typescript"
                       theme="dracula"
-                      ref="myEditor"
+                      ref="myImplementationEditor"
                     ></aceeditor>
                   </template>
                 </split-pane>
@@ -38,9 +38,11 @@
                   </template>
 
                   <template slot="paneR">
-                    <button @click="$store.dispatch('addTest', 'Test 1')">Test 1</button>
-                    <button @click="$store.dispatch('addTest', 'Test 2')">Test 2</button>
-                    <button @click="$store.dispatch('addTest', 'Test 3')">Test 3</button>
+                    <div class="h-100 w-100" style="background-color: #162231">
+                      <button @click="$store.dispatch('addTest', 'Test 1')">Test 1</button>
+                      <button @click="$store.dispatch('addTest', 'Test 2')">Test 2</button>
+                      <button @click="$store.dispatch('addTest', 'Test 3')">Test 3</button>
+                    </div>
                   </template>
                 </split-pane>
               </template>
