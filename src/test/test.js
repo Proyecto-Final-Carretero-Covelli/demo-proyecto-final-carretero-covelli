@@ -1,3 +1,4 @@
-let x = 10;
-const y = 20;
-var z = x + y;
+function suma(first, second) {
+    return first + second;
+}
+const resultado = suma(x, y);

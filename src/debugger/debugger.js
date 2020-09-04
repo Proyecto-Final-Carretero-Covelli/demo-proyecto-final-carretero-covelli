@@ -38,12 +38,16 @@ export class Debugger {
       };
 
       // If var does not have ob property, then it was defined by the user.
-      if (!variable.value.__ob__) {
+      if (this.isVariableType(variable)) {
         userVariables.push(variable);
       }
     }
 
     return userVariables;
+  }
+
+  isVariableType(variable) {
+    return !variable.value.__ob__ && (typeof variable.value != 'function');
   }
 
   next() {

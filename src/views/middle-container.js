@@ -17,18 +17,37 @@ export default {
       require("brace/theme/dracula");
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
+
+      let self = this;
+      const exercisesRef = this.$store.getters.getDb.ref("exercises");
+
+      exercisesRef.once("value").then(function(snapshot) {
+        const exercises = snapshot.val();
+        const sumExercise = exercises[Object.keys(exercises)[0]].javascript;
+        
+        self.implementationEditor = sumExercise;
+      });
     },
   },
 
   computed: {
-    editorContent: {
+    implementationEditor: {
       get() {
-        return this.$store.getters.getEditorContent;
+        return this.$store.getters.getImplementationEditor;
       },
       set(newValue) {
-        this.$store.commit("setEditorContent", newValue);
-      },
+        this.$store.commit("setImplementationEditor", newValue);
+      }
     },
+
+    variablesEditor: {
+      get() {
+        return this.$store.getters.getVariablesEditor;
+      },
+      set(newValue) {
+        this.$store.commit("setVariablesEditor", newValue);
+      }
+    }
   },
 
   mounted() {
@@ -36,6 +55,5 @@ export default {
 
     let editor = this.$refs.myEditor.editor;
     editor.setShowPrintMargin(false);
-    console.log(editor);
   },
 };

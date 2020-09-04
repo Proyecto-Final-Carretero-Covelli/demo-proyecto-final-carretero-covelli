@@ -4,10 +4,10 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { db } from "../db/firebase";
 
-import {
-  declaredVariables,
-  declaredArrays,
-} from "../mocks/structures-from-parsed-code";
+// import {
+//   declaredVariables,
+//   declaredArrays,
+// } from "../mocks/structures-from-parsed-code";
 
 Vue.use(Vuex);
 
@@ -22,9 +22,14 @@ export default new Vuex.Store({
     debugger: undefined,
     // declaredVariables: [],
     // declaredArrays: [],
+    implementationEditor: "",
+    variablesEditor: "",
+    declaredVariables: [],
+    declaredArrays: [],
+    db: db,
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
-    declaredVariables: declaredVariables,
-    declaredArrays: declaredArrays,
+    // declaredVariables: declaredVariables,
+    // declaredArrays: declaredArrays,
   },
   getters: {
     getTitle: (state) => {
@@ -36,8 +41,8 @@ export default new Vuex.Store({
     getTitleText: (state) => {
       return state.titleText;
     },
-    getEditorContent: (state) => {
-      return state.editorContent;
+    getImplementationEditor: (state) => {
+      return state.implementationEditor;
     },
     getDeclaredVariables: (state) => {
       return state.declaredVariables;
@@ -45,11 +50,17 @@ export default new Vuex.Store({
     getDeclaredArrays: (state) => {
       return state.declaredArrays;
     },
+    getVariablesEditor: (state) => {
+      return state.variablesEditor;
+    },
+    getDb: (state) => {
+      return state.db;
+    },
   },
 
   mutations: {
-    setEditorContent: (state, newValue) => {
-      state.editorContent = newValue;
+    setImplementationEditor: (state, newValue) => {
+      state.implementationEditor = newValue;
     },
     setResizeTitle: (state, newValue) => {
       state.resizeTitle = newValue;
@@ -64,30 +75,41 @@ export default new Vuex.Store({
     setDeclaredVariables: (state, newValue) => {
       state.declaredVariables = newValue;
     },
+    setVariablesEditor: (state, newValue) => {
+      state.variablesEditor = newValue;
+    },
   },
 
   actions: {
     play: (context) => {
-      if (!context.state.debugger) {
-        context.state.debugger = new Debugger(context.state.editorContent);
-      }
+      const code =
+        context.state.variablesEditor + context.state.implementationEditor;
+
+      context.state.debugger = new Debugger(code);
+
       context.state.debugger.runAllCode();
       context.commit(
-        "getDeclaredVariables",
+        "setDeclaredVariables",
         context.state.debugger.getVariables()
       );
-      const exercises = db.ref("exercises");
+    },
 
-      exercises.once("value").then(function(snapshot) {
-        console.log(snapshot.val());
-      });
+    addTest: (context, testNumber) => {
+      let editorContent;
 
-      if (this.editorContent) {
-        db.ref("exercises").push({
-          typescript: context.state.editorContent,
-          javascript: "javascript code",
-        });
+      switch (testNumber) {
+        case "Test 1":
+          editorContent = "let x = 10; const y = 20;";
+          break;
+        case "Test 2":
+          editorContent = "let x = -20; const y = 20;";
+          break;
+        case "Test 3":
+          editorContent = "let x = 15.4; const y = 22.1;";
+          break;
       }
+
+      context.state.variablesEditor = editorContent;
     },
   },
 });
