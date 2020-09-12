@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
-import { db } from "../db/firebase";
+import { firebaseUtils } from "../db/firebase";
 
 import {
   // declaredVariables,
@@ -24,7 +24,7 @@ export default new Vuex.Store({
     variablesEditor: "",
     declaredVariables: [],
     // declaredArrays: [],
-    db: db,
+    firebaseUtils: firebaseUtils,
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     // declaredVariables: declaredVariables,
     declaredArrays: declaredArrays,
@@ -52,7 +52,7 @@ export default new Vuex.Store({
       return state.variablesEditor;
     },
     getDb: (state) => {
-      return state.db;
+      return state.firebaseUtils.db;
     },
   },
 

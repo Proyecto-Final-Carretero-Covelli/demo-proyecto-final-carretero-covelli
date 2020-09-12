@@ -1,6 +1,6 @@
-import {initializeApp} from 'firebase';
+import * as firebase from 'firebase';
 
-const app = initializeApp({
+const app = firebase.initializeApp({
     apiKey: "AIzaSyDnyykVGqpifKz2ZF98lZuxTgXNVlmCKpo",
     authDomain: "vue-tesis-carretero-covelli.firebaseapp.com",
     databaseURL: "https://vue-tesis-carretero-covelli.firebaseio.com/",
@@ -9,4 +9,17 @@ const app = initializeApp({
     messagingSenderId: "<SENDER_ID>",
 });
 
-export const db = app.database();
+const loginWithGoogle = function() {
+    const baseProvider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(baseProvider).then((user) => {
+        console.log(user);
+        console.log('Success');
+    }).catch((error) => {
+        console.log(error);
+    });
+};
+
+export const firebaseUtils = {
+    db: app.database(),
+    loginWithGoogle: loginWithGoogle
+};
