@@ -15,8 +15,7 @@ export default new Vuex.Store({
   state: {
     title: "Título / Consigna",
     resizeTitle: null,
-    titleText:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    titleText: "",
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
@@ -28,6 +27,7 @@ export default new Vuex.Store({
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     // declaredVariables: declaredVariables,
     declaredArrays: declaredArrays,
+    currentExercise: {}
   },
   getters: {
     getTitle: (state) => {
@@ -51,9 +51,12 @@ export default new Vuex.Store({
     getVariablesEditor: (state) => {
       return state.variablesEditor;
     },
-    getDb: (state) => {
-      return state.firebaseUtils.db;
+    getFirabaseUtils: (state) => {
+      return state.firebaseUtils;
     },
+    getCurrentExercise: (state) => {
+      return state.currentExercise;
+    }
   },
 
   mutations: {
@@ -76,11 +79,20 @@ export default new Vuex.Store({
     setVariablesEditor: (state, newValue) => {
       state.variablesEditor = newValue;
     },
+    setCurrentExercise: (state, value) => {
+      state.currentExercise = value;
+    },
+    setTitle: (state, title) => {
+      state.title = title;
+    },
+    setTitleText: (state, titleText) => {
+      state.titleText = titleText;
+    }
   },
 
   actions: {
-    play: (context) => {
-      const code =
+    play: (context) => {     
+      const code = 
         context.state.variablesEditor + context.state.implementationEditor;
 
       context.state.debugger = new Debugger(code);

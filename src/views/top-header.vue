@@ -1,32 +1,28 @@
 <template>
   <div class="top-header">
     <div class="w-25">
+
       <img class="top-header__logo" src="../assets/logo-small-light.png" />
-      <b-dropdown text="File" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
-        <b-dropdown-item href="#">Action</b-dropdown-item>
-        <b-dropdown-item href="#">Another action</b-dropdown-item>
-        <b-dropdown-item href="#">Something else here</b-dropdown-item>
+
+      <b-dropdown text="Ejercicios" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
+        <b-dropdown-group v-for="(folderValue, folderId) in folders" :key="folderId">
+          <span class="dropdown-header"> {{ folderValue.name }} </span>
+          <b-dropdown-item class="subitem" v-for="(exerciseValue, exerciseId) in folderValue.exercises" :key="exerciseId" @click="selectExercise(exerciseValue)">
+            {{ exerciseValue.name }}
+          </b-dropdown-item>
+        </b-dropdown-group>
       </b-dropdown>
-      <b-dropdown text="Edit" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
-        <b-dropdown-item href="#">Action</b-dropdown-item>
-        <b-dropdown-item href="#">Another action</b-dropdown-item>
-        <b-dropdown-item href="#">Something else here</b-dropdown-item>
+
+      <b-dropdown :disabled="!$store.getters.getCurrentExercise.suiteTest" text="Tests" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
+        <b-dropdown-item v-for="test in $store.getters.getCurrentExercise.suiteTest" :key="test.name" @click="selectTest(test)">
+          {{ test.name }}
+        </b-dropdown-item>
       </b-dropdown>
-      <b-dropdown
-        text="Selection"
-        id="dropdown-left"
-        size="sm"
-        class="m-2 top-header__drop"
-        no-caret
-      >
-        <b-dropdown-item href="#">Action</b-dropdown-item>
-        <b-dropdown-item href="#">Another action</b-dropdown-item>
-        <b-dropdown-item href="#">Something else here</b-dropdown-item>
-      </b-dropdown>
-      <b-dropdown text="Help" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
-        <b-dropdown-item href="#">Action</b-dropdown-item>
-        <b-dropdown-item href="#">Another action</b-dropdown-item>
-        <b-dropdown-item href="#">Something else here</b-dropdown-item>
+      
+      <b-dropdown text="Ayuda" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
+        <b-dropdown-item :disabled="!$store.getters.getCurrentExercise.solution" @click="seeSolution()">
+          Ver solucion
+        </b-dropdown-item>
       </b-dropdown>
     </div>
 

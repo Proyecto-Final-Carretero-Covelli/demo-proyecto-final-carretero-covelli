@@ -9,13 +9,39 @@ const app = firebase.initializeApp({
     messagingSenderId: "<SENDER_ID>",
 });
 
-const loginWithGoogle = function() {
-    const baseProvider = new firebase.auth.GoogleAuthProvider();
-    return firebase.auth().signInWithPopup(baseProvider);
+export const firebaseUtils = {
+
+    db: app.database(),
+
+    auth: firebase.auth(),
+
+    loginWithGoogle: function() {
+        const baseProvider = new firebase.auth.GoogleAuthProvider();
+        return firebase.auth().signInWithPopup(baseProvider);
+    },
+
+    addFolder: function(folder) {
+        const newFolder = app.database().ref('folders/').push();
+        newFolder.set(folder);
+    },
+
+    getFolders: function() {
+        return firebase.database().ref('folders/').once('value');
+    },
+
+    addExercise: function(folderId, exercise) {
+        const folder = app.database().ref(`folders/${folderId}/exercises`).push();
+        folder.set(exercise);
+    }
+
 };
 
-export const firebaseUtils = {
-    db: app.database(),
-    auth: firebase.auth(),
-    loginWithGoogle: loginWithGoogle
-};
+/*const exercise = {
+        "statement": "Dados dos numeros x e y, definir la funcion 'suma(x,y)' que retorne la suma de dos numeros pasados por parametros",
+        "solution": "function suma(first, second) { return first + second; } const resultado = suma(x, y);",
+        "suiteTest": [
+          { "name": "Test Name 1", "result": 25, "test": "const x = 10; const y = 15" },
+          { "name": "Test Name 2", "result": -25, "test": "const x = -10; const y = -15" }
+        ]
+      };
+      context.state.firebaseUtils.addExercise('-MH7B5tdGcg90vYJNXl8', exercise);*/

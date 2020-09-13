@@ -17,16 +17,6 @@ export default {
       require("brace/theme/dracula");
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
-
-      let self = this;
-      const exercisesRef = this.$store.getters.getDb.ref("exercises");
-
-      exercisesRef.once("value").then(function(snapshot) {
-        const exercises = snapshot.val();
-        const sumExercise = exercises[Object.keys(exercises)[0]].javascript;
-
-        self.implementationEditor = sumExercise;
-      });
     },
   },
 
