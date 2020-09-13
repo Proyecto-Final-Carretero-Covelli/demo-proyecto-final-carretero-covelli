@@ -7,6 +7,7 @@ import splitPane from "vue-splitpane";
 import VueKonva from "vue-konva";
 import store from "./store";
 import "./db/firebase";
+import VModal from 'vue-js-modal';
 
 //Icons
 import { faAngellist } from "@fortawesome/free-brands-svg-icons";
@@ -23,6 +24,7 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueKonva);
+Vue.use(VModal);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("split-pane", splitPane);

@@ -11,15 +11,11 @@ const app = firebase.initializeApp({
 
 const loginWithGoogle = function() {
     const baseProvider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(baseProvider).then((user) => {
-        console.log(user);
-        console.log('Success');
-    }).catch((error) => {
-        console.log(error);
-    });
+    return firebase.auth().signInWithPopup(baseProvider);
 };
 
 export const firebaseUtils = {
     db: app.database(),
+    auth: firebase.auth(),
     loginWithGoogle: loginWithGoogle
 };
