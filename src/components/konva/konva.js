@@ -65,7 +65,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getDeclaredVariables", "getDeclaredArrays"]),
+    ...mapGetters(["getDeclaredVariables"]),
   },
 
   created: function() {

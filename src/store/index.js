@@ -4,10 +4,9 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { firebaseUtils } from "../db/firebase";
 
-import {
-  // declaredVariables,
-  declaredArrays,
-} from "../mocks/structures-from-parsed-code";
+// import {
+//    declaredVariables,
+// } from "../mocks/structures-from-parsed-code";
 
 Vue.use(Vuex);
 
@@ -22,12 +21,10 @@ export default new Vuex.Store({
     implementationEditor: "",
     variablesEditor: "",
     declaredVariables: [],
-    // declaredArrays: [],
     firebaseUtils: firebaseUtils,
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     // declaredVariables: declaredVariables,
-    declaredArrays: declaredArrays,
-    currentExercise: {}
+    currentExercise: {},
   },
   getters: {
     getTitle: (state) => {
@@ -45,9 +42,6 @@ export default new Vuex.Store({
     getDeclaredVariables: (state) => {
       return state.declaredVariables;
     },
-    getDeclaredArrays: (state) => {
-      return state.declaredArrays;
-    },
     getVariablesEditor: (state) => {
       return state.variablesEditor;
     },
@@ -56,7 +50,7 @@ export default new Vuex.Store({
     },
     getCurrentExercise: (state) => {
       return state.currentExercise;
-    }
+    },
   },
 
   mutations: {
@@ -87,12 +81,12 @@ export default new Vuex.Store({
     },
     setTitleText: (state, titleText) => {
       state.titleText = titleText;
-    }
+    },
   },
 
   actions: {
-    play: (context) => {     
-      const code = 
+    play: (context) => {
+      const code =
         context.state.variablesEditor + context.state.implementationEditor;
 
       context.state.debugger = new Debugger(code);
