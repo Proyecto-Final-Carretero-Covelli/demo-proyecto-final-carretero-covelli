@@ -10,6 +10,25 @@ export class Debugger {
     this.setNodesBody(this.parsedNodes);
   }
 
+  runSlowMode(callback) {
+    let self = this;
+
+    var myVar = setInterval(runNode, 1000);
+
+    function runNode() {
+
+      if (self.parsedNodes.length) {
+        const node = self.parsedNodes.shift();
+        self.interpreter.run(node);
+        callback();
+      } else {
+        clearInterval(myVar);
+      }
+
+    }
+
+  }
+
   setNodesBody(nodes) {
     nodes.forEach((node) => {
       if (!node.body) {

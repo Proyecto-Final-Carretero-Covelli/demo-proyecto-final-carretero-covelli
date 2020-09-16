@@ -91,11 +91,15 @@ export default new Vuex.Store({
 
       context.state.debugger = new Debugger(code);
 
-      context.state.debugger.runAllCode();
-      context.commit(
-        "setDeclaredVariables",
-        context.state.debugger.getVariables()
-      );
+      context.state.debugger.runSlowMode(setVariables);
+
+      function setVariables() {
+        context.commit(
+          "setDeclaredVariables",
+          context.state.debugger.getVariables()
+        );
+      }
+
     },
 
     addTest: (context, testNumber) => {
