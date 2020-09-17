@@ -10,7 +10,12 @@ export default {
     MiddleContainer
   },
   mounted() {
-    this.$modal.show('login-modal');
+
+    const currentUser = this.$store.getters.getCurrentUser;
+    if (!currentUser) {
+      this.$modal.show('login-modal');
+    }
+    
   },
   methods: {
 

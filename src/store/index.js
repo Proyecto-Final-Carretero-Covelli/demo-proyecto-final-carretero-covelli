@@ -25,6 +25,7 @@ export default new Vuex.Store({
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     // declaredVariables: declaredVariables,
     currentExercise: {},
+    currentUser: undefined
   },
   getters: {
     getTitle: (state) => {
@@ -51,6 +52,9 @@ export default new Vuex.Store({
     getCurrentExercise: (state) => {
       return state.currentExercise;
     },
+    getCurrentUser: (state) => {
+      return state.currentUser;
+    }
   },
 
   mutations: {
@@ -82,6 +86,9 @@ export default new Vuex.Store({
     setTitleText: (state, titleText) => {
       state.titleText = titleText;
     },
+    setCurrentUser: (state, user) => {
+      state.currentUser = user;
+    }
   },
 
   actions: {

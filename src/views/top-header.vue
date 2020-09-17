@@ -55,6 +55,14 @@
         :icon="['fas', 'stop']"
       />
       <font-awesome-icon class="top-header__controll-icon" :icon="['fab', 'angellist']" />
+      <font-awesome-icon v-if="!$store.getters.getCurrentUser" class="top-header__controll-icon" :icon="['fas', 'user']" />
+      <div v-else>
+        <img id="user-img" v-bind:src="$store.getters.getCurrentUser.photoURL" class="top-header__controll-icon--user" />
+        <b-tooltip target="user-img" triggers="hover">
+          {{ $store.getters.getCurrentUser.displayName }}
+        </b-tooltip>
+      </div>
+      
     </div>
   </div>
 </template>
