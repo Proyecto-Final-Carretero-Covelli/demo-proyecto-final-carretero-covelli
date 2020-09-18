@@ -32,6 +32,21 @@ export const firebaseUtils = {
     addExercise: function(folderId, exercise) {
         const folder = app.database().ref(`folders/${folderId}/exercises`).push();
         folder.set(exercise);
+    },
+
+    addUser: function() {
+        const googleUser = firebase.auth().currentUser;
+        const user = {
+            name: googleUser.displayName,
+            email: googleUser.email,
+            photoURL: googleUser.photoURL
+        }
+        app.database().ref(`users/${googleUser.providerData[0].uid}`).set(user);
+    },
+
+    getCurrentUser: function() {
+        const userId = firebase.auth().currentUser.providerData[0].uid;
+        return app.database().ref(`users/${userId}`).once('value');
     }
 
 };

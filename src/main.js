@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import splitPane from "vue-splitpane";
 import VueKonva from "vue-konva";
 import store from "./store";
-import * as firebase from 'firebase';
+import {firebaseUtils} from './db/firebase';
 import VModal from 'vue-js-modal';
 
 //Icons
@@ -41,15 +41,20 @@ library.add(faAngleUp);
 library.add(faAngleDown);
 library.add(faUser);
 
-firebase.auth().onAuthStateChanged(user => {
+firebaseUtils.auth.onAuthStateChanged(() => {
 
-  if (user) {
-    store.commit('setCurrentUser', user);
-  }
+  firebaseUtils.getCurrentUser().then((data) => {
+    const currentUser = data.val();
 
-  new Vue({
-    store,
-    render: (h) => h(App),
-  }).$mount("#app");
+    if (currentUser) {
+      store.commit('setCurrentUser', currentUser);
+    }
+
+    new Vue({
+      store,
+      render: (h) => h(App),
+    }).$mount("#app");
+
+  });
 
 });

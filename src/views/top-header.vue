@@ -59,7 +59,7 @@
       <div v-else>
         <img id="user-img" v-bind:src="$store.getters.getCurrentUser.photoURL" class="top-header__controll-icon--user" />
         <b-tooltip target="user-img" triggers="hover">
-          {{ $store.getters.getCurrentUser.displayName }}
+          {{ $store.getters.getCurrentUser.name }}
         </b-tooltip>
       </div>
       
