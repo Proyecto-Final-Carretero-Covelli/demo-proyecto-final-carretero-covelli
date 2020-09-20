@@ -2,6 +2,7 @@
   <div id="app">
     <!-- <MainScene /> -->
     <main-container />
+    <v-dialog />
   </div>
 </template>
 

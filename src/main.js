@@ -25,7 +25,7 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueKonva);
-Vue.use(VModal);
+Vue.use(VModal, {dialog: true});
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("split-pane", splitPane);
@@ -41,20 +41,27 @@ library.add(faAngleUp);
 library.add(faAngleDown);
 library.add(faUser);
 
-firebaseUtils.auth.onAuthStateChanged(() => {
+function initApp() {
+  new Vue({
+    store,
+    render: (h) => h(App),
+  }).$mount("#app");
+}
 
-  firebaseUtils.getCurrentUser().then((data) => {
-    const currentUser = data.val();
+firebaseUtils.auth.onAuthStateChanged((user) => {
 
-    if (currentUser) {
-      store.commit('setCurrentUser', currentUser);
-    }
-
-    new Vue({
-      store,
-      render: (h) => h(App),
-    }).$mount("#app");
-
-  });
+  if (user) {
+    firebaseUtils.getCurrentUser().then((data) => {
+      const currentUser = data.val();
+  
+      if (currentUser) {
+        store.commit('setCurrentUser', currentUser);
+      } 
+      initApp();
+  
+    });
+  } else {
+    initApp();
+  }
 
 });

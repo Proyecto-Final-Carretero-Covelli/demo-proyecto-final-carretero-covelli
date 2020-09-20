@@ -47,6 +47,38 @@ export const firebaseUtils = {
     getCurrentUser: function() {
         const userId = firebase.auth().currentUser.providerData[0].uid;
         return app.database().ref(`users/${userId}`).once('value');
+    },
+
+    addTestToHistory: function(exerciseId, passedFlag, test, oldInfo) {
+
+        if (oldInfo.passedBefore === passedFlag) {
+            return;
+        }
+
+        const userId = firebase.auth().currentUser.providerData[0].uid;
+
+        let newTest;
+        if (oldInfo.passedBefore) {
+            app.database().ref(`users/${userId}/history/${exerciseId}/passedTests/${oldInfo.historyId}`).remove();
+            newTest = app.database().ref(`users/${userId}/history/${exerciseId}/notPassedTests`).push();
+        } else {
+            app.database().ref(`users/${userId}/history/${exerciseId}/notPassedTests/${oldInfo.historyId}`).remove();
+            newTest = app.database().ref(`users/${userId}/history/${exerciseId}/passedTests`).push();
+        }
+        newTest.set(test.name);
+        test.historyId = newTest.key;
+        
+    },
+
+    updateUserStatistics: function(passedFlag, newValue) {
+
+        const userId = firebase.auth().currentUser.providerData[0].uid;
+        if (passedFlag) {
+            app.database().ref(`users/${userId}/statistics/passed`).set(newValue);
+        } else {
+            app.database().ref(`users/${userId}/statistics/notPassed`).set(newValue);
+        }
+        
     }
 
 };

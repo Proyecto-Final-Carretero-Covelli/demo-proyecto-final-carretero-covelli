@@ -21,7 +21,11 @@ export default {
 
     login() {
       firebaseUtils.loginWithGoogle().then(() => {
-        firebaseUtils.addUser();
+        firebaseUtils.getCurrentUser().then((user) => {
+          if (!user) {
+            firebaseUtils.addUser();
+          }
+        })  
         this.$modal.hide('login-modal');
       }).catch((error) => {
         console.log(error);

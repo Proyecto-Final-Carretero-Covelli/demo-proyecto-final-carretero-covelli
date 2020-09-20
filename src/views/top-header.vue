@@ -12,12 +12,6 @@
           </b-dropdown-item>
         </b-dropdown-group>
       </b-dropdown>
-
-      <b-dropdown :disabled="!$store.getters.getCurrentExercise.suiteTest" text="Tests" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
-        <b-dropdown-item v-for="test in $store.getters.getCurrentExercise.suiteTest" :key="test.name" @click="selectTest(test)">
-          {{ test.name }}
-        </b-dropdown-item>
-      </b-dropdown>
       
       <b-dropdown text="Ayuda" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
         <b-dropdown-item :disabled="!$store.getters.getCurrentExercise.solution" @click="seeSolution()">

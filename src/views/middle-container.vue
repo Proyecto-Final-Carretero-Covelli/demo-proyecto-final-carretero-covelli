@@ -8,8 +8,10 @@
         <template slot="paneR">
           <div class="middle-container__lower">
             <split-pane :min-percent="10" :default-percent="50" split="vertical">
-              <template slot="paneL">
+              
+              <template slot="paneL">               
                 <split-pane :min-percent="10" :default-percent="50" split="horizontal">
+                  
                   <template slot="paneL">
                     <aceeditor
                       v-model="variablesEditor"
@@ -29,23 +31,50 @@
                       ref="myImplementationEditor"
                     ></aceeditor>
                   </template>
-                </split-pane>
-              </template>
-              <template slot="paneR">
-                <split-pane :min-percent="10" :default-percent="50" split="horizontal">
-                  <template slot="paneL">
-                    <konva></konva>
-                  </template>
 
-                  <template slot="paneR">
-                    <div class="h-100 w-100" style="background-color: #162231">
-                      <button @click="$store.dispatch('addTest', 'Test 1')">Test 1</button>
-                      <button @click="$store.dispatch('addTest', 'Test 2')">Test 2</button>
-                      <button @click="$store.dispatch('addTest', 'Test 3')">Test 3</button>
-                    </div>
-                  </template>
                 </split-pane>
               </template>
+
+              <template slot="paneR">
+                <div>
+                  <b-tabs content-class="mt-3">
+
+                    <b-tab title="Visualización de estructuras" active>
+                      <konva></konva>
+                    </b-tab>
+
+                    <b-tab :disabled="!$store.getters.getCurrentExercise.suiteTest" class="container scrollable" title="Suite de test">
+
+                      <button class="btn btn-primary btn-sm play-all">
+                        Ejecutar todo
+                      </button>
+
+                      <div v-for="test in $store.getters.getCurrentExercise.suiteTest" :key="test.name" class="card test-card" @click="selectTest(test)">
+
+                        <div class="small">
+                          <img :id="test.name" class="card-icon" :src="test.imgInfo.img"/>
+                          <b-tooltip :target="test.name"> {{test.imgInfo.tooltip}} </b-tooltip>
+                        </div>
+                        
+                        <div class="large text-center">
+                          <p> {{ test.name }} </p>
+                        </div>
+                        
+                        <div class="small">
+                          <img class="card-play hoverable" src="https://www.flaticon.com/svg/static/icons/svg/151/151860.svg" @click="onPlayTestClicked(test, $event)"/>
+                        </div>
+                        
+                      </div>
+
+                    </b-tab>
+                    
+                  </b-tabs>
+                </div>
+
+                
+                  
+              </template>
+
             </split-pane>
           </div>
         </template>

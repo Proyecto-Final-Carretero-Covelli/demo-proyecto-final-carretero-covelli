@@ -44,6 +44,7 @@ export class Debugger {
 
   runAllCode() {
     this.interpreter.run(this.jsCode);
+    return this.interpreter.scope.context["resultado"].value;
   }
 
   getVariables() {

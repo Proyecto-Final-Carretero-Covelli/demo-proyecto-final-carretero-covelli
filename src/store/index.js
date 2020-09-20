@@ -4,6 +4,25 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { firebaseUtils } from "../db/firebase";
 
+const CONSTANTS = {
+  TEST_FLAG_INFO: {
+    PASSED: {
+      img: require('../assets/passed-icon.svg'),
+      tooltip: 'Test pasado correctamente'
+    },
+  
+    NOT_PASSED: {
+      img: require('../assets/not-passed-icon.svg'),
+      tooltip: 'Test no pasado'
+    },
+  
+    NOT_EXECUTED: {
+      img: require('../assets/not-executed-icon.svg'),
+      tooltip: 'Test aún no ejecutado'
+    }
+  }
+};
+
 // import {
 //    declaredVariables,
 // } from "../mocks/structures-from-parsed-code";
@@ -54,6 +73,9 @@ export default new Vuex.Store({
     },
     getCurrentUser: (state) => {
       return state.currentUser;
+    },
+    getConstants: () => {
+      return CONSTANTS;
     }
   },
 
@@ -92,13 +114,7 @@ export default new Vuex.Store({
   },
 
   actions: {
-    play: (context) => {
-      const code =
-        context.state.variablesEditor + context.state.implementationEditor;
-
-      context.state.debugger = new Debugger(code);
-
-      context.state.debugger.runSlowMode(setVariables);
+    play: (context, runInSlowMode) => {
 
       function setVariables() {
         context.commit(
@@ -107,24 +123,35 @@ export default new Vuex.Store({
         );
       }
 
-    },
+      const code =
+        context.state.variablesEditor + context.state.implementationEditor;
 
-    addTest: (context, testNumber) => {
-      let editorContent;
+      context.state.debugger = new Debugger(code);
 
-      switch (testNumber) {
-        case "Test 1":
-          editorContent = "let x = 10; const y = 20;";
-          break;
-        case "Test 2":
-          editorContent = "let x = -20; const y = 20;";
-          break;
-        case "Test 3":
-          editorContent = "let x = 15.4; const y = 22.1;";
-          break;
+      if (runInSlowMode) {
+        return context.state.debugger.runSlowMode(setVariables);
+      } else {
+        return context.state.debugger.runAllCode();
       }
 
-      context.state.variablesEditor = editorContent;
     },
+
+    createInfoDialog: (context, modalInfo) => {
+
+      modalInfo.modal.show('dialog', {
+        title: modalInfo.title,
+        text: modalInfo.msg,
+        buttons: [
+          {
+            title: 'Close',
+            handler: () => {
+              modalInfo.modal.hide('dialog')
+            }
+          }
+        ]
+      });
+
+    }
+
   },
 });

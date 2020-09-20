@@ -34,9 +34,61 @@
     border-bottom: 1px solid $border-grey !important;
     background: $border-grey !important;
   }
+
   .ace-dracula {
     background: $primary;
   }
+
+  .test-card {
+    display: flex;
+    flex-direction: row;
+    margin: 2.5% 5% 2.5% 5%;
+    color: black;
+    height: 35px;
+    background-color: #eeeeee;
+    cursor: pointer;
+  }
+
+  .card-icon {
+    width: 25px;
+    height: 25px;
+    margin-left: 10%;
+    cursor: context-menu;
+  }
+
+  .test-name {
+    text-align: center;
+  }
+
+  .small {
+    flex-grow: 1;
+    margin-top: 4px;
+  }
+
+  .large {
+    font-weight: 600px;
+    font-size: 16px;
+    flex-grow: 5;
+    margin-top: 0.5%;
+  }
+
+  .card-play {
+    width: 20px;
+    height: 20px;
+    margin-left: 50%;
+  }
+
+  .play-all {
+    position: absolute;
+    left: 85%;
+    top: 0.5%;
+  }
+
+  .scrollable {
+    overflow: auto;
+    max-height: 60vh;
+  }
+
 }
 
 .editor-container {
@@ -48,4 +100,10 @@
 
 .flex-item {
   flex-grow: 1;
+}
+
+.hoverable:hover{
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.2);
 }
