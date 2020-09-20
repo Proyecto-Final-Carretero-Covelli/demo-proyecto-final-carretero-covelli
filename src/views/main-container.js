@@ -20,13 +20,18 @@ export default {
   methods: {
 
     login() {
+      const modal = this.$modal;
+
       firebaseUtils.loginWithGoogle().then(() => {
         firebaseUtils.getCurrentUser().then((user) => {
-          if (!user) {
-            firebaseUtils.addUser();
+
+          if (!user.val()) {
+            firebaseUtils.addUser().then(() => modal.hide('login-modal'));
+          } else {
+            modal.hide('login-modal');
           }
-        })  
-        this.$modal.hide('login-modal');
+
+        });
       }).catch((error) => {
         console.log(error);
       });

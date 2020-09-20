@@ -41,7 +41,7 @@ export const firebaseUtils = {
             email: googleUser.email,
             photoURL: googleUser.photoURL
         }
-        app.database().ref(`users/${googleUser.providerData[0].uid}`).set(user);
+        return app.database().ref(`users/${googleUser.providerData[0].uid}`).set(user);
     },
 
     getCurrentUser: function() {
