@@ -23,5 +23,9 @@
     margin-right: 6px;
     margin-left: 6px;
     margin-bottom: 1.5rem;
+
+    &:hover {
+      color: $light-grey;
+    }
   }
 }

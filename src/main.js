@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import splitPane from "vue-splitpane";
 import VueKonva from "vue-konva";
 import store from "./store";
-import {firebaseUtils} from './db/firebase';
-import VModal from 'vue-js-modal';
+import { firebaseUtils } from "./db/firebase";
+import VModal from "vue-js-modal";
 
 //Icons
 import { faAngellist } from "@fortawesome/free-brands-svg-icons";
@@ -19,13 +19,14 @@ import { faStop } from "@fortawesome/free-solid-svg-icons";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueKonva);
-Vue.use(VModal, {dialog: true});
+Vue.use(VModal, { dialog: true });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("split-pane", splitPane);
@@ -40,6 +41,7 @@ library.add(faStop);
 library.add(faAngleUp);
 library.add(faAngleDown);
 library.add(faUser);
+library.add(faPlusSquare);
 
 function initApp() {
   new Vue({
@@ -49,19 +51,16 @@ function initApp() {
 }
 
 firebaseUtils.auth.onAuthStateChanged((user) => {
-
   if (user) {
     firebaseUtils.getCurrentUser().then((data) => {
       const currentUser = data.val();
-  
+
       if (currentUser) {
-        store.commit('setCurrentUser', currentUser);
-      } 
+        store.commit("setCurrentUser", currentUser);
+      }
       initApp();
-  
     });
   } else {
     initApp();
   }
-
 });

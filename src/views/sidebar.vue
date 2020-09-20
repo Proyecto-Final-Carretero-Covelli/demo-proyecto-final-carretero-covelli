@@ -1,6 +1,12 @@
 <template>
   <div class="sidebar">
-    <font-awesome-icon class="sidebar__icon" :icon="['fab', 'angellist']" />
+    <font-awesome-icon
+      class="sidebar__icon"
+      :icon="['far', 'plus-square']"
+      id="show-btn"
+      @click="$bvModal.show('bv-modal-example')"
+    />
+    <new-exercise></new-exercise>
     <font-awesome-icon class="sidebar__icon" :icon="['fas', 'cog']" />
     <font-awesome-icon class="sidebar__icon" :icon="['fas', 'chart-bar']" />
     <font-awesome-icon class="sidebar__icon" :icon="['fas', 'life-ring']" />
