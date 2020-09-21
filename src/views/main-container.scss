@@ -4,6 +4,10 @@ body {
   margin: 0px;
 }
 
+a {
+  color: $secondary-dark !important;
+}
+
 .main-container {
   background-color: $primary;
   width: 100%;

@@ -4,7 +4,7 @@
       class="sidebar__icon"
       :icon="['far', 'plus-square']"
       id="show-btn"
-      @click="$bvModal.show('bv-modal-example')"
+      @click="openModelNewExercise"
     />
     <new-exercise></new-exercise>
     <font-awesome-icon class="sidebar__icon" :icon="['fas', 'cog']" />
