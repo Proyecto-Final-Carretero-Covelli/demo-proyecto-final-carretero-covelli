@@ -20,6 +20,7 @@ import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
 
@@ -42,6 +43,7 @@ library.add(faAngleUp);
 library.add(faAngleDown);
 library.add(faUser);
 library.add(faPlusSquare);
+library.add(faSearch);
 
 function initApp() {
   new Vue({
