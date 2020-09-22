@@ -1,7 +1,7 @@
 <template>
   <b-modal content-class="search" id="modal-search" size="xl" scrollable>
     <template v-slot:modal-title>Buscar Ejercicios</template>
-    <div></div>
+    <div>{{folders}}</div>
   </b-modal>
 </template>
 
