@@ -1,0 +1,14 @@
+@import "../../../scss/variables";
+
+.search {
+  background-color: $primary !important;
+  color: $text-white !important;
+
+  .close {
+    color: $text-white;
+    text-shadow: none;
+    &:hover {
+      color: $red;
+    }
+  }
+}

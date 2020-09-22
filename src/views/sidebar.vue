@@ -1,25 +1,38 @@
 <template>
   <div class="sidebar">
-    <font-awesome-icon id="sidebar-help" class="sidebar__icon" :icon="['fas', 'life-ring']" />
-    <b-tooltip target="sidebar-help">Solución</b-tooltip>
+    <!-- Solution -->
+    <font-awesome-icon id="sidebar-solution" class="sidebar__icon" :icon="['fas', 'life-ring']" />
+    <b-tooltip target="sidebar-solution" triggers="hover">Solución</b-tooltip>
 
+    <!-- Analytics -->
     <font-awesome-icon id="sidebar-analytics" class="sidebar__icon" :icon="['fas', 'chart-bar']" />
-    <b-tooltip target="sidebar-analytics">Estadisticas</b-tooltip>
-    <font-awesome-icon id="sidebar-search" class="sidebar__icon" :icon="['fas', 'search']" />
-    <b-tooltip target="sidebar-search">Buscar</b-tooltip>
+    <b-tooltip target="sidebar-analytics" triggers="hover">Estadisticas</b-tooltip>
 
+    <!-- Search -->
+    <font-awesome-icon
+      id="sidebar-search"
+      class="sidebar__icon"
+      :icon="['fas', 'search']"
+      @click="openModalSeach"
+    />
+    <b-tooltip target="sidebar-search" triggers="hover">Buscar</b-tooltip>
+    <search></search>
+
+    <!-- New Exercise -->
     <font-awesome-icon
       id="sidebar-new-exercise"
       class="sidebar__icon"
       :icon="['far', 'plus-square']"
-      @click="openModelNewExercise"
+      @click="openModalNewExercise"
     />
-    <b-tooltip target="sidebar-new-exercise">Crear Ejercicio</b-tooltip>
+    <b-tooltip target="sidebar-new-exercise" triggers="hover">Crear Ejercicio</b-tooltip>
     <new-exercise></new-exercise>
 
+    <!-- Config -->
     <font-awesome-icon id="sidebar-config" class="sidebar__icon" :icon="['fas', 'cog']" />
-    <b-tooltip target="sidebar-config" title="Solución">Configuraciones</b-tooltip>
+    <b-tooltip target="sidebar-config" title="Solución" triggers="hover">Configuraciones</b-tooltip>
 
+    <!-- User -->
     <font-awesome-icon
       v-if="!$store.getters.getCurrentUser"
       class="sidebar__icon"
@@ -31,7 +44,7 @@
         v-bind:src="$store.getters.getCurrentUser.photoURL"
         class="sidebar__user"
       />
-      <b-tooltip target="sidebar-user-img">{{ $store.getters.getCurrentUser.name }}</b-tooltip>
+      <b-tooltip target="sidebar-user-img" triggers="hover">{{ $store.getters.getCurrentUser.name }}</b-tooltip>
     </div>
   </div>
 </template>
