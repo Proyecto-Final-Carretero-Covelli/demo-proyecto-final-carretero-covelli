@@ -28,4 +28,10 @@
       color: $light-grey;
     }
   }
+
+  &__user {
+    width: 36px;
+    border-radius: 50%;
+    padding: 2px;
+  }
 }
