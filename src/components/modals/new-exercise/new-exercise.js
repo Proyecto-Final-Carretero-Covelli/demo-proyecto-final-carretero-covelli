@@ -44,6 +44,16 @@ export default {
       this.currentIndexTest = indexTest;
     },
 
+    deleteTest: function(indexTest) {
+      this.tests.splice(indexTest, 1);
+      if (this.currentIndexTest == indexTest) {
+        this.currentIndexTest = -1;
+        this.currentTestCode = "";
+        this.currentTestName = "";
+        this.editTestMode = false;
+      }
+    },
+
     cancelEdit: function() {
       this.currentTestCode = "";
       this.currentTestName = "";

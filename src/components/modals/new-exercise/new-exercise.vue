@@ -86,8 +86,16 @@
             class="d-flex mb-1 new-exercise__test--item"
             @click="showTest(i)"
           >
-            <div class="mr-3">{{i + 1}}.</div>
-            <div>{{test.name}}</div>
+            <div class="d-flex">
+              <div class="mr-3">{{i + 1}}.</div>
+              <div>{{test.name}}</div>
+            </div>
+
+            <font-awesome-icon
+              class="new-exercise__test--item--delete"
+              :icon="['fas', 'trash-alt']"
+              @click="deleteTest(i)"
+            />
           </div>
         </div>
       </div>
