@@ -3,12 +3,46 @@
 .search {
   background-color: $primary !important;
   color: $text-white !important;
+  height: calc(100vh - 3.5rem);
 
   .close {
     color: $text-white;
     text-shadow: none;
     &:hover {
       color: $red;
+    }
+  }
+
+  .vue-treeselect {
+    //background-color: $primary !important;
+    height: 100%;
+    &__control,
+    &__menu,
+    &__option {
+      background-color: $primary !important;
+      color: $text-white !important;
+      border: none !important;
+    }
+
+    &__control {
+      border-bottom: 1px solid $secondary !important;
+      font-size: 1.5rem;
+    }
+
+    &__menu {
+      max-height: none !important;
+      margin-top: 1rem;
+    }
+
+    &__option {
+      font-size: 1.25rem;
+      &--selected {
+        color: $secondary !important;
+      }
+    }
+
+    input {
+      color: $text-white !important;
     }
   }
 }
