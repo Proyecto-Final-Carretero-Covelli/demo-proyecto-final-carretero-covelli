@@ -13,7 +13,7 @@
           slot="option-label"
           slot-scope="{ node, labelClassName }"
           :class="labelClassName"
-          @click="selectExercise(node.raw)"
+          @click="selectExercise(JSON.parse(JSON.stringify(node.raw)))"
         >
           {{ node.label }}
         </label></treeselect

@@ -12,5 +12,12 @@ export default {
     openModalSeach() {
       this.$bvModal.show("modal-search");
     },
+
+    seeSolution() {
+      this.$store.commit(
+        "setImplementationEditor",
+        this.$store.getters.getCurrentExercise.solution
+      );
+    },
   },
 };
