@@ -2,31 +2,6 @@
   <div class="top-header">
     <div class="w-25">
       <img class="top-header__logo" src="../assets/logo-small-light.png" />
-
-      <b-dropdown
-        text="Ejercicios"
-        id="dropdown-left"
-        size="sm"
-        class="m-2 top-header__drop"
-        no-caret
-      >
-        <b-dropdown-group v-for="(folderValue, folderId) in folders" :key="folderId">
-          <span class="dropdown-header">{{ folderValue.name }}</span>
-          <b-dropdown-item
-            class="subitem"
-            v-for="(exerciseValue, exerciseId) in folderValue.exercises"
-            :key="exerciseId"
-            @click="selectExercise(exerciseValue)"
-          >{{ exerciseValue.name }}</b-dropdown-item>
-        </b-dropdown-group>
-      </b-dropdown>
-
-      <b-dropdown text="Ayuda" id="dropdown-left" size="sm" class="m-2 top-header__drop" no-caret>
-        <b-dropdown-item
-          :disabled="!$store.getters.getCurrentExercise.solution"
-          @click="seeSolution()"
-        >Ver solucion</b-dropdown-item>
-      </b-dropdown>
     </div>
 
     <div class="top-header__title w-50">
@@ -57,7 +32,10 @@
         class="top-header__controll-icon top-header__controll-icon--stop"
         :icon="['fas', 'stop']"
       />
-      <font-awesome-icon class="top-header__controll-icon" :icon="['fab', 'angellist']" />
+      <font-awesome-icon
+        class="top-header__controll-icon"
+        :icon="['fab', 'angellist']"
+      />
     </div>
   </div>
 </template>
