@@ -1,7 +1,9 @@
 export default {
-  data: function() {},
-
-  methods: {},
+  methods: {
+    toggleTitleShow() {
+      this.$store.commit("toggleTitleShow");
+    },
+  },
 
   mounted() {},
 };
