@@ -26,7 +26,9 @@ export default {
     },
 
     onPlayTestClicked(test, evt) {
-      evt.stopPropagation();
+      if (evt) {
+        evt.stopPropagation();
+      }
 
       this.$store.commit("setVariablesEditor", test.test);
 
@@ -76,6 +78,13 @@ export default {
 
       this.$store.commit('setCurrentUser', currentUser);
       return valueToUpdate+1;
+    },
+
+    onRunAllTestsClicked: function() {
+      const tests = this.$store.getters.getCurrentExercise.suiteTest;
+      tests.forEach((test) => {
+        this.onPlayTestClicked(test);
+      });   
     }
 
   },

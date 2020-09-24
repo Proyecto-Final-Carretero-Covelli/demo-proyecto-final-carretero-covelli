@@ -45,7 +45,7 @@
 
                     <b-tab :disabled="!$store.getters.getCurrentExercise.suiteTest" class="container scrollable" title="Suite de test">
 
-                      <button class="btn btn-primary btn-sm play-all">
+                      <button class="btn btn-primary btn-sm play-all" @click="onRunAllTestsClicked()">
                         Ejecutar todo
                       </button>
 
