@@ -1,11 +1,19 @@
 import Sval from "sval";
+//import ace from 'brace';
 
 export class Debugger {
-  constructor(jsCode) {
-    this.jsCode = jsCode;
+  constructor(settings) {
+
+    this.variablesCode = settings.variablesContent;
+    this.implementationCode = settings.implementationContent;
+
+    this.variablesEditor = settings.variablesEditor;
+    this.implementationEditor = settings.implementationEditor;
+
+    this.jsCode = this.variablesCode + this.implementationCode;
 
     this.interpreter = new Sval();
-    this.parsedNodes = this.interpreter.parse(jsCode).body;
+    this.parsedNodes = this.interpreter.parse(this.jsCode).body;
 
     this.setNodesBody(this.parsedNodes);
   }
@@ -19,6 +27,12 @@ export class Debugger {
 
       if (self.parsedNodes.length) {
         const node = self.parsedNodes.shift();
+
+        /*let Range = ace.acequire('ace/range').Range;
+
+        const newRange = new Range(0, node.start, 0, node.end);
+        self.variablesEditor.getSession().addMarker(newRange, 'myMarker', 'text');*/
+
         self.interpreter.run(node);
         callback();
       } else {
@@ -67,7 +81,8 @@ export class Debugger {
   }
 
   isVariableType(variable) {
-    return !variable.value.__ob__ && (typeof variable.value != 'function');
+    return variable.name != 'window' && variable.name != 'this'
+      && variable.name != 'exports' && (typeof variable.value != 'function');
   }
 
   next() {

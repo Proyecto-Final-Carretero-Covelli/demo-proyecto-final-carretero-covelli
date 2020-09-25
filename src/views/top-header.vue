@@ -42,7 +42,7 @@
       <font-awesome-icon
         class="top-header__controll-icon top-header__controll-icon--play"
         :icon="['fas', 'play']"
-        @click="$store.dispatch('play')"
+        @click="$store.dispatch('play', true)"
       />
       <font-awesome-icon
         class="top-header__controll-icon top-header__controll-icon--stop"

@@ -118,5 +118,8 @@ export default {
     let implementationEditor = this.$refs.myImplementationEditor.editor;
     variablesEditor.setShowPrintMargin(false);
     implementationEditor.setShowPrintMargin(false);
+
+    this.$store.commit('setImplementationAceEditor', implementationEditor);
+    this.$store.commit('setVariablesAceEditor', variablesEditor);
   },
 };
