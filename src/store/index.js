@@ -7,20 +7,20 @@ import { firebaseUtils } from "../db/firebase";
 const CONSTANTS = {
   TEST_FLAG_INFO: {
     PASSED: {
-      img: require('../assets/passed-icon.svg'),
-      tooltip: 'Test pasado correctamente'
+      img: require("../assets/passed-icon.svg"),
+      tooltip: "Test pasado correctamente",
     },
-  
+
     NOT_PASSED: {
-      img: require('../assets/not-passed-icon.svg'),
-      tooltip: 'Test no pasado'
+      img: require("../assets/not-passed-icon.svg"),
+      tooltip: "Test no pasado",
     },
-  
+
     NOT_EXECUTED: {
-      img: require('../assets/not-executed-icon.svg'),
-      tooltip: 'Test aún no ejecutado'
-    }
-  }
+      img: require("../assets/not-executed-icon.svg"),
+      tooltip: "Test aún no ejecutado",
+    },
+  },
 };
 
 // import {
@@ -31,6 +31,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
+    // declaredVariables: declaredVariables,
+
     title: "Título / Consigna",
     resizeTitle: null,
     titleText: "",
@@ -41,10 +44,9 @@ export default new Vuex.Store({
     variablesEditor: "",
     declaredVariables: [],
     firebaseUtils: firebaseUtils,
-    // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
-    // declaredVariables: declaredVariables,
     currentExercise: {},
-    currentUser: undefined
+    currentUser: undefined,
+    folders: [],
   },
   getters: {
     getTitle: (state) => {
@@ -76,7 +78,10 @@ export default new Vuex.Store({
     },
     getConstants: () => {
       return CONSTANTS;
-    }
+    },
+    getFolders: (state) => {
+      return state.folders;
+    },
   },
 
   mutations: {
@@ -110,12 +115,14 @@ export default new Vuex.Store({
     },
     setCurrentUser: (state, user) => {
       state.currentUser = user;
-    }
+    },
+    setFolders: (state, newFolders) => {
+      state.folders = newFolders;
+    },
   },
 
   actions: {
     play: (context, runInSlowMode) => {
-
       function setVariables() {
         context.commit(
           "setDeclaredVariables",
@@ -133,25 +140,30 @@ export default new Vuex.Store({
       } else {
         return context.state.debugger.runAllCode();
       }
-
     },
 
     createInfoDialog: (context, modalInfo) => {
-
-      modalInfo.modal.show('dialog', {
+      modalInfo.modal.show("dialog", {
         title: modalInfo.title,
         text: modalInfo.msg,
         buttons: [
           {
-            title: 'Close',
+            title: "Close",
             handler: () => {
-              modalInfo.modal.hide('dialog')
-            }
-          }
-        ]
+              modalInfo.modal.hide("dialog");
+            },
+          },
+        ],
       });
+    },
 
-    }
-
+    updateFolders: (context) => {
+      console.log("Context", context);
+      context.state.firebaseUtils.getFolders().then(function(data) {
+        //self.folders = data.val();
+        console.log("UpdateFolders", data.val());
+        context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
+      });
+    },
   },
 });

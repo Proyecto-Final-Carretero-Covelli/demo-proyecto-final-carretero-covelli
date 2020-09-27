@@ -1,13 +1,25 @@
 <template >
-  <b-modal content-class="new-exercise" id="modal-new-exercise" size="xl" scrollable>
+  <b-modal
+    content-class="new-exercise"
+    id="modal-new-exercise"
+    size="xl"
+    scrollable
+    @ok="handleOk"
+  >
     <template v-slot:modal-title>Crear Nuevo Ejercicio</template>
     <div>
-      <b-form-input id="new-exercise-title" :state="null" placeholder="Título"></b-form-input>
+      <b-form-input
+        id="new-exercise-title"
+        :state="null"
+        placeholder="Título"
+        v-model="title"
+      ></b-form-input>
       <b-form-textarea
         class="mt-3"
         id="new-exercise-statement"
         size="lg"
         placeholder="Consigna Ejercicio"
+        v-model="statement"
       ></b-form-textarea>
     </div>
     <div class="mt-3">
@@ -62,7 +74,8 @@
               @click="addTest"
               variant="success"
               class="new-exercise__test--adder-button"
-            >Agregar Test</b-button>
+              >Agregar Test</b-button
+            >
           </template>
           <template v-if="editTestMode">
             <div class="d-flex justify-content-end">
@@ -70,25 +83,27 @@
                 @click="cancelEdit"
                 variant="secondary"
                 class="new-exercise__test--adder-button mr-2"
-              >Cancelar</b-button>
+                >Cancelar</b-button
+              >
               <b-button
                 @click="saveEdit"
                 variant="primary"
                 class="new-exercise__test--adder-button"
-              >Guardar</b-button>
+                >Guardar</b-button
+              >
             </div>
           </template>
         </div>
         <div class="w-50 pl-2">
           <div
             v-for="(test, i) in tests"
-            :key="'test-'+i"
+            :key="'test-' + i"
             class="d-flex mb-1 new-exercise__test--item"
             @click="showTest(i)"
           >
             <div class="d-flex">
-              <div class="mr-3">{{i + 1}}.</div>
-              <div>{{test.name}}</div>
+              <div class="mr-3">{{ i + 1 }}.</div>
+              <div>{{ test.name }}</div>
             </div>
 
             <font-awesome-icon
@@ -98,6 +113,14 @@
             />
           </div>
         </div>
+      </div>
+      <div>
+        <b-form-input
+          id="new-exercise-folder"
+          :state="null"
+          placeholder="Carpeta"
+          v-model="folder"
+        ></b-form-input>
       </div>
     </div>
   </b-modal>

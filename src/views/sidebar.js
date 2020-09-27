@@ -11,6 +11,7 @@ export default {
 
     openModalSeach() {
       this.$bvModal.show("modal-search");
+      this.$store.dispatch("updateFolders");
     },
 
     seeSolution() {

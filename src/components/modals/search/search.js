@@ -9,8 +9,13 @@ export default {
     return {
       folders: undefined,
       value: null,
-      options: null,
     };
+  },
+
+  computed: {
+    options() {
+      return this.$store.getters.getFolders;
+    },
   },
 
   methods: {
@@ -80,36 +85,35 @@ export default {
       return { imgInfo: TEST_FLAG_INFO.NOT_EXECUTED };
     },
 
-    parseFolders(folders) {
-      let result = [];
-      for (const idFolder in folders) {
-        let folder = folders[idFolder];
-        let newFolder = {
-          id: idFolder,
-          label: folder["name"],
-          children: [],
-        };
-        for (const idExercise in folder["exercises"]) {
-          let exercise = folder["exercises"][idExercise];
-          newFolder["children"].push({
-            id: exercise["id"],
-            label: exercise["name"],
-            exercise: exercise,
-          });
-        }
-        result.push(newFolder);
-      }
-      return result;
-    },
+    // parseFolders(folders) {
+    //   let result = [];
+    //   for (const idFolder in folders) {
+    //     let folder = folders[idFolder];
+    //     let newFolder = {
+    //       id: idFolder,
+    //       label: folder["name"],
+    //       children: [],
+    //     };
+    //     for (const idExercise in folder["exercises"]) {
+    //       let exercise = folder["exercises"][idExercise];
+    //       newFolder["children"].push({
+    //         id: exercise["id"],
+    //         label: exercise["name"],
+    //         exercise: exercise,
+    //       });
+    //     }
+    //     result.push(newFolder);
+    //   }
+    //   return result;
+    // },
   },
 
   mounted() {
-    let self = this;
-    const firebaseUtils = this.$store.getters.getFirabaseUtils;
-
-    firebaseUtils.getFolders().then(function(data) {
-      self.folders = data.val();
-      self.options = self.parseFolders(data.val());
-    });
+    // let self = this;
+    // const firebaseUtils = this.$store.getters.getFirabaseUtils;
+    // firebaseUtils.getFolders().then(function(data) {
+    //   self.folders = data.val();
+    //   self.options = self.parseFolders(data.val());
+    // });
   },
 };

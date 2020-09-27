@@ -1,9 +1,13 @@
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+
 export default {
-  components: { aceeditor: require("vue2-ace-editor") },
+  components: { aceeditor: require("vue2-ace-editor"), Treeselect },
 
   data() {
     return {
       title: "",
+      statement: "",
       initialCode: "",
       solutionCode: "",
       currentTestName: "",
@@ -11,6 +15,7 @@ export default {
       currentIndexTest: -1,
       tests: [{ name: "Test Name 1", test: "var = x" }],
       editTestMode: false,
+      folder: "",
     };
   },
 
@@ -69,6 +74,30 @@ export default {
         this.currentIndexTest = -1;
         this.currentTestName = "";
         this.currentTestCode = "";
+      }
+    },
+
+    handleOk: function() {
+      //Enviar mediante el método de addFolder() y addExercise() los datos correspondientes
+      if (
+        // this.title !== "" &&
+        // this.statement !== "" &&
+        // this.solutionCode !== "" &&
+        this.folder !== ""
+      ) {
+        // const exercises = {
+        //   name: this.title,
+        //   statement: this.statement,
+        //   solution: this.solution,
+        // };
+
+        // Pendiente de definición para el "result" de la suite de test
+
+        const firebaseUtils = this.$store.getters.getFirabaseUtils;
+        firebaseUtils.addFolder({ name: this.folder });
+        firebaseUtils.addExercise();
+      } else {
+        console.log("ERROR CAMPOS IMCOMPLETOS !");
       }
     },
   },
