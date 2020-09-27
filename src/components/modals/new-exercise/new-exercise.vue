@@ -52,7 +52,41 @@
         <p>Suite de Test</p>
       </div>
       <div class="d-flex">
-        <div class="w-50 pr-2 d-flex new-exercise__test--adder-container">
+        <div class="w-50 pr-2">
+          <template v-if="tests.length > 0">
+            <div
+              v-for="(test, i) in tests"
+              :key="'test-' + i"
+              class="d-flex mb-1 new-exercise__test--item"
+              @click="showTest(i)"
+            >
+              <div class="d-flex">
+                <div class="mr-3">{{ i + 1 }}.</div>
+                <div>{{ test.name }}</div>
+              </div>
+
+              <font-awesome-icon
+                class="new-exercise__test--item--delete"
+                :icon="['fas', 'trash-alt']"
+                @click="deleteTest(i)"
+              />
+            </div>
+          </template>
+          <div
+            v-else
+            class="w-100 h-100 d-flex justify-content-center align-items-center"
+          >
+            <div class="d-flex justify-content-center align-items-center">
+              <font-awesome-icon
+                class="mr-2"
+                :icon="['fas', 'info-circle']"
+                size="lg"
+              />
+              <p class="m-0">Sin Tests</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-50 pl-2 d-flex new-exercise__test--adder-container">
           <b-form-input
             id="new-exercise-test-title"
             v-model="currentTestName"
@@ -93,25 +127,6 @@
               >
             </div>
           </template>
-        </div>
-        <div class="w-50 pl-2">
-          <div
-            v-for="(test, i) in tests"
-            :key="'test-' + i"
-            class="d-flex mb-1 new-exercise__test--item"
-            @click="showTest(i)"
-          >
-            <div class="d-flex">
-              <div class="mr-3">{{ i + 1 }}.</div>
-              <div>{{ test.name }}</div>
-            </div>
-
-            <font-awesome-icon
-              class="new-exercise__test--item--delete"
-              :icon="['fas', 'trash-alt']"
-              @click="deleteTest(i)"
-            />
-          </div>
         </div>
       </div>
       <div>

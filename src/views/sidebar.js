@@ -7,6 +7,7 @@ export default {
   methods: {
     openModalNewExercise() {
       this.$bvModal.show("modal-new-exercise");
+      this.$store.dispatch("updateFolders");
     },
 
     openModalSeach() {

@@ -22,6 +22,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
 
@@ -46,6 +47,7 @@ library.add(faUser);
 library.add(faPlusSquare);
 library.add(faSearch);
 library.add(faTrashAlt);
+library.add(faInfoCircle);
 
 function initApp() {
   new Vue({

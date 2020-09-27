@@ -13,7 +13,7 @@ export default {
       currentTestName: "",
       currentTestCode: "",
       currentIndexTest: -1,
-      tests: [{ name: "Test Name 1", test: "var = x" }],
+      tests: [],
       editTestMode: false,
       folder: "",
     };
@@ -29,6 +29,18 @@ export default {
       require("brace/theme/dracula");
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
+    },
+
+    resetModal() {
+      this.title = "";
+      this.statement = "";
+      this.initialCode = "";
+      this.solutionCode = "";
+      this.currentTestName = "";
+      this.currentTestCode = "";
+      this.currentIndexTest = -1;
+      this.tests = [];
+      this.editTestMode = false;
     },
 
     addTest: function() {
@@ -102,5 +114,14 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    this.$root.$on("bv::modal::show", () => {
+      this.resetModal();
+    });
+    this.$root.$on("bv::modal::shown", () => {
+      this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
+      this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);
+      this.$refs.initialCodeEditor.editor.setShowPrintMargin(false);
+    });
+  },
 };
