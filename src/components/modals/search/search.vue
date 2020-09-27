@@ -8,6 +8,7 @@
         :multiple="false"
         :always-open="true"
         :options="options"
+        :disable-branch-nodes="true"
         noResultsText="No se encontraron resultados."
         ><label
           slot="option-label"
