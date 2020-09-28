@@ -19,6 +19,12 @@ export default {
     };
   },
 
+  computed: {
+    options() {
+      return this.$store.getters.getFolders;
+    },
+  },
+
   methods: {
     editorInit: function() {
       require("brace/ext/language_tools"); //language extension prerequsite...

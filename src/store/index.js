@@ -47,6 +47,7 @@ export default new Vuex.Store({
     currentExercise: {},
     currentUser: undefined,
     folders: [],
+    exercises: [],
   },
   getters: {
     getTitle: (state) => {
@@ -81,6 +82,9 @@ export default new Vuex.Store({
     },
     getFolders: (state) => {
       return state.folders;
+    },
+    getExercices: (state) => {
+      return state.exercises;
     },
   },
 
@@ -118,6 +122,9 @@ export default new Vuex.Store({
     },
     setFolders: (state, newFolders) => {
       state.folders = newFolders;
+    },
+    setExercices: (state, newExercices) => {
+      state.exercises = newExercices;
     },
   },
 
@@ -157,11 +164,18 @@ export default new Vuex.Store({
       });
     },
 
-    updateFolders: (context) => {
-      console.log("Context", context);
+    updateExercices: (context) => {
       context.state.firebaseUtils.getFolders().then(function(data) {
-        //self.folders = data.val();
-        console.log("UpdateFolders", data.val());
+        context.commit(
+          "setExercices",
+          firebaseUtils.parseExercices(data.val())
+        );
+      });
+    },
+
+    updateFolders: (context) => {
+      console.log("UPDATE FOLDERS");
+      context.state.firebaseUtils.getFolders().then(function(data) {
         context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
       });
     },

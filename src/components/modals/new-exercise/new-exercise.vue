@@ -9,6 +9,22 @@
     <template v-slot:modal-title>Crear Nuevo Ejercicio</template>
     <div>
       <b-form-input
+        id="new-exercise-folder"
+        :state="null"
+        placeholder="Carpeta"
+        v-model="folder"
+        class="mb-4"
+      ></b-form-input>
+      <treeselect
+        v-model="folder"
+        :multiple="false"
+        :options="options"
+        noResultsText="No se encontraron resultados."
+      >
+      </treeselect>
+    </div>
+    <div class="mt-3">
+      <b-form-input
         id="new-exercise-title"
         :state="null"
         placeholder="Título"
@@ -22,6 +38,7 @@
         v-model="statement"
       ></b-form-textarea>
     </div>
+
     <div class="mt-3">
       <p>Código Inicial</p>
       <div class="new-exercise__code-editor">
@@ -128,14 +145,6 @@
             </div>
           </template>
         </div>
-      </div>
-      <div>
-        <b-form-input
-          id="new-exercise-folder"
-          :state="null"
-          placeholder="Carpeta"
-          v-model="folder"
-        ></b-form-input>
       </div>
     </div>
   </b-modal>

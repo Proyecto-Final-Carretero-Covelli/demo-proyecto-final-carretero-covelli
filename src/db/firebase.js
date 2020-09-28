@@ -113,7 +113,7 @@ export const firebaseUtils = {
     }
   },
 
-  parseFolders(folders) {
+  parseExercices(folders) {
     let result = [];
     for (const idFolder in folders) {
       let folder = folders[idFolder];
@@ -130,6 +130,20 @@ export const firebaseUtils = {
           exercise: exercise,
         });
       }
+      result.push(newFolder);
+    }
+    return result;
+  },
+
+  parseFolders(folders) {
+    let result = [];
+    for (const idFolder in folders) {
+      let folder = folders[idFolder];
+      let newFolder = {
+        id: idFolder,
+        label: folder["name"],
+        children: [],
+      };
       result.push(newFolder);
     }
     return result;
