@@ -88,7 +88,6 @@
     overflow: auto;
     max-height: 60vh;
   }
-
 }
 
 .editor-container {
@@ -102,14 +101,26 @@
   flex-grow: 1;
 }
 
-.hoverable:hover{
+.hoverable:hover {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.2);
 }
 
 .myMarker {
-  position:absolute;
-  background:rgba(255, 98, 221, 0.3);
-  z-index:20
+  position: absolute;
+  background: rgba(255, 98, 221, 0.3);
+  z-index: 20;
+}
+
+.main-split-pane-hide {
+  > .splitter-pane-resizer {
+    display: none;
+  }
+}
+
+.main-split-pane-show {
+  > .splitter-pane-resizer {
+    display: block;
+  }
 }

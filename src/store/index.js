@@ -4,6 +4,12 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { firebaseUtils } from "../db/firebase";
 
+// import {
+//    declaredVariables,
+// } from "../mocks/structures-from-parsed-code";
+
+Vue.use(Vuex);
+
 const CONSTANTS = {
   TEST_FLAG_INFO: {
     PASSED: {
@@ -23,18 +29,12 @@ const CONSTANTS = {
   },
 };
 
-// import {
-//    declaredVariables,
-// } from "../mocks/structures-from-parsed-code";
-
-Vue.use(Vuex);
-
 export default new Vuex.Store({
   state: {
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     // declaredVariables: declaredVariables,
 
-    title: "Título / Consigna",
+    title: null,
     resizeTitle: null,
     titleText: "",
     editorContent: "",

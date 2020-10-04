@@ -5,7 +5,10 @@
     </div>
 
     <div class="top-header__title w-50">
-      <div class="d-flex justify-content-center align-items-center">
+      <div
+        v-if="$store.getters.getTitle !== null"
+        class="d-flex justify-content-center align-items-center"
+      >
         <p>{{ $store.getters.getTitle }}</p>
         <font-awesome-icon
           v-if="$store.getters.getResizeTitle.percent <= 1"
