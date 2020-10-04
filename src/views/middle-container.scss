@@ -124,3 +124,29 @@
     display: block;
   }
 }
+
+.nav-tabs {
+  border: none !important;
+  .nav-item {
+    background-color: $primary !important;
+    .nav-link {
+      background-color: $primary !important;
+      border: none !important;
+      color: $border-grey !important;
+      &:hover {
+        color: white !important;
+      }
+      &:focus {
+        border: none !important;
+        outline: none !important;
+      }
+    }
+    .active {
+      background-color: $primary !important;
+      color: white !important;
+      &:hover {
+        color: white !important;
+      }
+    }
+  }
+}
