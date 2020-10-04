@@ -22,6 +22,16 @@
     padding: 2px;
     margin-right: 6px;
     margin-left: 6px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+
+    &:hover {
+      color: $light-grey;
+    }
+  }
+
+  &__user {
+    width: 36px;
+    border-radius: 50%;
+    padding: 2px;
   }
 }

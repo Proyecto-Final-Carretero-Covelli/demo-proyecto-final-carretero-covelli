@@ -7,20 +7,20 @@ import { firebaseUtils } from "../db/firebase";
 const CONSTANTS = {
   TEST_FLAG_INFO: {
     PASSED: {
-      img: require('../assets/passed-icon.svg'),
-      tooltip: 'Test pasado correctamente'
+      img: require("../assets/passed-icon.svg"),
+      tooltip: "Test pasado correctamente",
     },
-  
+
     NOT_PASSED: {
-      img: require('../assets/not-passed-icon.svg'),
-      tooltip: 'Test no pasado'
+      img: require("../assets/not-passed-icon.svg"),
+      tooltip: "Test no pasado",
     },
-  
+
     NOT_EXECUTED: {
-      img: require('../assets/not-executed-icon.svg'),
-      tooltip: 'Test aún no ejecutado'
-    }
-  }
+      img: require("../assets/not-executed-icon.svg"),
+      tooltip: "Test aún no ejecutado",
+    },
+  },
 };
 
 // import {
@@ -31,6 +31,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
+    // declaredVariables: declaredVariables,
+
     title: "Título / Consigna",
     resizeTitle: null,
     titleText: "",
@@ -43,10 +46,10 @@ export default new Vuex.Store({
     variablesAceEditor: null,
     declaredVariables: [],
     firebaseUtils: firebaseUtils,
-    // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
-    // declaredVariables: declaredVariables,
     currentExercise: {},
-    currentUser: undefined
+    currentUser: undefined,
+    folders: [],
+    exercises: [],
   },
   getters: {
     getTitle: (state) => {
@@ -78,7 +81,13 @@ export default new Vuex.Store({
     },
     getConstants: () => {
       return CONSTANTS;
-    }
+    },
+    getFolders: (state) => {
+      return state.folders;
+    },
+    getExercices: (state) => {
+      return state.exercises;
+    },
   },
 
   mutations: {
@@ -113,17 +122,22 @@ export default new Vuex.Store({
     setCurrentUser: (state, user) => {
       state.currentUser = user;
     },
+    setFolders: (state, newFolders) => {
+      state.folders = newFolders;
+    },
+    setExercices: (state, newExercices) => {
+      state.exercises = newExercices;
+    },
     setImplementationAceEditor: (state, value) => {
       state.implementationAceEditor = value;
     },
     setVariablesAceEditor: (state, value) => {
       state.variablesAceEditor = value;
-    }
+    },
   },
 
   actions: {
     play: (context, runInSlowMode) => {
-
       function setVariables() {
         context.commit(
           "setDeclaredVariables",
@@ -135,8 +149,8 @@ export default new Vuex.Store({
         variablesContent: context.state.variablesEditor,
         implementationContent: context.state.implementationEditor,
         variablesEditor: context.state.variablesAceEditor,
-        implementationEditor: context.state.implementationAceEditor
-      }
+        implementationEditor: context.state.implementationAceEditor,
+      };
 
       context.state.debugger = new Debugger(settings);
 
@@ -147,25 +161,37 @@ export default new Vuex.Store({
         setVariables();
         return resultado;
       }
-
     },
 
     createInfoDialog: (context, modalInfo) => {
-
-      modalInfo.modal.show('dialog', {
+      modalInfo.modal.show("dialog", {
         title: modalInfo.title,
         text: modalInfo.msg,
         buttons: [
           {
-            title: 'Close',
+            title: "Close",
             handler: () => {
-              modalInfo.modal.hide('dialog')
-            }
-          }
-        ]
+              modalInfo.modal.hide("dialog");
+            },
+          },
+        ],
       });
+    },
 
-    }
+    updateExercices: (context) => {
+      context.state.firebaseUtils.getFolders().then(function(data) {
+        context.commit(
+          "setExercices",
+          firebaseUtils.parseExercices(data.val())
+        );
+      });
+    },
 
+    updateFolders: (context) => {
+      console.log("UPDATE FOLDERS");
+      context.state.firebaseUtils.getFolders().then(function(data) {
+        context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
+      });
+    },
   },
 });

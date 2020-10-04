@@ -1,0 +1,178 @@
+@import "../../../scss/variables";
+
+.new-exercise {
+  background-color: $primary !important;
+  color: $text-white !important;
+
+  &__folder {
+    width: 49%;
+
+    &--icon {
+      color: $border-grey;
+      height: 15px;
+      width: 15px;
+
+      &:hover {
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    &--search-container {
+      padding: 0;
+      margin: 0;
+      height: 120px;
+      overflow-y: auto;
+      border-top: 1px solid $border-grey !important;
+      padding-top: 0.5rem;
+    }
+
+    &--search-result {
+      &:hover {
+        color: $secondary;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__title {
+    width: 49%;
+  }
+
+  &__code-editor {
+    height: 300px;
+  }
+
+  &__test {
+    &--adder-container {
+      flex-direction: column;
+    }
+
+    &--adder-button {
+      align-self: flex-end;
+    }
+
+    &--item {
+      justify-content: space-between;
+      align-items: center;
+      background-color: $primary-dark;
+      padding: 0.55rem 0.75rem;
+      height: fit-content;
+      width: 100%;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $primary-light;
+      }
+
+      &--delete {
+        color: $border-grey;
+
+        &:hover {
+          color: $red;
+        }
+      }
+    }
+  }
+
+  .form-control {
+    background-color: transparent !important;
+    color: $text-white !important;
+    border-color: transparent !important;
+    border-radius: 0px !important;
+    padding-left: 0px !important;
+    font-size: 1.25rem !important;
+    margin: 0px;
+
+    &:focus {
+      border-color: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .close {
+    color: $text-white;
+    text-shadow: none;
+    &:hover {
+      color: $red;
+    }
+  }
+
+  .vue-treeselect {
+    //background-color: $primary !important;
+    height: 100%;
+    &__control,
+    &__menu,
+    &__option {
+      background-color: $primary !important;
+      color: $text-white !important;
+      border: none !important;
+    }
+
+    &__control {
+      border-bottom: 1px solid $secondary !important;
+      font-size: 1.5rem;
+    }
+
+    &__menu {
+      max-height: none !important;
+      margin-top: 1rem;
+    }
+
+    &__option {
+      font-size: 1.25rem;
+      &--selected {
+        color: $secondary !important;
+      }
+    }
+
+    &__single-value {
+      color: $text-white !important;
+    }
+
+    input {
+      color: $text-white !important;
+    }
+  }
+}
+
+.input-deco {
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+
+  &:focus-within {
+    box-shadow: none !important;
+    // border: 1px $secondary solid !important;
+    background-color: $primary-down;
+  }
+  &:hover {
+    box-shadow: none !important;
+    background-color: $primary-down;
+  }
+}
+
+.autocomplete {
+  position: relative;
+  width: 130px;
+}
+
+.autocomplete-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  height: 120px;
+  overflow: auto;
+}
+
+.autocomplete-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete-result:hover {
+  background-color: #4aae9b;
+  color: white;
+}
