@@ -16,12 +16,32 @@ export default {
       tests: [],
       editTestMode: false,
       folder: "",
+
+      searchActive: false,
     };
   },
 
   computed: {
     options() {
       return this.$store.getters.getFolders;
+    },
+
+    filterItems() {
+      return this.$store.getters.getFolders.filter((folder) => {
+        if (
+          this.folder !== undefined &&
+          this.folder !== "" &&
+          this.folder !== " " &&
+          folder !== undefined
+        ) {
+          let comparacion = folder.label
+            .toLowerCase()
+            .includes(this.folder.toLowerCase());
+          console.log(comparacion, this.folder, folder.label);
+          return comparacion;
+        }
+        return false;
+      });
     },
   },
 
@@ -35,6 +55,15 @@ export default {
       require("brace/theme/dracula");
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
+    },
+
+    searchFolder() {
+      this.searchActive = !this.searchActive;
+    },
+
+    selectFolder(label) {
+      this.folder = label;
+      this.searchActive = false;
     },
 
     resetModal() {
@@ -121,13 +150,13 @@ export default {
   },
 
   mounted() {
-    this.$root.$on("bv::modal::show", () => {
-      this.resetModal();
-    });
-    this.$root.$on("bv::modal::shown", () => {
-      this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
-      this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);
-      this.$refs.initialCodeEditor.editor.setShowPrintMargin(false);
-    });
+    // this.$root.$on("bv::modal::show", () => {
+    //   this.resetModal();
+    // });
+    // this.$root.$on("bv::modal::shown", () => {
+    //   this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
+    //   this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);
+    //   this.$refs.initialCodeEditor.editor.setShowPrintMargin(false);
+    // });
   },
 };

@@ -7,31 +7,61 @@
     @ok="handleOk"
   >
     <template v-slot:modal-title>Crear Nuevo Ejercicio</template>
-    <div>
-      <b-form-input
-        id="new-exercise-folder"
-        :state="null"
-        placeholder="Carpeta"
-        v-model="folder"
-        class="mb-4"
-      ></b-form-input>
-      <treeselect
-        v-model="folder"
-        :multiple="false"
-        :options="options"
-        noResultsText="No se encontraron resultados."
+
+    <div class="d-flex align-items-center w-100">
+      <div class="new-exercise__folder input-deco">
+        <div class="d-flex align-items-center">
+          <b-form-input
+            id="new-exercise-folder"
+            :state="null"
+            placeholder="Carpeta"
+            v-model="folder"
+          ></b-form-input>
+
+          <font-awesome-icon
+            v-if="!searchActive"
+            class="new-exercise__folder--icon"
+            :icon="['fas', 'search']"
+            @click="searchFolder"
+          />
+          <font-awesome-icon
+            v-if="searchActive"
+            class="new-exercise__folder--icon"
+            :icon="['fas', 'times']"
+            @click="searchFolder"
+          />
+        </div>
+        <ul v-if="searchActive" class="new-exercise__folder--search-container">
+          <li
+            v-for="(folder, i) in filterItems"
+            :key="'filterItems' + i"
+            class="new-exercise__folder--search-result"
+            @click="selectFolder(folder.label)"
+          >
+            {{ folder.label }}
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="ml-2 mr-2 d-flex justify-content-center align-items-center"
+        style="width: 2%"
       >
-      </treeselect>
+        <p class="m-0" style="font-size: 30px">\</p>
+      </div>
+
+      <div class="new-exercise__title input-deco">
+        <b-form-input
+          id="new-exercise-title"
+          :state="null"
+          placeholder="Título"
+          v-model="title"
+        ></b-form-input>
+      </div>
     </div>
-    <div class="mt-3">
-      <b-form-input
-        id="new-exercise-title"
-        :state="null"
-        placeholder="Título"
-        v-model="title"
-      ></b-form-input>
+
+    <div class="mt-3 input-deco">
       <b-form-textarea
-        class="mt-3"
         id="new-exercise-statement"
         size="lg"
         placeholder="Consigna Ejercicio"

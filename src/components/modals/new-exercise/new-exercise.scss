@@ -4,6 +4,41 @@
   background-color: $primary !important;
   color: $text-white !important;
 
+  &__folder {
+    width: 49%;
+
+    &--icon {
+      color: $border-grey;
+      height: 15px;
+      width: 15px;
+
+      &:hover {
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    &--search-container {
+      padding: 0;
+      margin: 0;
+      height: 120px;
+      overflow-y: auto;
+      border-top: 1px solid $border-grey !important;
+      padding-top: 0.5rem;
+    }
+
+    &--search-result {
+      &:hover {
+        color: $secondary;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__title {
+    width: 49%;
+  }
+
   &__code-editor {
     height: 300px;
   }
@@ -42,18 +77,17 @@
   }
 
   .form-control {
-    background-color: $primary !important;
+    background-color: transparent !important;
     color: $text-white !important;
-    border-color: $primary !important;
-    border-bottom: 1px $light-grey solid !important;
+    border-color: transparent !important;
     border-radius: 0px !important;
     padding-left: 0px !important;
     font-size: 1.25rem !important;
+    margin: 0px;
 
     &:focus {
-      border-color: $primary !important;
+      border-color: none !important;
       box-shadow: none !important;
-      border-bottom: 1px $secondary solid !important;
     }
   }
 
@@ -101,4 +135,44 @@
       color: $text-white !important;
     }
   }
+}
+
+.input-deco {
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+
+  &:focus-within {
+    box-shadow: none !important;
+    // border: 1px $secondary solid !important;
+    background-color: $primary-down;
+  }
+  &:hover {
+    box-shadow: none !important;
+    background-color: $primary-down;
+  }
+}
+
+.autocomplete {
+  position: relative;
+  width: 130px;
+}
+
+.autocomplete-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  height: 120px;
+  overflow: auto;
+}
+
+.autocomplete-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete-result:hover {
+  background-color: #4aae9b;
+  color: white;
 }
