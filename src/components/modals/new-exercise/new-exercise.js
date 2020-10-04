@@ -150,9 +150,9 @@ export default {
   },
 
   mounted() {
-    // this.$root.$on("bv::modal::show", () => {
-    //   this.resetModal();
-    // });
+    this.$root.$on("bv::modal::show", () => {
+      this.resetModal();
+    });
     // this.$root.$on("bv::modal::shown", () => {
     //   this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
     //   this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);
