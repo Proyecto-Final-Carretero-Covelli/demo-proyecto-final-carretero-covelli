@@ -42,6 +42,8 @@ export default new Vuex.Store({
     debugger: undefined,
     implementationEditor: "",
     variablesEditor: "",
+    implementationAceEditor: null,
+    variablesAceEditor: null,
     declaredVariables: [],
     firebaseUtils: firebaseUtils,
     currentExercise: {},
@@ -126,6 +128,12 @@ export default new Vuex.Store({
     setExercices: (state, newExercices) => {
       state.exercises = newExercices;
     },
+    setImplementationAceEditor: (state, value) => {
+      state.implementationAceEditor = value;
+    },
+    setVariablesAceEditor: (state, value) => {
+      state.variablesAceEditor = value;
+    },
   },
 
   actions: {
@@ -137,15 +145,21 @@ export default new Vuex.Store({
         );
       }
 
-      const code =
-        context.state.variablesEditor + context.state.implementationEditor;
+      const settings = {
+        variablesContent: context.state.variablesEditor,
+        implementationContent: context.state.implementationEditor,
+        variablesEditor: context.state.variablesAceEditor,
+        implementationEditor: context.state.implementationAceEditor,
+      };
 
-      context.state.debugger = new Debugger(code);
+      context.state.debugger = new Debugger(settings);
 
       if (runInSlowMode) {
         return context.state.debugger.runSlowMode(setVariables);
       } else {
-        return context.state.debugger.runAllCode();
+        const resultado = context.state.debugger.runAllCode();
+        setVariables();
+        return resultado;
       }
     },
 
