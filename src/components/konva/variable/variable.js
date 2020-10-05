@@ -46,6 +46,6 @@ export default {
   },
 
   mounted() {
-    this.elementStartX = this.elementIndex() * 100;
+    this.elementStartX = this.elementIndex * 100;
   },
 };

@@ -4,37 +4,37 @@ import "es6-promise/auto";
 import { Debugger } from "../debugger/debugger.js";
 import { firebaseUtils } from "../db/firebase";
 
-const CONSTANTS = {
-  TEST_FLAG_INFO: {
-    PASSED: {
-      img: require("../assets/passed-icon.svg"),
-      tooltip: "Test pasado correctamente",
-    },
-
-    NOT_PASSED: {
-      img: require("../assets/not-passed-icon.svg"),
-      tooltip: "Test no pasado",
-    },
-
-    NOT_EXECUTED: {
-      img: require("../assets/not-executed-icon.svg"),
-      tooltip: "Test aún no ejecutado",
-    },
-  },
-};
-
 // import {
 //    declaredVariables,
 // } from "../mocks/structures-from-parsed-code";
 
 Vue.use(Vuex);
 
+const CONSTANTS = {
+  TEST_FLAG_INFO: {
+    PASSED: {
+      state: "passed",
+      tooltip: "Test pasado correctamente",
+    },
+
+    NOT_PASSED: {
+      state: "not-passed",
+      tooltip: "Test no pasado",
+    },
+
+    NOT_EXECUTED: {
+      state: "not-executed",
+      tooltip: "Test aún no ejecutado",
+    },
+  },
+};
+
 export default new Vuex.Store({
   state: {
     // - Visualización Mock Variables y Arreglos - (Descomentar el correspondiente import from 'mocks')
     // declaredVariables: declaredVariables,
 
-    title: "Título / Consigna",
+    title: null,
     resizeTitle: null,
     titleText: "",
     editorContent: "",
