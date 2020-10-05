@@ -1,0 +1,20 @@
+@import "../../../scss/variables";
+
+.login {
+  background-color: $primary !important;
+  color: $text-white !important;
+  height: 70vh;
+
+  &__google {
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    background-color: $primary-down;
+
+    &:hover {
+      background-color: $secondary-dark;
+      cursor: pointer;
+    }
+  }
+}

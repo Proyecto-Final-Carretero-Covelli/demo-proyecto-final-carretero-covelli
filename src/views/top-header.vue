@@ -35,10 +35,6 @@
         class="top-header__controll-icon top-header__controll-icon--stop"
         :icon="['fas', 'stop']"
       />
-      <font-awesome-icon
-        class="top-header__controll-icon"
-        :icon="['fab', 'angellist']"
-      />
     </div>
   </div>
 </template>
