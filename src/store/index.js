@@ -13,17 +13,17 @@ Vue.use(Vuex);
 const CONSTANTS = {
   TEST_FLAG_INFO: {
     PASSED: {
-      img: require("../assets/passed-icon.svg"),
+      state: "passed",
       tooltip: "Test pasado correctamente",
     },
 
     NOT_PASSED: {
-      img: require("../assets/not-passed-icon.svg"),
+      state: "not-passed",
       tooltip: "Test no pasado",
     },
 
     NOT_EXECUTED: {
-      img: require("../assets/not-executed-icon.svg"),
+      state: "not-executed",
       tooltip: "Test aún no ejecutado",
     },
   },

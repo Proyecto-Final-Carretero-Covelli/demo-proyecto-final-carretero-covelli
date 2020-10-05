@@ -42,11 +42,46 @@
   .test-card {
     display: flex;
     flex-direction: row;
-    margin: 2.5% 5% 2.5% 5%;
-    color: black;
-    height: 35px;
-    background-color: #eeeeee;
-    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    color: white;
+    width: 100%;
+    height: 50px;
+    background-color: $primary-down;
+
+    &__name {
+      margin: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        color: $border-grey;
+        margin: 0px;
+        cursor: pointer;
+        width: fit-content;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+
+    &__state {
+      &--passed {
+        color: $secondary;
+      }
+
+      &--not-passed {
+        color: #fbc02d;
+      }
+
+      &--not-executed {
+        color: $border-grey;
+      }
+    }
   }
 
   .card-icon {
@@ -62,26 +97,38 @@
 
   .small {
     flex-grow: 1;
-    margin-top: 4px;
   }
 
   .large {
     font-weight: 600px;
     font-size: 16px;
     flex-grow: 5;
-    margin-top: 0.5%;
   }
 
   .card-play {
     width: 20px;
     height: 20px;
-    margin-left: 50%;
+    color: $border-grey;
+    cursor: pointer;
+    &:hover {
+      color: $green-play;
+    }
   }
 
-  .play-all {
-    position: absolute;
-    left: 85%;
-    top: 0.5%;
+  .test-play-all {
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    border: 1px solid $border-grey;
+    color: $border-grey;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+      background-color: $secondary-dark;
+      border: 1px solid $secondary-dark;
+    }
   }
 
   .scrollable {
@@ -101,12 +148,6 @@
   flex-grow: 1;
 }
 
-.hoverable:hover {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.2);
-}
-
 .myMarker {
   position: absolute;
   background: rgba(255, 98, 221, 0.3);
@@ -122,6 +163,15 @@
 .main-split-pane-show {
   > .splitter-pane-resizer {
     display: block;
+  }
+}
+
+.tabs {
+  height: 100%;
+  max-height: 100%;
+  .tab-pane {
+    height: 100%;
+    max-height: 100%;
   }
 }
 
@@ -149,4 +199,12 @@
       }
     }
   }
+}
+
+.test-container {
+  padding-bottom: 1rem;
+}
+
+.test-container-cards {
+  overflow-y: scroll;
 }
