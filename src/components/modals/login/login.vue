@@ -5,6 +5,7 @@
     hide-header
     hide-footer
     centered
+    no-close-on-backdrop
   >
     <div
       class="d-flex h-100 flex-column justify-content-between align-items-center p-3"
@@ -18,7 +19,7 @@
         <h2 class="ml-3">VIDE</h2>
       </div>
 
-      <h3 class="mb-3">Bienvenido !</h3>
+      <h3 class="mb-3">Bienvenido ! 👋🏼</h3>
 
       <div
         class="w-100 d-flex flex-column justify-content-center align-items-center"
@@ -27,9 +28,9 @@
           Registrate para comenzar a practicar!
         </h5>
 
-        <div class="d-flex w-100 login__google">
+        <div class="d-flex w-100 login__google" @click="login()">
           <font-awesome-icon :icon="['fab', 'google']" />
-          <p class="ml-3 mb-0">Registrarse con Google</p>
+          <p class="ml-3 mb-0">Ingresar con Google</p>
         </div>
       </div>
     </div>
