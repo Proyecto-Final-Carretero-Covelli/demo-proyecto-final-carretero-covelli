@@ -2,22 +2,23 @@
   <div class="konva" ref="container">
     <v-stage ref="stage" :config="configKonva">
       <v-layer>
-        <template v-for="(variable,i) in getDeclaredVariables">
+        <template v-for="(variable, i) in getDeclaredVariables">
           <template v-if="Array.isArray(variable.value)">
             <array
-              :key="'array-key-'+i"
+              :key="'array-key-' + i"
               :name="variable.name"
               :arrayItems="variable.value"
-              :elementIndex="getItemCount"
+              :elementIndex="i"
             ></array>
           </template>
           <template v-else>
             <variable
-              :key="'variable-key-'+i"
+              :key="'variable-key-' + i"
               :name="variable.name"
               :value="variable.value"
-              :elementIndex="getItemCount"
-            >{{variable}}</variable>
+              :elementIndex="i"
+              >{{ variable }}</variable
+            >
           </template>
         </template>
       </v-layer>
