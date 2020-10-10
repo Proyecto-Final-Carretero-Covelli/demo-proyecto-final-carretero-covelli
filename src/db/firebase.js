@@ -19,7 +19,7 @@ export const firebaseUtils = {
     return firebase.auth().signInWithPopup(baseProvider);
   },
 
-  logOutGoogle: function() {
+  signOut: function() {
     firebase.auth().signOut();
   },
 
