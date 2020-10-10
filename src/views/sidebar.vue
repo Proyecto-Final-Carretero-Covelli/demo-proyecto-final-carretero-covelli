@@ -62,10 +62,12 @@
         id="sidebar-user-img"
         v-bind:src="$store.getters.getCurrentUser.photoURL"
         class="sidebar__user"
+        @click="openModalAccount"
       />
       <b-tooltip target="sidebar-user-img" triggers="hover">{{
         $store.getters.getCurrentUser.name
       }}</b-tooltip>
+      <account></account>
     </div>
   </div>
 </template>

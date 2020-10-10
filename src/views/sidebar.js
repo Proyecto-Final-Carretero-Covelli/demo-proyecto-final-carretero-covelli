@@ -1,8 +1,9 @@
 import NewExercise from "../components/modals/new-exercise/new-exercise.vue";
 import Search from "../components/modals/search/search.vue";
+import Account from "../components/modals/account/account.vue";
 
 export default {
-  components: { NewExercise, Search },
+  components: { NewExercise, Search, Account },
 
   methods: {
     openModalNewExercise() {
@@ -13,6 +14,10 @@ export default {
     openModalSeach() {
       this.$bvModal.show("modal-search");
       this.$store.dispatch("updateExercices");
+    },
+
+    openModalAccount() {
+      this.$bvModal.show("modal-account");
     },
 
     seeSolution() {

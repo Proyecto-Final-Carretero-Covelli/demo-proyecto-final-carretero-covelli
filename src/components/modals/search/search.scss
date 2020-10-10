@@ -9,7 +9,8 @@
     color: $text-white;
     text-shadow: none;
     &:hover {
-      color: $red;
+      color: $text-white;
+      opacity: 1 !important;
     }
   }
 

@@ -137,6 +137,11 @@ export default new Vuex.Store({
   },
 
   actions: {
+    signOut: (context) => {
+      context.commit("setCurrentUser", undefined);
+      context.state.firebaseUtils.logOutGoogle();
+    },
+
     play: (context, runInSlowMode) => {
       function setVariables() {
         context.commit(
