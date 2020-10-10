@@ -19,6 +19,10 @@ export const firebaseUtils = {
     return firebase.auth().signInWithPopup(baseProvider);
   },
 
+  signOut: function() {
+    firebase.auth().signOut();
+  },
+
   addFolder: function(folder) {
     const newFolder = app
       .database()
