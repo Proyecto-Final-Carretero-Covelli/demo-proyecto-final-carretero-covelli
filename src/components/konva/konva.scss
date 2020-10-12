@@ -1,1 +1,9 @@
+@import "../../scss/variables";
 
+.konva {
+  background-color: $primary-down;
+  margin: 0.25rem 0.5rem;
+  max-width: 100%;
+  max-height: calc(100% - 60px);
+  overflow: hidden;
+}

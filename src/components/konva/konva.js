@@ -28,10 +28,11 @@ export default {
   },
   methods: {
     changeRect: function() {
-      const container = this.$refs.container;
+      const container = this.$refs.containerKonva;
       if (!container) {
         return;
       }
+      console.log("Height", container.offsetHeight);
       const height = container.offsetHeight;
       const width = container.offsetWidth;
       this.configKonva.width = width;

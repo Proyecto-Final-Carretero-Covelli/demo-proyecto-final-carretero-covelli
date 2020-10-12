@@ -1,15 +1,15 @@
 import Konva from "../components/konva/konva.vue";
-import {firebaseUtils} from '../db/firebase';
+import Console from "../components/console/console.vue";
+import { firebaseUtils } from "../db/firebase";
 
 export default {
-  components: { aceeditor: require("vue2-ace-editor"), Konva },
+  components: { aceeditor: require("vue2-ace-editor"), Konva, Console },
 
   data: function() {
     return {};
   },
 
   methods: {
-
     editorInit: function() {
       require("brace/ext/language_tools"); //language extension prerequsite...
       require("brace/mode/html");
@@ -22,7 +22,7 @@ export default {
     },
 
     selectTest(test) {
-      this.$store.commit('setVariablesEditor', test.test);
+      this.$store.commit("setVariablesEditor", test.test);
     },
 
     onPlayTestClicked(test, evt) {
@@ -35,11 +35,11 @@ export default {
       const TEST_FLAG_INFO = this.$store.getters.getConstants.TEST_FLAG_INFO;
       const oldInfo = {
         passedBefore: test.imgInfo === TEST_FLAG_INFO.PASSED,
-        historyId: test.historyId
-      };    
+        historyId: test.historyId,
+      };
       const currentExercise = this.$store.getters.getCurrentExercise;
 
-      this.$store.dispatch('play').then((result) => {
+      this.$store.dispatch("play").then((result) => {
         if (result === test.result) {
           test.imgInfo = TEST_FLAG_INFO.PASSED;
         } else {
@@ -47,18 +47,24 @@ export default {
         }
 
         const testHasPassed = test.imgInfo === TEST_FLAG_INFO.PASSED;
-        firebaseUtils.addTestToHistory(currentExercise.id, testHasPassed, test, oldInfo);    
-        firebaseUtils.updateUserStatistics(testHasPassed, this._getValueToUpdateUserStatistics(testHasPassed));
+        firebaseUtils.addTestToHistory(
+          currentExercise.id,
+          testHasPassed,
+          test,
+          oldInfo
+        );
+        firebaseUtils.updateUserStatistics(
+          testHasPassed,
+          this._getValueToUpdateUserStatistics(testHasPassed)
+        );
 
         this.$forceUpdate();
-        
       });
-      
     },
 
     _getValueToUpdateUserStatistics(testHasPassed) {
       const currentUser = this.$store.getters.getCurrentUser;
-      
+
       let valueToUpdate = 0;
       if (currentUser.statistics) {
         if (testHasPassed) {
@@ -70,23 +76,22 @@ export default {
         }
       } else {
         if (testHasPassed) {
-          currentUser.statistics = {passed: valueToUpdate + 1};
+          currentUser.statistics = { passed: valueToUpdate + 1 };
         } else {
-          currentUser.statistics = {notPassed: valueToUpdate + 1};
+          currentUser.statistics = { notPassed: valueToUpdate + 1 };
         }
       }
 
-      this.$store.commit('setCurrentUser', currentUser);
-      return valueToUpdate+1;
+      this.$store.commit("setCurrentUser", currentUser);
+      return valueToUpdate + 1;
     },
 
     onRunAllTestsClicked: function() {
       const tests = this.$store.getters.getCurrentExercise.suiteTest;
       tests.forEach((test) => {
         this.onPlayTestClicked(test);
-      });   
-    }
-
+      });
+    },
   },
 
   computed: {
@@ -107,8 +112,6 @@ export default {
         this.$store.commit("setVariablesEditor", newValue);
       },
     },
-
-    
   },
 
   mounted() {
@@ -119,7 +122,7 @@ export default {
     variablesEditor.setShowPrintMargin(false);
     implementationEditor.setShowPrintMargin(false);
 
-    this.$store.commit('setImplementationAceEditor', implementationEditor);
-    this.$store.commit('setVariablesAceEditor', variablesEditor);
+    this.$store.commit("setImplementationAceEditor", implementationEditor);
+    this.$store.commit("setVariablesAceEditor", variablesEditor);
   },
 };
