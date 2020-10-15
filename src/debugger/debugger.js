@@ -1,106 +1,151 @@
 import Sval from "sval";
-//import ace from 'brace';
+import ace from 'brace';
 
 export class Debugger {
-  constructor(settings) {
+  constructor(storeContext) {
 
-    this.variablesCode = settings.variablesContent;
-    this.implementationCode = settings.implementationContent;
+    this.variablesCode = storeContext.state.variablesEditor;
+    this.implementationCode = storeContext.state.implementationEditor;
 
-    this.variablesEditor = settings.variablesEditor;
-    this.implementationEditor = settings.implementationEditor;
+    this.storeContext = storeContext;
 
-    this.jsCode = this.variablesCode + this.implementationCode;
+    this.jsCode = storeContext.state.variablesEditor + storeContext.state.implementationEditor;
 
     this.interpreter = new Sval();
-    this.parsedNodes = this.interpreter.parse(this.jsCode).body;
-
-    this.setNodesBody(this.parsedNodes);
   }
 
-  runSlowMode(callback) {
-    let self = this;
+  getRange(code, node, startPos, editor) {
+    let start = 0;
+    let end = 0;
+    let row = 0;
 
-    var myVar = setInterval(runNode, 1000);
+    for (let i = 0; i < code.length; i++) {
 
-    function runNode() {
+      if (i === startPos) {
+        end = start + (node.end - node.start);
+        break;
+      }
 
-      if (self.parsedNodes.length) {
-        const node = self.parsedNodes.shift();
-
-        /*let Range = ace.acequire('ace/range').Range;
-
-        const newRange = new Range(0, node.start, 0, node.end);
-        self.variablesEditor.getSession().addMarker(newRange, 'myMarker', 'text');*/
-
-        self.interpreter.run(node);
-        callback();
+      if (code[i] === '\n') {
+        row++;
+        start = 0;
       } else {
-        clearInterval(myVar);
+        start++;
       }
 
     }
 
+    return {
+      start: start,
+      end: end,
+      row: row,
+      editor: editor
+    }
   }
 
-  setNodesBody(nodes) {
-    nodes.forEach((node) => {
-      if (!node.body) {
-        node.body = node;
-      }
-    });
+  getHighlightPosition(node) {
+    let range;
+
+    if (node.start < this.variablesCode.length) {
+      range = this.getRange(this.variablesCode, node, node.start, 'variablesAceEditor');
+    } else {
+      const startPos = node.start - this.variablesCode.length;
+      range = this.getRange(this.implementationCode, node, startPos, 'implementationAceEditor');
+      range.clearVariablesEditorMarker = true;   
+    }
+
+    return range;
   }
 
-  isTrueCondition(conditionCode) {
-    this.interpreter.run("exports.isTrueCondition=" + conditionCode + ";");
-    return this.interpreter.exports.isTrueCondition;
+  runSlowMode() {
+    let self = this;
+    this.interpreter.run(this.jsCode);
+    const contextStack = this.interpreter.scope.context.exports.contextStack;
+    
+    let interval = setInterval(function() {
+        if (contextStack.length) {
+            const currentContext = contextStack.shift();
+            currentContext.pos = self.getHighlightPosition(currentContext.node);
+            self.setVariables(currentContext);
+        } else {
+            clearInterval(interval);
+            self.setVariables(null, true);
+        }
+    }, 1200);
+    
   }
 
   runAllCode() {
     this.interpreter.run(this.jsCode);
-    return this.interpreter.scope.context["resultado"].value;
-  }
+    const contextStack = this.interpreter.scope.context.exports.contextStack;
+    const result = this.interpreter.scope.context["resultado"];
 
-  getVariables() {
-    const variables = this.interpreter.scope.context;
-    const userVariables = [];
-
-    for (let variableName in variables) {
-      const variable = {
-        name: variableName,
-        value: variables[variableName].value,
-      };
-
-      // If var does not have ob property, then it was defined by the user.
-      if (this.isVariableType(variable)) {
-        userVariables.push(variable);
+    if (contextStack && contextStack.length) {
+      return {
+        value: result ? result.value : null,
+        context: contextStack[contextStack.length - 1]
       }
     }
-
-    return userVariables;
   }
 
-  isVariableType(variable) {
-    return variable.name != 'window' && variable.name != 'this'
-      && variable.name != 'exports' && (typeof variable.value != 'function');
+  setVariables(svalContext, isLastExecution) {
+    if (isLastExecution) {
+      if (this.storeContext.state.implementationEditor) {
+        this.storeContext.state.implementationAceEditor.getSession().removeMarker(this.storeContext.currentMarker);
+      } else {
+        this.storeContext.state.variablesAceEditor.getSession().removeMarker(this.storeContext.currentMarker);
+      }
+      this.storeContext.state.isRunningCode = false;
+      return;
+    }
+
+    const pos = svalContext.pos;
+
+    if (pos.clearVariablesEditorMarker) {
+      this.storeContext.state.variablesAceEditor.getSession().removeMarker(this.storeContext.currentMarker);
+    }
+
+    if (this.storeContext.currentMarker) {
+      this.storeContext.state[pos.editor].getSession().removeMarker(this.storeContext.currentMarker);
+    }
+
+    let Range = ace.acequire('ace/range').Range;
+    const newRange = new Range(pos.row, pos.start, pos.row, pos.end);
+    this.storeContext.currentMarker = this.storeContext.state[pos.editor].getSession().addMarker(newRange, 'myMarker', 'text');
+
+    this.storeContext.commit(
+      "setDeclaredVariables",
+      svalContext.variables
+    );
+
+  }
+
+  runDebugMode() {
+    this.storeContext.state.isDebugging = true;
+    this.interpreter.run(this.jsCode);
+    this.contextStack = this.interpreter.scope.context.exports.contextStack;
+    this.next();
   }
 
   next() {
-    if (this.parsedNodes) {
-      const nodeToInterpret = this.parsedNodes.shift();
-      if (nodeToInterpret.type === "IfStatement") {
-        this.debugIfStatement(nodeToInterpret);
-      } else {
-        this.interpreter.run(nodeToInterpret);
-      }
+    if (this.contextStack && this.contextStack.length) {
+      const currentContext = this.contextStack.shift();
+      currentContext.pos = this.getHighlightPosition(currentContext.node);
+      this.setVariables(currentContext);
+    } else {
+      this.setVariables(null, true);
+      this.storeContext.state.isDebugging = false;
     }
+    return this.storeContext.state.isDebugging;
   }
 
-  concatBlockStatement(blockStatement) {
-    if (blockStatement) {
-      const blockStatementBody = blockStatement.body;
-      this.setNodesBody(blockStatementBody);
-      this.parsedNodes = blockStatementBody.concat(this.parsedNodes);
-    }
+  finishDebugMode() {
+    while (this.next());
   }
+
+  stop() {
+    this.setVariables(null, true);
+    this.storeContext.state.isDebugging = false;
+  }
+
 }

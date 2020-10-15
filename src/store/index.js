@@ -50,6 +50,8 @@ export default new Vuex.Store({
     currentUser: undefined,
     folders: [],
     exercises: [],
+    isRunningCode: false,
+    isDebugging: false
   },
   getters: {
     getTitle: (state) => {
@@ -88,6 +90,12 @@ export default new Vuex.Store({
     getExercices: (state) => {
       return state.exercises;
     },
+    isRunningCode: (state) => {
+      return state.isRunningCode;
+    },
+    isDebugging: (state) => {
+      return state.isDebugging;
+    }
   },
 
   mutations: {
@@ -134,6 +142,9 @@ export default new Vuex.Store({
     setVariablesAceEditor: (state, value) => {
       state.variablesAceEditor = value;
     },
+    setRunningCode: (state, isRunning) => {
+      state.isRunningCode = isRunning;
+    }
   },
 
   actions: {
@@ -141,31 +152,50 @@ export default new Vuex.Store({
       context.commit("setCurrentUser", undefined);
       context.state.firebaseUtils.signOut();
     },
+    
+    play: (context) => {
 
-    play: (context, runInSlowMode) => {
-      function setVariables() {
+      if (context.state.isDebugging) {
+        return context.state.debugger.finishDebugMode();
+      }
+
+      const debug = new Debugger(context);
+      const result = debug.runAllCode();
+
+      if (result) {
         context.commit(
           "setDeclaredVariables",
-          context.state.debugger.getVariables()
+          result.context.variables
         );
       }
 
-      const settings = {
-        variablesContent: context.state.variablesEditor,
-        implementationContent: context.state.implementationEditor,
-        variablesEditor: context.state.variablesAceEditor,
-        implementationEditor: context.state.implementationAceEditor,
-      };
+      return result ? result.value : null;
 
-      context.state.debugger = new Debugger(settings);
+    },
 
-      if (runInSlowMode) {
-        return context.state.debugger.runSlowMode(setVariables);
-      } else {
-        const resultado = context.state.debugger.runAllCode();
-        setVariables();
-        return resultado;
-      }
+    stop: (context) => {
+      context.state.debugger.stop();
+      context.commit("setDeclaredVariables", []);
+    },
+
+    runInDebugMode: (context) => {
+
+      context.state.debugger = new Debugger(context);
+      context.state.debugger.runDebugMode();
+
+    },
+
+    nextStep: (context) => {
+      context.state.debugger.next();
+    },
+
+    runInSlowMode: (context) => {
+
+      const debug = new Debugger(context);
+
+      context.state.isRunningCode = true;
+      debug.runSlowMode();
+
     },
 
     createInfoDialog: (context, modalInfo) => {

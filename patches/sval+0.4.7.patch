@@ -1,0 +1,91 @@
+diff --git a/node_modules/sval/dist/sval.js b/node_modules/sval/dist/sval.js
+index df5842f..a659311 100644
+--- a/node_modules/sval/dist/sval.js
++++ b/node_modules/sval/dist/sval.js
+@@ -1498,6 +1498,11 @@
+       }
+   }
+ 
++  var contextStack = [];
++  const EXCLUDED_OPERATIONS = [
++    'Program', 'Literal', 'Identifier', 'IfStatement', 'ForStatement', 'BlockStatement', 'UpdateExpression',
++    'FunctionDeclaration', 'ArrayExpression', 'ExpressionStatement'
++  ];
+   var program = /*#__PURE__*/Object.freeze({
+     __proto__: null,
+     Program: Program
+@@ -1512,13 +1517,60 @@
+       }
+       var handler = evaluateOps[node.type];
+       if (handler) {
+-          return handler(node, scope);
++          let result = handler(node, scope);
++          if (includeToStack(node, scope)) {
++            const currentNode = Object.assign({}, node);
++            if (!scope.parent) {
++                const variables = getVariables(scope.context);
++                contextStack.push({variables: variables, node: currentNode});
++            } else {
++                let allScopes = Object.assign({}, scope);
++                let currentVariables = getVariables(allScopes.context);
++                while (allScopes.parent) {
++                    currentVariables = currentVariables.concat(getVariables(allScopes.parent.context));
++                    allScopes = allScopes.parent;
++                }
++                contextStack.push({variables: currentVariables, node: currentNode});
++            }
++          }
++          return result;
+       }
+       else {
+           throw new Error(node.type + " isn't implemented");
+       }
+   }
+-
++  function includeToStack(node, scope) {
++      if (node.type === 'Identifier') {
++          return scope.context[node.name] && typeof scope.context[node.name].value === 'function';
++      }
++      return !EXCLUDED_OPERATIONS.includes(node.type);
++  }
++  function getVariables(variables) {
++    const userVariables = [];
++    for (let variableName in variables) {
++      const variable = {
++        name: variableName,
++        value: variables[variableName].value,
++      };
++      // If var does not have ob property, then it was defined by the user.
++      if (isVariableType(variable)) {
++        userVariables.push(JSON.parse(JSON.stringify((variable))));
++      }
++    }
++    return userVariables;
++  }
++  function isVariableType(variable) {
++    const isNotGlobal = variable.name != 'window' && variable.name != 'this'
++      && variable.name != 'exports' && variable.name != 'arguments' 
++      && !variable.name.includes('newtarget') && (typeof variable.value != 'function');
++    if (!isNotGlobal) {
++      return false;
++    }
++    if (typeof variable.value === 'string' && variable.value.includes('deadzone')) {
++      return false;
++    }
++    return true;
++  }
+   function FunctionDeclaration(node, scope) {
+       scope.func(node.id.name, createFunc$1(node, scope));
+   }
+@@ -3963,9 +4015,11 @@
+           return acorn.parse(code, this.options);
+       };
+       Sval.prototype.run = function (code) {
++          contextStack = [];
+           var ast = typeof code === 'string' ? acorn.parse(code, this.options) : code;
+           hoist$1(ast, this.scope);
+           evaluate(ast, this.scope);
++          this.scope.context.exports.contextStack = contextStack;
+       };
+       Sval.version = version;
+       return Sval;

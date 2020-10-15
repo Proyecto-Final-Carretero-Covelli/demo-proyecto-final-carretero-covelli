@@ -28,6 +28,9 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faBug } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
 
@@ -58,6 +61,9 @@ library.add(faCheck);
 library.add(faBan);
 library.add(faSquare);
 library.add(faGoogle);
+library.add(faBug);
+library.add(faArrowRight);
+library.add(faClock);
 
 function initApp() {
   new Vue({
