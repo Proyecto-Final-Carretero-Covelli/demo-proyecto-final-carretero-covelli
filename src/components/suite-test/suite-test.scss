@@ -1,0 +1,85 @@
+@import "../../scss/variables";
+
+.test-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  width: 100%;
+  height: 50px;
+  background-color: $primary-down;
+
+  &__name {
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      color: $border-grey;
+      margin: 0px;
+      cursor: pointer;
+      width: fit-content;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  &__state {
+    &--passed {
+      color: $secondary;
+    }
+
+    &--not-passed {
+      color: #fbc02d;
+    }
+
+    &--not-executed {
+      color: $border-grey;
+    }
+  }
+}
+
+.test-container {
+  padding-bottom: 1rem;
+}
+
+.test-container-cards {
+  overflow-y: scroll;
+}
+
+.card-play {
+  width: 20px;
+  height: 20px;
+  color: $border-grey;
+  cursor: pointer;
+  &:hover {
+    color: $green-play;
+  }
+}
+
+.test-play-all {
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.25rem;
+  border: 1px solid $border-grey;
+  color: $border-grey;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: $secondary-dark;
+    border: 1px solid $secondary-dark;
+  }
+}
+
+.scrollable {
+  overflow: auto;
+  max-height: 60vh;
+}
