@@ -29,6 +29,7 @@ export const firebaseUtils = {
       .ref("folders/")
       .push();
     newFolder.set(folder);
+    return newFolder.key;
   },
 
   getFolders: function() {

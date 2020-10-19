@@ -1,10 +1,9 @@
-<template >
+<template>
   <b-modal
     content-class="new-exercise"
     id="modal-new-exercise"
     size="xl"
     scrollable
-    @ok="handleOk"
   >
     <template v-slot:modal-title>Crear Nuevo Ejercicio</template>
 
@@ -177,6 +176,30 @@
         </div>
       </div>
     </div>
+
+    <template v-slot:modal-footer="{ cancel }">
+      <div class="w-100 d-flex justify-content-end align-items-center">
+        <template v-if="!loadingNewExercise">
+          <b-button size="md" class="mr-2 " @click="cancel()">
+            Cancelar
+          </b-button>
+          <b-button variant="primary" size="md" @click="handleOk()">
+            Aceptar
+          </b-button>
+        </template>
+
+        <template v-if="loadingNewExercise">
+          <div>
+            <b-spinner
+              small
+              type="grow"
+              label="Loading..."
+              class="top-header__controll-icon"
+            ></b-spinner>
+          </div>
+        </template>
+      </div>
+    </template>
   </b-modal>
 </template>
 

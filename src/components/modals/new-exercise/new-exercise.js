@@ -18,6 +18,8 @@ export default {
       folder: "",
 
       searchActive: false,
+
+      loadingNewExercise: false,
     };
   },
 
@@ -67,6 +69,7 @@ export default {
     },
 
     resetModal() {
+      this.folder = "";
       this.title = "";
       this.statement = "";
       this.initialCode = "";
@@ -76,9 +79,10 @@ export default {
       this.currentIndexTest = -1;
       this.tests = [];
       this.editTestMode = false;
+      this.loadingNewExercise = false;
     },
 
-    addTest: function() {
+    addTest() {
       if (this.currentTestName !== "") {
         this.tests = [
           ...this.tests,
@@ -89,14 +93,14 @@ export default {
       }
     },
 
-    showTest: function(indexTest) {
+    showTest(indexTest) {
       this.currentTestName = this.tests[indexTest]["name"];
       this.currentTestCode = this.tests[indexTest]["test"];
       this.editTestMode = true;
       this.currentIndexTest = indexTest;
     },
 
-    deleteTest: function(indexTest) {
+    deleteTest(indexTest) {
       this.tests.splice(indexTest, 1);
       if (this.currentIndexTest == indexTest) {
         this.currentIndexTest = -1;
@@ -106,13 +110,13 @@ export default {
       }
     },
 
-    cancelEdit: function() {
+    cancelEdit() {
       this.currentTestCode = "";
       this.currentTestName = "";
       this.editTestMode = false;
     },
 
-    saveEdit: function() {
+    saveEdit() {
       if (this.currentTestName !== "") {
         this.tests.splice(this.currentIndexTest, 1, {
           name: this.currentTestName,
@@ -124,35 +128,79 @@ export default {
       }
     },
 
-    handleOk: function() {
+    handleOk() {
       //Enviar mediante el método de addFolder() y addExercise() los datos correspondientes
       if (
-        // this.title !== "" &&
-        // this.statement !== "" &&
-        // this.solutionCode !== "" &&
+        this.title !== "" &&
+        this.statement !== "" &&
+        this.solutionCode !== "" &&
         this.folder !== ""
       ) {
-        // const exercises = {
-        //   name: this.title,
-        //   statement: this.statement,
-        //   solution: this.solution,
-        // };
+        this.loadingNewExercise = true;
 
-        // Pendiente de definición para el "result" de la suite de test
+        let suiteTest = [];
 
-        const firebaseUtils = this.$store.getters.getFirabaseUtils;
-        firebaseUtils.addFolder({ name: this.folder });
-        firebaseUtils.addExercise();
+        this.generateResultTests().then((resultSuiteTests) => {
+          console.log("PROMESAS TERMINADAS", resultSuiteTests);
+
+          this.tests.forEach((test, i) => {
+            suiteTest.push({
+              name: test.name,
+              result: resultSuiteTests[i],
+              test: test.test,
+            });
+          });
+
+          const exercises = {
+            name: this.title,
+            statement: this.statement,
+            initialCode: this.initialCode,
+            solution: this.solutionCode,
+            suiteTest: suiteTest,
+          };
+          const firebaseUtils = this.$store.getters.getFirabaseUtils;
+          const folderKey = firebaseUtils.addFolder({ name: this.folder });
+
+          firebaseUtils.addExercise(folderKey, exercises);
+
+          this.loadingNewExercise = false;
+        });
       } else {
         console.log("ERROR CAMPOS IMCOMPLETOS !");
       }
+    },
+
+    generateResultTests() {
+      let promisesResults = [];
+      this.tests.forEach((test) => {
+        let testContext = {
+          state: {
+            variablesEditor: this.initialCode + test.test,
+            implementationEditor: this.solutionCode,
+          },
+        };
+        promisesResults.push(
+          this.$store.dispatch("generateTestResult", testContext)
+        );
+      });
+
+      return Promise.all(promisesResults);
     },
   },
 
   mounted() {
     this.$root.$on("bv::modal::show", () => {
       this.resetModal();
+
+      //Inicialización generación de test
+      this.folder = "TEST FOLDER";
+      this.solutionCode = "let resultado = a + b;";
+      this.tests = [
+        { name: "TEST 1", test: "let a = 1; let b = 1;" },
+        { name: "TEST 2", test: "let a = 2; let b = 2;" },
+      ];
     });
+
     // this.$root.$on("bv::modal::shown", () => {
     //   this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
     //   this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);
