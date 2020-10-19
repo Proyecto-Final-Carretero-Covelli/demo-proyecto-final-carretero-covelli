@@ -38,103 +38,6 @@
   .ace-dracula {
     background: $primary;
   }
-
-  .test-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    margin-bottom: 0.5rem;
-    color: white;
-    width: 100%;
-    height: 50px;
-    background-color: $primary-down;
-
-    &__name {
-      margin: 0px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      p {
-        color: $border-grey;
-        margin: 0px;
-        cursor: pointer;
-        width: fit-content;
-
-        &:hover {
-          color: white;
-        }
-      }
-    }
-
-    &__state {
-      &--passed {
-        color: $secondary;
-      }
-
-      &--not-passed {
-        color: #fbc02d;
-      }
-
-      &--not-executed {
-        color: $border-grey;
-      }
-    }
-  }
-
-  .card-icon {
-    width: 25px;
-    height: 25px;
-    margin-left: 10%;
-    cursor: context-menu;
-  }
-
-  .test-name {
-    text-align: center;
-  }
-
-  .small {
-    flex-grow: 1;
-  }
-
-  .large {
-    font-weight: 600px;
-    font-size: 16px;
-    flex-grow: 5;
-  }
-
-  .card-play {
-    width: 20px;
-    height: 20px;
-    color: $border-grey;
-    cursor: pointer;
-    &:hover {
-      color: $green-play;
-    }
-  }
-
-  .test-play-all {
-    width: 100%;
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 0.25rem;
-    border: 1px solid $border-grey;
-    color: $border-grey;
-    cursor: pointer;
-
-    &:hover {
-      color: white;
-      background-color: $secondary-dark;
-      border: 1px solid $secondary-dark;
-    }
-  }
-
-  .scrollable {
-    overflow: auto;
-    max-height: 60vh;
-  }
 }
 
 .editor-container {
@@ -206,12 +109,4 @@
       }
     }
   }
-}
-
-.test-container {
-  padding-bottom: 1rem;
-}
-
-.test-container-cards {
-  overflow-y: scroll;
 }

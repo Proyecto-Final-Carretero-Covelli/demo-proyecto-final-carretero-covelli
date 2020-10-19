@@ -1,5 +1,5 @@
 <template>
-  <div class="konva" ref="container">
+  <div class="konva" ref="containerKonva">
     <v-stage ref="stage" :config="configKonva">
       <v-layer>
         <template v-for="(variable, i) in getDeclaredVariables">
