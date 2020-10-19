@@ -2,7 +2,7 @@
   <div class="m-2 console">
     Console
     <div>
-      {{ consoleOutput }}
+      <!-- {{ consoleOutput }} -->
     </div>
   </div>
 </template>
