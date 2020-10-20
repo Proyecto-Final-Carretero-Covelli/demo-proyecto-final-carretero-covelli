@@ -125,6 +125,7 @@ export default {
         this.currentIndexTest = -1;
         this.currentTestName = "";
         this.currentTestCode = "";
+        this.editTestMode = false;
       }
     },
 
