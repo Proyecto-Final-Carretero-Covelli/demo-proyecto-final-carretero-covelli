@@ -129,7 +129,6 @@ export default {
     },
 
     handleOk() {
-      //Enviar mediante el método de addFolder() y addExercise() los datos correspondientes
       if (
         this.title !== "" &&
         this.statement !== "" &&
@@ -137,34 +136,45 @@ export default {
         this.folder !== ""
       ) {
         this.loadingNewExercise = true;
-
         let suiteTest = [];
-
-        this.generateResultTests().then((resultSuiteTests) => {
-          console.log("PROMESAS TERMINADAS", resultSuiteTests);
-
-          this.tests.forEach((test, i) => {
-            suiteTest.push({
-              name: test.name,
-              result: resultSuiteTests[i],
-              test: test.test,
+        this.$store
+          .dispatch("getFolderIfExist", this.folder)
+          .then((folderId) => {
+            this.generateResultTests().then((resultSuiteTests) => {
+              this.tests.forEach((test, i) => {
+                suiteTest.push({
+                  name: test.name,
+                  result: resultSuiteTests[i],
+                  test: test.test,
+                });
+              });
+              const exercises = {
+                name: this.title,
+                statement: this.statement,
+                initialCode: this.initialCode,
+                solution: this.solutionCode,
+                suiteTest: suiteTest,
+              };
+              const firebaseUtils = this.$store.getters.getFirabaseUtils;
+              if (folderId != null) {
+                firebaseUtils.addExercise(folderId, exercises);
+              } else {
+                const newFolderId = firebaseUtils.addFolder({
+                  name: this.folder,
+                });
+                firebaseUtils.addExercise(newFolderId, exercises);
+              }
+              this.loadingNewExercise = false;
+              this.$bvModal.hide("modal-new-exercise");
+              this.$bvToast.toast(`${this.folder} / ${this.title}`, {
+                title: "Ejercicio Creado ✔",
+                variant: "success",
+                solid: true,
+                bodyClass: "new-exercise__toast-complete--body",
+                headerClass: "new-exercise__toast-complete--header",
+              });
             });
           });
-
-          const exercises = {
-            name: this.title,
-            statement: this.statement,
-            initialCode: this.initialCode,
-            solution: this.solutionCode,
-            suiteTest: suiteTest,
-          };
-          const firebaseUtils = this.$store.getters.getFirabaseUtils;
-          const folderKey = firebaseUtils.addFolder({ name: this.folder });
-
-          firebaseUtils.addExercise(folderKey, exercises);
-
-          this.loadingNewExercise = false;
-        });
       } else {
         console.log("ERROR CAMPOS IMCOMPLETOS !");
       }
