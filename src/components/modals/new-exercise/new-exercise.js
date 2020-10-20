@@ -129,12 +129,7 @@ export default {
     },
 
     handleOk() {
-      if (
-        this.title !== "" &&
-        this.statement !== "" &&
-        this.solutionCode !== "" &&
-        this.folder !== ""
-      ) {
+      if (this.title !== "" && this.statement !== "" && this.folder !== "") {
         this.loadingNewExercise = true;
         let suiteTest = [];
         this.$store
@@ -176,13 +171,30 @@ export default {
                 this.$bvModal.hide("modal-new-exercise");
                 this.showToastSuccessNewExercise();
               } else {
-                this.showToastErrorGeneratingResultsTests();
+                this.showToastErrorGeneratingResultsTests(
+                  "Error Generación Suite Test ❌",
+                  "Recomendación: Verifica tu solución y/o variables iniciales"
+                );
                 this.loadingNewExercise = false;
               }
             });
           });
       } else {
-        console.log("ERROR CAMPOS IMCOMPLETOS !");
+        if (this.title == "")
+          this.showToastErrorGeneratingResultsTests(
+            "Título ❌",
+            "Por favor indique un 'Título'."
+          );
+        if (this.folder == "")
+          this.showToastErrorGeneratingResultsTests(
+            "Carpeta ❌",
+            "Por favor indique una 'Carpeta', mediante el botón 🔍 puede buscar las existentes."
+          );
+        if (this.statement == "")
+          this.showToastErrorGeneratingResultsTests(
+            "Cosigna Ejercicio ❌",
+            "Por favor indique una 'Consinga' para el nuevo ejercicio."
+          );
       }
     },
 
@@ -212,17 +224,15 @@ export default {
       });
     },
 
-    showToastErrorGeneratingResultsTests() {
-      this.$bvToast.toast(
-        "Recomendación: Verifica tu solución y/o variables iniciales",
-        {
-          title: "Error Generación Suite Test ❌",
-          variant: "danger",
-          solid: true,
-          bodyClass: "new-exercise__toast-error--body",
-          headerClass: "new-exercise__toast-error--header",
-        }
-      );
+    showToastErrorGeneratingResultsTests(title, bodyMessage, delayHide = 5000) {
+      this.$bvToast.toast(bodyMessage, {
+        title: title,
+        variant: "danger",
+        solid: true,
+        bodyClass: "new-exercise__toast-error--body",
+        headerClass: "new-exercise__toast-error--header",
+        autoHideDelay: delayHide,
+      });
     },
   },
 
