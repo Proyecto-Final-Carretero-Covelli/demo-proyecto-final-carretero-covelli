@@ -141,38 +141,44 @@ export default {
           .dispatch("getFolderIfExist", this.folder)
           .then((folderId) => {
             this.generateResultTests().then((resultSuiteTests) => {
+              // Verification that all the result of the suite test have benn successfull
+              let errorInResultGeneration = false;
               this.tests.forEach((test, i) => {
-                suiteTest.push({
-                  name: test.name,
-                  result: resultSuiteTests[i],
-                  test: test.test,
-                });
+                if (resultSuiteTests[i] !== null) {
+                  suiteTest.push({
+                    name: test.name,
+                    result: resultSuiteTests[i],
+                    test: test.test,
+                  });
+                } else {
+                  errorInResultGeneration = true;
+                }
               });
-              const exercises = {
-                name: this.title,
-                statement: this.statement,
-                initialCode: this.initialCode,
-                solution: this.solutionCode,
-                suiteTest: suiteTest,
-              };
-              const firebaseUtils = this.$store.getters.getFirabaseUtils;
-              if (folderId != null) {
-                firebaseUtils.addExercise(folderId, exercises);
+
+              if (!errorInResultGeneration) {
+                const exercises = {
+                  name: this.title,
+                  statement: this.statement,
+                  initialCode: this.initialCode,
+                  solution: this.solutionCode,
+                  suiteTest: suiteTest,
+                };
+                const firebaseUtils = this.$store.getters.getFirabaseUtils;
+                if (folderId != null) {
+                  firebaseUtils.addExercise(folderId, exercises);
+                } else {
+                  const newFolderId = firebaseUtils.addFolder({
+                    name: this.folder,
+                  });
+                  firebaseUtils.addExercise(newFolderId, exercises);
+                }
+                this.loadingNewExercise = false;
+                this.$bvModal.hide("modal-new-exercise");
+                this.showToastSuccessNewExercise();
               } else {
-                const newFolderId = firebaseUtils.addFolder({
-                  name: this.folder,
-                });
-                firebaseUtils.addExercise(newFolderId, exercises);
+                this.showToastErrorGeneratingResultsTests();
+                this.loadingNewExercise = false;
               }
-              this.loadingNewExercise = false;
-              this.$bvModal.hide("modal-new-exercise");
-              this.$bvToast.toast(`${this.folder} / ${this.title}`, {
-                title: "Ejercicio Creado ✔",
-                variant: "success",
-                solid: true,
-                bodyClass: "new-exercise__toast-complete--body",
-                headerClass: "new-exercise__toast-complete--header",
-              });
             });
           });
       } else {
@@ -193,8 +199,30 @@ export default {
           this.$store.dispatch("generateTestResult", testContext)
         );
       });
-
       return Promise.all(promisesResults);
+    },
+
+    showToastSuccessNewExercise() {
+      this.$bvToast.toast(`${this.folder} / ${this.title}`, {
+        title: "Ejercicio Creado ✔",
+        variant: "success",
+        solid: true,
+        bodyClass: "new-exercise__toast-complete--body",
+        headerClass: "new-exercise__toast-complete--header",
+      });
+    },
+
+    showToastErrorGeneratingResultsTests() {
+      this.$bvToast.toast(
+        "Recomendación: Verifica tu solución y/o variables iniciales",
+        {
+          title: "Error Generación Suite Test ❌",
+          variant: "danger",
+          solid: true,
+          bodyClass: "new-exercise__toast-error--body",
+          headerClass: "new-exercise__toast-error--header",
+        }
+      );
     },
   },
 

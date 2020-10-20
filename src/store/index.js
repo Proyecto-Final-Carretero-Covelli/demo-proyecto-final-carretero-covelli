@@ -160,7 +160,12 @@ export default new Vuex.Store({
     generateTestResult: (context, customContext) => {
       console.log("CUSTOM CONTEXT", customContext);
       const debug = new Debugger(customContext);
-      const result = debug.runAllCode();
+      let result;
+      try {
+        result = debug.runAllCode();
+      } catch (error) {
+        result = undefined;
+      }
       return result ? result.value : null;
     },
 
