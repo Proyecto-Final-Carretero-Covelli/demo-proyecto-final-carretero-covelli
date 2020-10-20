@@ -23,6 +23,15 @@ export const firebaseUtils = {
     firebase.auth().signOut();
   },
 
+  getFolderIfExist: async function(folderName) {
+    const data = await this.getFolders();
+    let folderId = null;
+    Object.entries(data.val()).map((folder) => {
+      if (folderName == folder[1].name) folderId = folder[0];
+    });
+    return folderId;
+  },
+
   addFolder: function(folder) {
     const newFolder = app
       .database()
@@ -44,6 +53,7 @@ export const firebaseUtils = {
       .database()
       .ref(`folders/${folderId}/exercises`)
       .push();
+    exercise.id = folder.key;
     folder.set(exercise);
   },
 

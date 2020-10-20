@@ -153,6 +153,10 @@ export default new Vuex.Store({
       context.state.firebaseUtils.signOut();
     },
 
+    getFolderIfExist: (context, folderName) => {
+      return context.state.firebaseUtils.getFolderIfExist(folderName);
+    },
+
     generateTestResult: (context, customContext) => {
       console.log("CUSTOM CONTEXT", customContext);
       const debug = new Debugger(customContext);
