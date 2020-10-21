@@ -1,4 +1,5 @@
 import { firebaseUtils } from "../../db/firebase";
+import _ from "lodash";
 
 export default {
   methods: {
@@ -21,7 +22,7 @@ export default {
       const currentExercise = this.$store.getters.getCurrentExercise;
 
       this.$store.dispatch("play").then((result) => {
-        if (result === test.result) {
+        if (_.isEqual(result, test.result)) {
           test.imgInfo = TEST_FLAG_INFO.PASSED;
         } else {
           test.imgInfo = TEST_FLAG_INFO.NOT_PASSED;

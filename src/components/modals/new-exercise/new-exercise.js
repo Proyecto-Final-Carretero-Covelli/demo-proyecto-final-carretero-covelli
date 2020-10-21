@@ -28,7 +28,8 @@ export default {
       return this.$store.getters.getFolders;
     },
 
-    filterItems() {
+    /* Filter folders */
+    filterFolders() {
       return this.$store.getters.getFolders.filter((folder) => {
         if (
           this.folder !== undefined &&
@@ -36,11 +37,10 @@ export default {
           this.folder !== " " &&
           folder !== undefined
         ) {
-          let comparacion = folder.label
+          let comparation = folder.label
             .toLowerCase()
             .includes(this.folder.toLowerCase());
-          console.log(comparacion, this.folder, folder.label);
-          return comparacion;
+          return comparation;
         }
         return false;
       });
@@ -243,7 +243,7 @@ export default {
 
       //Inicialización generación de test
       this.folder = "TEST FOLDER";
-      this.solutionCode = "let resultado = a + b;";
+      this.solutionCode = "let resultado = [a, b];";
       this.tests = [
         { name: "TEST 1", test: "let a = 1; let b = 1;" },
         { name: "TEST 2", test: "let a = 2; let b = 2;" },

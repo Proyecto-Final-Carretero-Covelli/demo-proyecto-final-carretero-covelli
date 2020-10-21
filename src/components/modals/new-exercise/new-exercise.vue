@@ -32,8 +32,8 @@
         </div>
         <ul v-if="searchActive" class="new-exercise__folder--search-container">
           <li
-            v-for="(folder, i) in filterItems"
-            :key="'filterItems' + i"
+            v-for="(folder, i) in filterFolders"
+            :key="'filterFolders' + i"
             class="new-exercise__folder--search-result"
             @click="selectFolder(folder.label)"
           >
