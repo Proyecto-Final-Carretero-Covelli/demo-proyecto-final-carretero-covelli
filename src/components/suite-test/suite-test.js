@@ -15,11 +15,6 @@ export default {
       this.$store.commit("setVariablesEditor", test.test);
 
       const TEST_FLAG_INFO = this.$store.getters.getConstants.TEST_FLAG_INFO;
-      const oldInfo = {
-        passedBefore: test.imgInfo === TEST_FLAG_INFO.PASSED,
-        historyId: test.historyId,
-      };
-      const currentExercise = this.$store.getters.getCurrentExercise;
 
       this.$store.dispatch("play").then((result) => {
         if (_.isEqual(result, test.result)) {
@@ -29,12 +24,7 @@ export default {
         }
 
         const testHasPassed = test.imgInfo === TEST_FLAG_INFO.PASSED;
-        firebaseUtils.addTestToHistory(
-          currentExercise.id,
-          testHasPassed,
-          test,
-          oldInfo
-        );
+
         firebaseUtils.updateUserStatistics(
           testHasPassed,
           this._getValueToUpdateUserStatistics(testHasPassed)
