@@ -240,7 +240,7 @@ export default new Vuex.Store({
       context.commit("setCurrentExercise", exercise);
       context.commit("setTitle", exercise.name);
       context.commit("setTitleText", exercise.statement);
-      context.commit("setImplementationEditor", "");
+      context.commit("setImplementationEditor", exercise.initialCode);
       context.commit("setVariablesEditor", "");
       context.commit("setDeclaredVariables", []);
     },
