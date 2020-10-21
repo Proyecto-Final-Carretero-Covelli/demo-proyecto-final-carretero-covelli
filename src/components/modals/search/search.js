@@ -29,11 +29,7 @@ export default {
         Object.keys(exercise.suiteTest).forEach((testId) => {
           this._setTestFlagIconInfo(exercise.suiteTest[testId], exercise);
         });
-
-        this.$store.commit("setCurrentExercise", exercise);
-        this.$store.commit("setTitle", exercise.name);
-        this.$store.commit("setTitleText", exercise.statement);
-
+        this.$store.dispatch("selectExercise", exercise);
         this.$bvModal.hide("modal-search");
       }
     },

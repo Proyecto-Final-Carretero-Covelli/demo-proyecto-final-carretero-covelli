@@ -235,5 +235,14 @@ export default new Vuex.Store({
         context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
       });
     },
+
+    selectExercise: (context, exercise) => {
+      context.commit("setCurrentExercise", exercise);
+      context.commit("setTitle", exercise.name);
+      context.commit("setTitleText", exercise.statement);
+      context.commit("setImplementationEditor", "");
+      context.commit("setVariablesEditor", "");
+      context.commit("setDeclaredVariables", []);
+    },
   },
 });
