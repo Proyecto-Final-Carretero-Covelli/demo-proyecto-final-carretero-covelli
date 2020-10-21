@@ -51,7 +51,7 @@ export default new Vuex.Store({
     folders: [],
     exercises: [],
     isRunningCode: false,
-    isDebugging: false
+    isDebugging: false,
   },
   getters: {
     getTitle: (state) => {
@@ -95,7 +95,7 @@ export default new Vuex.Store({
     },
     isDebugging: (state) => {
       return state.isDebugging;
-    }
+    },
   },
 
   mutations: {
@@ -144,7 +144,7 @@ export default new Vuex.Store({
     },
     setRunningCode: (state, isRunning) => {
       state.isRunningCode = isRunning;
-    }
+    },
   },
 
   actions: {
@@ -152,9 +152,24 @@ export default new Vuex.Store({
       context.commit("setCurrentUser", undefined);
       context.state.firebaseUtils.signOut();
     },
-    
-    play: (context) => {
 
+    getFolderIfExist: (context, folderName) => {
+      return context.state.firebaseUtils.getFolderIfExist(folderName);
+    },
+
+    generateTestResult: (context, customContext) => {
+      console.log("CUSTOM CONTEXT", customContext);
+      const debug = new Debugger(customContext);
+      let result;
+      try {
+        result = debug.runAllCode();
+      } catch (error) {
+        result = undefined;
+      }
+      return result ? result.value : null;
+    },
+
+    play: (context) => {
       if (context.state.isDebugging) {
         return context.state.debugger.finishDebugMode();
       }
@@ -163,14 +178,10 @@ export default new Vuex.Store({
       const result = debug.runAllCode();
 
       if (result) {
-        context.commit(
-          "setDeclaredVariables",
-          result.context.variables
-        );
+        context.commit("setDeclaredVariables", result.context.variables);
       }
 
       return result ? result.value : null;
-
     },
 
     stop: (context) => {
@@ -179,10 +190,8 @@ export default new Vuex.Store({
     },
 
     runInDebugMode: (context) => {
-
       context.state.debugger = new Debugger(context);
       context.state.debugger.runDebugMode();
-
     },
 
     nextStep: (context) => {
@@ -190,12 +199,10 @@ export default new Vuex.Store({
     },
 
     runInSlowMode: (context) => {
-
       const debug = new Debugger(context);
 
       context.state.isRunningCode = true;
       debug.runSlowMode();
-
     },
 
     createInfoDialog: (context, modalInfo) => {
@@ -227,6 +234,15 @@ export default new Vuex.Store({
       context.state.firebaseUtils.getFolders().then(function(data) {
         context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
       });
+    },
+
+    selectExercise: (context, exercise) => {
+      context.commit("setCurrentExercise", exercise);
+      context.commit("setTitle", exercise.name);
+      context.commit("setTitleText", exercise.statement);
+      context.commit("setImplementationEditor", exercise.initialCode);
+      context.commit("setVariablesEditor", "");
+      context.commit("setDeclaredVariables", []);
     },
   },
 });

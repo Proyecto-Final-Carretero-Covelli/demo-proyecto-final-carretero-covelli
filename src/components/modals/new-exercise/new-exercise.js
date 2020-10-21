@@ -18,6 +18,8 @@ export default {
       folder: "",
 
       searchActive: false,
+
+      loadingNewExercise: false,
     };
   },
 
@@ -26,7 +28,8 @@ export default {
       return this.$store.getters.getFolders;
     },
 
-    filterItems() {
+    /* Filter folders */
+    filterFolders() {
       return this.$store.getters.getFolders.filter((folder) => {
         if (
           this.folder !== undefined &&
@@ -34,11 +37,10 @@ export default {
           this.folder !== " " &&
           folder !== undefined
         ) {
-          let comparacion = folder.label
+          let comparation = folder.label
             .toLowerCase()
             .includes(this.folder.toLowerCase());
-          console.log(comparacion, this.folder, folder.label);
-          return comparacion;
+          return comparation;
         }
         return false;
       });
@@ -67,6 +69,7 @@ export default {
     },
 
     resetModal() {
+      this.folder = "";
       this.title = "";
       this.statement = "";
       this.initialCode = "";
@@ -76,9 +79,10 @@ export default {
       this.currentIndexTest = -1;
       this.tests = [];
       this.editTestMode = false;
+      this.loadingNewExercise = false;
     },
 
-    addTest: function() {
+    addTest() {
       if (this.currentTestName !== "") {
         this.tests = [
           ...this.tests,
@@ -89,14 +93,14 @@ export default {
       }
     },
 
-    showTest: function(indexTest) {
+    showTest(indexTest) {
       this.currentTestName = this.tests[indexTest]["name"];
       this.currentTestCode = this.tests[indexTest]["test"];
       this.editTestMode = true;
       this.currentIndexTest = indexTest;
     },
 
-    deleteTest: function(indexTest) {
+    deleteTest(indexTest) {
       this.tests.splice(indexTest, 1);
       if (this.currentIndexTest == indexTest) {
         this.currentIndexTest = -1;
@@ -106,13 +110,13 @@ export default {
       }
     },
 
-    cancelEdit: function() {
+    cancelEdit() {
       this.currentTestCode = "";
       this.currentTestName = "";
       this.editTestMode = false;
     },
 
-    saveEdit: function() {
+    saveEdit() {
       if (this.currentTestName !== "") {
         this.tests.splice(this.currentIndexTest, 1, {
           name: this.currentTestName,
@@ -121,38 +125,131 @@ export default {
         this.currentIndexTest = -1;
         this.currentTestName = "";
         this.currentTestCode = "";
+        this.editTestMode = false;
       }
     },
 
-    handleOk: function() {
-      //Enviar mediante el método de addFolder() y addExercise() los datos correspondientes
-      if (
-        // this.title !== "" &&
-        // this.statement !== "" &&
-        // this.solutionCode !== "" &&
-        this.folder !== ""
-      ) {
-        // const exercises = {
-        //   name: this.title,
-        //   statement: this.statement,
-        //   solution: this.solution,
-        // };
+    handleOk() {
+      if (this.title !== "" && this.statement !== "" && this.folder !== "") {
+        this.loadingNewExercise = true;
+        let suiteTest = [];
+        this.$store
+          .dispatch("getFolderIfExist", this.folder)
+          .then((folderId) => {
+            this.generateResultTests().then((resultSuiteTests) => {
+              // Verification that all the result of the suite test have benn successfull
+              let errorInResultGeneration = false;
+              this.tests.forEach((test, i) => {
+                if (resultSuiteTests[i] !== null) {
+                  suiteTest.push({
+                    name: test.name,
+                    result: resultSuiteTests[i],
+                    test: test.test,
+                  });
+                } else {
+                  errorInResultGeneration = true;
+                }
+              });
 
-        // Pendiente de definición para el "result" de la suite de test
-
-        const firebaseUtils = this.$store.getters.getFirabaseUtils;
-        firebaseUtils.addFolder({ name: this.folder });
-        firebaseUtils.addExercise();
+              if (!errorInResultGeneration) {
+                const exercises = {
+                  name: this.title,
+                  statement: this.statement,
+                  initialCode: this.initialCode,
+                  solution: this.solutionCode,
+                  suiteTest: suiteTest,
+                };
+                const firebaseUtils = this.$store.getters.getFirabaseUtils;
+                if (folderId != null) {
+                  firebaseUtils.addExercise(folderId, exercises);
+                } else {
+                  const newFolderId = firebaseUtils.addFolder({
+                    name: this.folder,
+                  });
+                  firebaseUtils.addExercise(newFolderId, exercises);
+                }
+                this.loadingNewExercise = false;
+                this.$bvModal.hide("modal-new-exercise");
+                this.showToastSuccessNewExercise();
+              } else {
+                this.showToastErrorGeneratingResultsTests(
+                  "Error Generación Suite Test ❌",
+                  "Recomendación: Verifica tu solución y/o variables iniciales"
+                );
+                this.loadingNewExercise = false;
+              }
+            });
+          });
       } else {
-        console.log("ERROR CAMPOS IMCOMPLETOS !");
+        if (this.title == "")
+          this.showToastErrorGeneratingResultsTests(
+            "Título ❌",
+            "Por favor indique un 'Título'."
+          );
+        if (this.folder == "")
+          this.showToastErrorGeneratingResultsTests(
+            "Carpeta ❌",
+            "Por favor indique una 'Carpeta', mediante el botón 🔍 puede buscar las existentes."
+          );
+        if (this.statement == "")
+          this.showToastErrorGeneratingResultsTests(
+            "Cosigna Ejercicio ❌",
+            "Por favor indique una 'Consinga' para el nuevo ejercicio."
+          );
       }
+    },
+
+    generateResultTests() {
+      let promisesResults = [];
+      this.tests.forEach((test) => {
+        let testContext = {
+          state: {
+            variablesEditor: this.initialCode + test.test,
+            implementationEditor: this.solutionCode,
+          },
+        };
+        promisesResults.push(
+          this.$store.dispatch("generateTestResult", testContext)
+        );
+      });
+      return Promise.all(promisesResults);
+    },
+
+    showToastSuccessNewExercise() {
+      this.$bvToast.toast(`${this.folder} / ${this.title}`, {
+        title: "Ejercicio Creado ✔",
+        variant: "success",
+        solid: true,
+        bodyClass: "new-exercise__toast-complete--body",
+        headerClass: "new-exercise__toast-complete--header",
+      });
+    },
+
+    showToastErrorGeneratingResultsTests(title, bodyMessage, delayHide = 5000) {
+      this.$bvToast.toast(bodyMessage, {
+        title: title,
+        variant: "danger",
+        solid: true,
+        bodyClass: "new-exercise__toast-error--body",
+        headerClass: "new-exercise__toast-error--header",
+        autoHideDelay: delayHide,
+      });
     },
   },
 
   mounted() {
     this.$root.$on("bv::modal::show", () => {
       this.resetModal();
+
+      //Inicialización generación de test
+      this.folder = "TEST FOLDER";
+      this.solutionCode = "let resultado = [a, b];";
+      this.tests = [
+        { name: "TEST 1", test: "let a = 1; let b = 1;" },
+        { name: "TEST 2", test: "let a = 2; let b = 2;" },
+      ];
     });
+
     // this.$root.$on("bv::modal::shown", () => {
     //   this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
     //   this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);

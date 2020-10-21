@@ -24,16 +24,14 @@ export default {
     },
 
     selectExercise(selectedExercise) {
-      let exercise = selectedExercise.exercise;
-      Object.keys(exercise.suiteTest).forEach((testId) => {
-        this._setTestFlagIconInfo(exercise.suiteTest[testId], exercise);
-      });
-
-      this.$store.commit("setCurrentExercise", exercise);
-      this.$store.commit("setTitle", exercise.name);
-      this.$store.commit("setTitleText", exercise.statement);
-
-      this.$bvModal.hide("modal-search");
+      if (!selectedExercise.children) {
+        let exercise = selectedExercise.exercise;
+        Object.keys(exercise.suiteTest).forEach((testId) => {
+          this._setTestFlagIconInfo(exercise.suiteTest[testId], exercise);
+        });
+        this.$store.dispatch("selectExercise", exercise);
+        this.$bvModal.hide("modal-search");
+      }
     },
 
     _setTestFlagIconInfo(test, exercise) {
