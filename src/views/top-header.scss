@@ -75,9 +75,44 @@
       }
     }
   }
+
+  .btn-drop-down {
+    button {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .dropdown-menu {
+      background-color: $primary-down;
+
+      .dropdown-item {
+        background-color: $primary-down;
+        color: white !important;
+
+        &:hover {
+          color: $secondary !important;
+        }
+      }
+    }
+  }
 }
 
 .subitem {
   margin-left: 15px;
   font-size: 12px;
+}
+
+.b-dropdown {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active,
+.btn-secondary:not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle {
+  background-color: transparent !important;
+  border: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
