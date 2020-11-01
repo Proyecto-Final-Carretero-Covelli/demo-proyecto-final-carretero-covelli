@@ -1,9 +1,9 @@
 <template>
   <v-group :config="configArrayGroup">
     <v-text :config="configArrayName"></v-text>
-    <template v-for="(arrayItem,i) in arrayItems">
+    <template v-for="(arrayItem, i) in arrayItems">
       <v-rect
-        :key="'rect-array-item-'+i"
+        :key="'rect-array-item-' + i"
         :config="{
           x: elementStartX,
           y: 100 + sizeRect * i,
@@ -13,17 +13,17 @@
         }"
       ></v-rect>
       <v-text
-        :key="'text-array-item-'+i"
+        :key="'text-array-item-' + i"
         :config="{
           x: elementStartX,
           y: 100 + sizeRect * i,
-          text: arrayItem,
+          text: JSON.stringify(arrayItem),
           width: sizeRect,
           height: sizeRect,
           align: 'center',
           verticalAlign: 'middle',
           fill: 'white',
-       }"
+        }"
       ></v-text>
     </template>
   </v-group>

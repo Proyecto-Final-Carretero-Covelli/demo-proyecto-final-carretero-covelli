@@ -26,7 +26,7 @@ export default {
       return {
         x: this.elementStartX,
         y: 100,
-        text: this.value,
+        text: JSON.stringify(this.value),
         width: sizeRect,
         height: sizeRect,
         align: "center",
