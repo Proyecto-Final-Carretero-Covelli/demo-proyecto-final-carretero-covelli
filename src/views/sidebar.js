@@ -23,7 +23,9 @@ export default {
     seeSolution() {
       this.$store.commit(
         "setImplementationEditor",
-        this.$store.getters.getCurrentExercise.solution
+        this.$store.getters.getCurrentExercise.initialCode +
+          "\n\n" +
+          this.$store.getters.getCurrentExercise.solution
       );
     },
   },

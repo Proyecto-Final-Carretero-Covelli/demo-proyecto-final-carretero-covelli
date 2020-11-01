@@ -244,5 +244,14 @@ export default new Vuex.Store({
       context.commit("setVariablesEditor", "");
       context.commit("setDeclaredVariables", []);
     },
+
+    closeExercise: (context) => {
+      context.commit("setCurrentExercise", {});
+      context.commit("setTitle", null);
+      context.commit("setTitleText", null);
+      context.commit("setImplementationEditor", "");
+      context.commit("setVariablesEditor", "");
+      context.commit("setDeclaredVariables", []);
+    },
   },
 });
