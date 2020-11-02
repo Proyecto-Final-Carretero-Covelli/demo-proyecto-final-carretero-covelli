@@ -139,13 +139,25 @@ export default {
             this.generateResultTests().then((resultSuiteTests) => {
               // Verification that all the result of the suite test have benn successfull
               let errorInResultGeneration = false;
+
               this.tests.forEach((test, i) => {
                 if (resultSuiteTests[i] !== null) {
-                  suiteTest.push({
-                    name: test.name,
-                    result: resultSuiteTests[i],
-                    test: test.test,
-                  });
+                  if (
+                    Array.isArray(resultSuiteTests[i]) &&
+                    resultSuiteTests[i].length == 0
+                  ) {
+                    suiteTest.push({
+                      name: test.name,
+                      result: "resultIsAnEmptyArray-VIDE",
+                      test: test.test,
+                    });
+                  } else {
+                    suiteTest.push({
+                      name: test.name,
+                      result: resultSuiteTests[i],
+                      test: test.test,
+                    });
+                  }
                 } else {
                   errorInResultGeneration = true;
                 }
