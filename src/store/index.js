@@ -158,7 +158,6 @@ export default new Vuex.Store({
     },
 
     generateTestResult: (context, customContext) => {
-      console.log("CUSTOM CONTEXT", customContext);
       const debug = new Debugger(customContext);
       let result;
       try {
@@ -230,7 +229,6 @@ export default new Vuex.Store({
     },
 
     updateFolders: (context) => {
-      console.log("UPDATE FOLDERS");
       context.state.firebaseUtils.getFolders().then(function(data) {
         context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
       });

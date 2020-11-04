@@ -17,10 +17,18 @@ export default {
       const TEST_FLAG_INFO = this.$store.getters.getConstants.TEST_FLAG_INFO;
 
       this.$store.dispatch("play").then((result) => {
-        if (_.isEqual(result, test.result)) {
-          test.imgInfo = TEST_FLAG_INFO.PASSED;
+        if (test.result == "resultIsAnEmptyArray-VIDE") {
+          if (Array.isArray(result) && result.length == 0) {
+            test.imgInfo = TEST_FLAG_INFO.PASSED;
+          } else {
+            test.imgInfo = TEST_FLAG_INFO.NOT_PASSED;
+          }
         } else {
-          test.imgInfo = TEST_FLAG_INFO.NOT_PASSED;
+          if (_.isEqual(result, test.result)) {
+            test.imgInfo = TEST_FLAG_INFO.PASSED;
+          } else {
+            test.imgInfo = TEST_FLAG_INFO.NOT_PASSED;
+          }
         }
 
         const testHasPassed = test.imgInfo === TEST_FLAG_INFO.PASSED;
