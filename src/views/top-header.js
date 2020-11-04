@@ -3,6 +3,10 @@ export default {
     toggleTitleShow() {
       this.$store.commit("toggleTitleShow");
     },
+
+    closeExercise() {
+      this.$store.dispatch("closeExercise");
+    },
   },
 
   mounted() {},
