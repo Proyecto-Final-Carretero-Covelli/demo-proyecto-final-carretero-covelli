@@ -52,6 +52,7 @@ export default new Vuex.Store({
     exercises: [],
     isRunningCode: false,
     isDebugging: false,
+    consoleOutput: ""
   },
   getters: {
     getTitle: (state) => {
@@ -96,6 +97,9 @@ export default new Vuex.Store({
     isDebugging: (state) => {
       return state.isDebugging;
     },
+    getConsoleOutput: (state) => {
+      return state.consoleOutput;
+    }
   },
 
   mutations: {
@@ -145,9 +149,16 @@ export default new Vuex.Store({
     setRunningCode: (state, isRunning) => {
       state.isRunningCode = isRunning;
     },
+    appendErrorToConsole: (state, error) => {
+      state.consoleOutput += ("<p>" + error + "</p>");
+    }
   },
 
   actions: {
+    clearConsole: (context) => {
+      context.state.consoleOutput = "";
+    },
+
     signOut: (context) => {
       context.commit("setCurrentUser", undefined);
       context.state.firebaseUtils.signOut();
@@ -199,8 +210,6 @@ export default new Vuex.Store({
 
     runInSlowMode: (context) => {
       const debug = new Debugger(context);
-
-      context.state.isRunningCode = true;
       debug.runSlowMode();
     },
 

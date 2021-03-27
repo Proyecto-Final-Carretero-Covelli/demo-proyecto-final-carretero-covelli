@@ -2,6 +2,19 @@
 
 .console {
   background-color: $primary;
-  width: 100%;
+  width: 97.5%;
   height: 100%;
+  overflow: auto;
+}
+
+.console-content {
+  color: red;
+  padding-top: 2%;
+  font-size: 0.9em;
+}
+
+.trash-bin {
+  float: right;
+  margin-right: 1%;
+  cursor: pointer;
 }
