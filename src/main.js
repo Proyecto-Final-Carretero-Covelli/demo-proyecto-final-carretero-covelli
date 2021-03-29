@@ -79,8 +79,14 @@ firebaseUtils.auth.onAuthStateChanged((user) => {
 
       if (currentUser) {
         store.commit("setCurrentUser", currentUser);
+        initApp();
+      } else {
+        firebaseUtils.addUser().then((user) => {
+          store.commit("setCurrentUser", user);
+          initApp();
+        });
       }
-      initApp();
+
     });
   } else {
     initApp();

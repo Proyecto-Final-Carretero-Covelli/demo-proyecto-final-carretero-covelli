@@ -64,18 +64,31 @@ export const firebaseUtils = {
       email: googleUser.email,
       photoURL: googleUser.photoURL,
     };
-    return app
+    app
       .database()
       .ref(`users/${googleUser.providerData[0].uid}`)
       .set(user);
+
+    return new Promise((resolve) => resolve(user));
   },
 
   getCurrentUser: function() {
-    const userId = firebase.auth().currentUser.providerData[0].uid;
-    return app
-      .database()
-      .ref(`users/${userId}`)
-      .once("value");
+    return new Promise((resolve) => {
+      
+      const currentUser = firebase.auth().currentUser;
+      
+      if (currentUser) {
+        const userId = currentUser.providerData[0].uid;
+        const user = app
+          .database()
+          .ref(`users/${userId}`)
+          .once("value");
+        resolve(user);
+      } else {
+        resolve();
+      }
+
+    });
   },
 
   addTestToHistory: function(exerciseId, passedFlag, test, oldInfo) {
