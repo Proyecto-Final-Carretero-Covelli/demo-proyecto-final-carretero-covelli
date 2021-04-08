@@ -31,6 +31,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
 
@@ -64,6 +65,7 @@ library.add(faGoogle);
 library.add(faBug);
 library.add(faArrowRight);
 library.add(faClock);
+library.add(faDownload);
 
 function initApp() {
   new Vue({
