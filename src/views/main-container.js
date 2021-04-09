@@ -2,6 +2,7 @@ import Sidebar from "./sidebar.vue";
 import TopHeader from "./top-header.vue";
 import MiddleContainer from "./middle-container.vue";
 import Login from "../components/modals/login/login.vue";
+import { firebaseUtils } from "../db/firebase";
 
 export default {
   components: {
@@ -12,8 +13,12 @@ export default {
   },
   mounted() {
     const currentUser = this.$store.getters.getCurrentUser;
-    if (!currentUser) {
-      this.$bvModal.show("modal-login");
-    }
+
+    firebaseUtils.getCurrentUser().then((user) => {
+      if (!user && !currentUser) {
+        this.$bvModal.show("modal-login");
+      }
+    });
+
   },
 };

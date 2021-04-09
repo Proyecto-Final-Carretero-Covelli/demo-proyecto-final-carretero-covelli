@@ -45,11 +45,10 @@
     <font-awesome-icon
       id="sidebar-config"
       class="sidebar__icon"
-      :icon="['fas', 'cog']"
+      :icon="['fas', 'download']"
+      @click="downloadCode"
     />
-    <b-tooltip target="sidebar-config" title="Solución" triggers="hover"
-      >Configuraciones</b-tooltip
-    >
+    <b-tooltip target="sidebar-config" title="Solución" triggers="hover">Descargar Ejercicio</b-tooltip>
 
     <!-- User -->
     <font-awesome-icon

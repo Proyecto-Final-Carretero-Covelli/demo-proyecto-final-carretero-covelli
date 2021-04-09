@@ -59,24 +59,30 @@ export class Debugger {
 
   runSlowMode() {
     let self = this;
-    this.interpreter.run(this.jsCode);
-    const contextStack = this.interpreter.scope.context.exports.contextStack;
-    
-    let interval = setInterval(function() {
-        if (contextStack.length) {
-            const currentContext = contextStack.shift();
-            currentContext.pos = self.getHighlightPosition(currentContext.node);
-            self.setVariables(currentContext);
-        } else {
-            clearInterval(interval);
-            self.setVariables(null, true);
-        }
-    }, 1200);
+    const successRun = this.runInterpreter();
+
+    if (successRun) {
+      this.storeContext.commit("setRunningCode", true);
+
+      const contextStack = this.interpreter.scope.context.exports.contextStack;
+      
+      let interval = setInterval(function() {
+          if (contextStack.length) {
+              const currentContext = contextStack.shift();
+              currentContext.pos = self.getHighlightPosition(currentContext.node);
+              self.setVariables(currentContext);
+          } else {
+              clearInterval(interval);
+              self.setVariables(null, true);
+          }
+      }, 1200);
+
+    }
     
   }
 
   runAllCode() {
-    this.interpreter.run(this.jsCode);
+    this.runInterpreter();
     const contextStack = this.interpreter.scope.context.exports.contextStack;
     const result = this.interpreter.scope.context["resultado"];
 
@@ -120,9 +126,23 @@ export class Debugger {
 
   }
 
+  runInterpreter() {
+    try {
+      this.interpreter.run(this.jsCode);
+      return true;
+    } catch (error) {
+      alert("Error al interpretar el código ingresado. Para más detalles por favor revisar la consola.");
+      this.storeContext.commit("appendErrorToConsole", error);
+
+      return false;
+    }
+  }
+
   runDebugMode() {
     this.storeContext.state.isDebugging = true;
-    this.interpreter.run(this.jsCode);
+
+    this.runInterpreter();
+
     this.contextStack = this.interpreter.scope.context.exports.contextStack;
     this.next();
   }
