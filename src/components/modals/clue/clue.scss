@@ -1,0 +1,59 @@
+@import "../../../scss/variables";
+
+.clue {
+  background-color: $primary !important;
+  color: $text-white !important;
+  height: 100%;
+  width: 100%;
+  max-width: 800px;
+
+  .close {
+    color: white;
+  }
+
+  &__keypad {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    &__option {
+      background-color: $primary-light;
+      margin: 0 0.5rem;
+
+      &:active {
+        background-color: $primary-light;
+      }
+
+      &:focus {
+        box-shadow: none !important;
+      }
+
+      &--selected {
+        background-color: $secondary-dark !important;
+        color: $primary-dark !important;
+      }
+    }
+  }
+
+  &__body {
+    width: 100%;
+    padding: 0px;
+    flex: 1 1;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title {
+      width: 100%;
+      margin: 1rem 0.5rem;
+      max-height: 30%;
+      overflow-y: scroll;
+    }
+
+    &__code {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import NewExercise from "../components/modals/new-exercise/new-exercise.vue";
 import Search from "../components/modals/search/search.vue";
 import Account from "../components/modals/account/account.vue";
+import Clue from "../components/modals/clue/clue.vue";
 
 export default {
-  components: { NewExercise, Search, Account },
+  components: { NewExercise, Search, Account, Clue },
 
   methods: {
     openModalNewExercise() {
@@ -21,55 +22,72 @@ export default {
     },
 
     seeSolution() {
-      const solution = this.$store.getters.getCurrentExercise.initialCode ?
-        (this.$store.getters.getCurrentExercise.initialCode +
-        "\n\n" +
-        this.$store.getters.getCurrentExercise.solution) :
-        this.$store.getters.getCurrentExercise.solution;
+      if (this.$store.getters.getTitle) {
+        const currentExercise = this.$store.getters.getCurrentExercise;
+        if (currentExercise.clue1 || currentExercise.clue2) {
+          this.$bvModal.show("modal-clue");
+        }
 
-      this.$store.commit("setImplementationEditor", solution);
+        const solution = this.$store.getters.getCurrentExercise.initialCode
+          ? this.$store.getters.getCurrentExercise.initialCode +
+            "\n\n" +
+            this.$store.getters.getCurrentExercise.solution
+          : this.$store.getters.getCurrentExercise.solution;
+
+        this.$store.commit("setImplementationEditor", solution);
+      } else {
+        this.$bvToast.toast("Utilice la 🔍 para buscar ejercicios.", {
+          title: "Seleccione un ejercicio",
+          variant: "warning",
+          solid: true,
+          bodyClass: "new-exercise__toast-error--body",
+          headerClass: "new-exercise__toast-error--header",
+          autoHideDelay: 2000,
+        });
+      }
     },
 
     downloadCode() {
       function download(filename, text) {
-        const element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', "VIDE" + filename + ".txt");
+        const element = document.createElement("a");
+        element.setAttribute(
+          "href",
+          "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+        );
+        element.setAttribute("download", "VIDE" + filename + ".txt");
         element.click();
       }
 
       function getState(state) {
         switch (state) {
-          case 'not-passed':
-            return 'rechazado';
-          case 'passed':
-            return 'pasado correctamente';
-          case 'not-executed':
-            return 'aún no ejecutado';
+          case "not-passed":
+            return "rechazado";
+          case "passed":
+            return "pasado correctamente";
+          case "not-executed":
+            return "aún no ejecutado";
         }
       }
-    
+
       const currentExercise = this.$store.getters.getCurrentExercise;
-      let text = 
+      let text =
         "Consigna:\n" +
         (currentExercise.statement || "") +
         "\n\nDeclaración:\n" +
-        (this.$store.getters.getVariablesEditor || "") + 
-        "\n\nImplementación:\n" + 
+        (this.$store.getters.getVariablesEditor || "") +
+        "\n\nImplementación:\n" +
         (this.$store.getters.getImplementationEditor || "");
 
       if (currentExercise.suiteTest && currentExercise.suiteTest.length) {
-        text += "\n\nReporte de Tests:\n"
-        currentExercise.suiteTest.forEach(test => {
-          text += (test.name + ": " + getState(test.imgInfo.state) + "\n");
+        text += "\n\nReporte de Tests:\n";
+        currentExercise.suiteTest.forEach((test) => {
+          text += test.name + ": " + getState(test.imgInfo.state) + "\n";
         });
       }
 
-      const filename = currentExercise.name ? " - " + currentExercise.name  : "";
-      
+      const filename = currentExercise.name ? " - " + currentExercise.name : "";
+
       download(filename, text);
-
-    }
-
+    },
   },
 };

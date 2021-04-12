@@ -32,7 +32,6 @@ export default {
       if (!container) {
         return;
       }
-      console.log("Height", container.offsetHeight);
       const height = container.offsetHeight;
       const width = container.offsetWidth;
       this.configKonva.width = width;

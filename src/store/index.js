@@ -52,7 +52,7 @@ export default new Vuex.Store({
     exercises: [],
     isRunningCode: false,
     isDebugging: false,
-    consoleOutput: ""
+    consoleOutput: "",
   },
   getters: {
     getTitle: (state) => {
@@ -99,7 +99,7 @@ export default new Vuex.Store({
     },
     getConsoleOutput: (state) => {
       return state.consoleOutput;
-    }
+    },
   },
 
   mutations: {
@@ -150,8 +150,8 @@ export default new Vuex.Store({
       state.isRunningCode = isRunning;
     },
     appendErrorToConsole: (state, error) => {
-      state.consoleOutput += ("<p>" + error + "</p>");
-    }
+      state.consoleOutput += "<p>" + error + "</p>";
+    },
   },
 
   actions: {
