@@ -26,9 +26,10 @@ export default {
     selectExercise(selectedExercise) {
       if (!selectedExercise.children) {
         let exercise = selectedExercise.exercise;
-        Object.keys(exercise.suiteTest).forEach((testId) => {
-          this._setTestFlagIconInfo(exercise.suiteTest[testId], exercise);
-        });
+        if (exercise.suiteTest)
+          Object.keys(exercise.suiteTest).forEach((testId) => {
+            this._setTestFlagIconInfo(exercise.suiteTest[testId], exercise);
+          });
         this.$store.dispatch("selectExercise", exercise);
         this.$bvModal.hide("modal-search");
       }
