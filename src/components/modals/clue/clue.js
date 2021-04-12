@@ -35,8 +35,8 @@ export default {
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
     },
-  },
-  beforeDestroy() {
-    console.log("destroy");
+    hiddenEvent() {
+      this.index = null;
+    },
   },
 };

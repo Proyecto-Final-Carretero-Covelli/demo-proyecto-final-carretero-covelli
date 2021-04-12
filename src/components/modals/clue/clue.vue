@@ -4,6 +4,7 @@
     size="xl"
     content-class="clue"
     body-class="clue__body"
+    @hidden="hiddenEvent"
     hide-footer
     scrollable
     centered

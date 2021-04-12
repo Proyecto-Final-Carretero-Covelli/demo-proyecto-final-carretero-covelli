@@ -23,18 +23,7 @@ export default {
 
     seeSolution() {
       if (this.$store.getters.getTitle) {
-        const currentExercise = this.$store.getters.getCurrentExercise;
-        if (currentExercise.clue1 || currentExercise.clue2) {
-          this.$bvModal.show("modal-clue");
-        }
-
-        const solution = this.$store.getters.getCurrentExercise.initialCode
-          ? this.$store.getters.getCurrentExercise.initialCode +
-            "\n\n" +
-            this.$store.getters.getCurrentExercise.solution
-          : this.$store.getters.getCurrentExercise.solution;
-
-        this.$store.commit("setImplementationEditor", solution);
+        this.$bvModal.show("modal-clue");
       } else {
         this.$bvToast.toast("Utilice la 🔍 para buscar ejercicios.", {
           title: "Seleccione un ejercicio",
