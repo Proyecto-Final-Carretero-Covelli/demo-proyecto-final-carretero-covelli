@@ -9,6 +9,14 @@
 
   .close {
     color: white;
+    text-shadow: none;
+
+    &:hover {
+      color: $red !important;
+    }
+    &:focus {
+      outline: none;
+    }
   }
 
   &__keypad {
@@ -19,6 +27,7 @@
     &__option {
       background-color: $primary-light;
       margin: 0 0.5rem;
+      border-color: $primary-light !important;
 
       &:active {
         background-color: $primary-light;
@@ -30,6 +39,7 @@
 
       &--selected {
         background-color: $secondary-dark !important;
+        border-color: $secondary-dark !important;
         color: $primary-dark !important;
       }
     }

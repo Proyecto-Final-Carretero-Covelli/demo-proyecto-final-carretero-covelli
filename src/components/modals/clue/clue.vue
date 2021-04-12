@@ -1,6 +1,7 @@
 <template>
   <b-modal
     id="modal-clue"
+    size="xl"
     content-class="clue"
     body-class="clue__body"
     hide-footer
