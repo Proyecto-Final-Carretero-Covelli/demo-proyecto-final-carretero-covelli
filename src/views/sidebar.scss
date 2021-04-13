@@ -27,6 +27,10 @@
     &:hover {
       color: $light-grey;
     }
+
+    &.disabled {
+      color: rgba(255, 255, 255, 0.212);
+    }
   }
 
   &__user {

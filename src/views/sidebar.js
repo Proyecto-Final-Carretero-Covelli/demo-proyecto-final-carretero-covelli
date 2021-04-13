@@ -6,6 +6,16 @@ import Clue from "../components/modals/clue/clue.vue";
 export default {
   components: { NewExercise, Search, Account, Clue },
 
+  computed: {
+    cluesOrSolution() {
+      return (
+        this.$store.getters.getTitle &&
+        (!!this.$store.getters.getCurrentExercise.clue ||
+          !!this.$store.getters.getCurrentExercise.solution)
+      );
+    },
+  },
+
   methods: {
     openModalNewExercise() {
       this.$bvModal.show("modal-new-exercise");
@@ -23,11 +33,25 @@ export default {
 
     seeSolution() {
       if (this.$store.getters.getTitle) {
-        this.$bvModal.show("modal-clue");
+        if (
+          !!this.$store.getters.getCurrentExercise.clue ||
+          !!this.$store.getters.getCurrentExercise.solution
+        ) {
+          this.$bvModal.show("modal-clue");
+        } else {
+          this.$bvToast.toast("Ejercicio sin solución y/o pistas ", {
+            title: "🙈🙉🙊",
+            variant: "info",
+            solid: true,
+            bodyClass: "new-exercise__toast-error--body",
+            headerClass: "new-exercise__toast-error--header",
+            autoHideDelay: 2000,
+          });
+        }
       } else {
         this.$bvToast.toast("Utilice la 🔍 para buscar ejercicios.", {
           title: "Seleccione un ejercicio",
-          variant: "warning",
+          variant: "info",
           solid: true,
           bodyClass: "new-exercise__toast-error--body",
           headerClass: "new-exercise__toast-error--header",

@@ -4,6 +4,7 @@
     <font-awesome-icon
       id="sidebar-solution"
       class="sidebar__icon"
+      :class="{ disabled: !cluesOrSolution }"
       :icon="['fas', 'life-ring']"
       @click="seeSolution"
     />
