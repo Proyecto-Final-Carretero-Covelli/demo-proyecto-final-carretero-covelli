@@ -38,7 +38,7 @@
                     <aceeditor
                       v-model="variablesEditor"
                       @init="editorInit"
-                      lang="typescript"
+                      lang="javascript"
                       theme="dracula"
                       ref="myVariablesEditor"
                     ></aceeditor>
@@ -48,7 +48,7 @@
                     <aceeditor
                       v-model="implementationEditor"
                       @init="editorInit"
-                      lang="typescript"
+                      lang="javascript"
                       theme="dracula"
                       ref="myImplementationEditor"
                     ></aceeditor>

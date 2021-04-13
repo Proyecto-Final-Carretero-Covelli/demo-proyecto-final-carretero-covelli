@@ -4,10 +4,14 @@
     <font-awesome-icon
       id="sidebar-solution"
       class="sidebar__icon"
+      :class="{ disabled: !cluesOrSolution }"
       :icon="['fas', 'life-ring']"
       @click="seeSolution"
     />
-    <b-tooltip target="sidebar-solution" triggers="hover">Solución</b-tooltip>
+    <b-tooltip target="sidebar-solution" triggers="hover"
+      >Solución y Pistas</b-tooltip
+    >
+    <clue></clue>
 
     <!-- Analytics -->
     <font-awesome-icon
@@ -48,7 +52,9 @@
       :icon="['fas', 'download']"
       @click="downloadCode"
     />
-    <b-tooltip target="sidebar-config" title="Solución" triggers="hover">Descargar Ejercicio</b-tooltip>
+    <b-tooltip target="sidebar-config" title="Solución" triggers="hover"
+      >Descargar Ejercicio</b-tooltip
+    >
 
     <!-- User -->
     <font-awesome-icon

@@ -4,6 +4,17 @@
   background-color: $primary !important;
   color: $text-white !important;
 
+  &__split-50 {
+    display: flex;
+    > div {
+      width: 50%;
+    }
+
+    .form-control {
+      height: 100%;
+    }
+  }
+
   &__folder {
     width: 49%;
 
@@ -150,6 +161,10 @@
   &:hover {
     box-shadow: none !important;
     background-color: $primary-down;
+  }
+
+  &--border {
+    border: 1px solid $primary-light;
   }
 }
 

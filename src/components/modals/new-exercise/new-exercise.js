@@ -10,15 +10,17 @@ export default {
       statement: "",
       initialCode: "",
       solutionCode: "",
+      clue1: "",
+      clueCode1: "",
+      clue2: "",
+      clueCode2: "",
       currentTestName: "",
       currentTestCode: "",
       currentIndexTest: -1,
       tests: [],
       editTestMode: false,
       folder: "",
-
       searchActive: false,
-
       loadingNewExercise: false,
     };
   },
@@ -59,6 +61,14 @@ export default {
       require("brace/snippets/javascript"); //snippet
     },
 
+    openSearchDropdown() {
+      this.searchActive = true;
+    },
+
+    closeSearchDropdown() {
+      this.searchActive = false;
+    },
+
     searchFolder() {
       this.searchActive = !this.searchActive;
     },
@@ -76,6 +86,10 @@ export default {
       this.solutionCode = "";
       this.currentTestName = "";
       this.currentTestCode = "";
+      this.clue1 = "";
+      this.clueCode1 = "";
+      this.clue2 = "";
+      this.clueCode2 = "";
       this.currentIndexTest = -1;
       this.tests = [];
       this.editTestMode = false;
@@ -169,6 +183,14 @@ export default {
                   statement: this.statement,
                   initialCode: this.initialCode,
                   solution: this.solutionCode,
+                  clue: [
+                    ...this.getClue(this.clue1, this.clueCode1),
+                    ...this.getClue(this.clue2, this.clueCode2),
+                  ],
+                  clue1: this.clue1,
+                  clueCode1: this.clueCode1,
+                  clue2: this.clue2,
+                  clueCode2: this.clueCode2,
                   suiteTest: suiteTest,
                 };
                 const firebaseUtils = this.$store.getters.getFirabaseUtils;
@@ -209,6 +231,20 @@ export default {
             "Por favor indique una 'Consinga' para el nuevo ejercicio."
           );
       }
+    },
+
+    getClue(title, code) {
+      if (title || code) {
+        const clue = {};
+        if (title) {
+          clue.title = title;
+        }
+        if (code) {
+          clue.code = code;
+        }
+        return [clue];
+      }
+      return [];
     },
 
     generateResultTests() {

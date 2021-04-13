@@ -15,6 +15,8 @@
             :state="null"
             placeholder="Carpeta"
             v-model="folder"
+            @keyup.enter="openSearchDropdown"
+            @keyup.esc="closeSearchDropdown"
           ></b-form-input>
 
           <font-awesome-icon
@@ -59,7 +61,7 @@
       </div>
     </div>
 
-    <div class="mt-3 input-deco">
+    <div class="mt-3 input-deco input-deco--border">
       <b-form-textarea
         id="new-exercise-statement"
         size="lg"
@@ -74,7 +76,7 @@
         <aceeditor
           v-model="initialCode"
           @init="editorInit"
-          lang="typescript"
+          lang="javascript"
           theme="dracula"
           ref="initialCodeEditor"
         ></aceeditor>
@@ -86,10 +88,49 @@
         <aceeditor
           v-model="solutionCode"
           @init="editorInit"
-          lang="typescript"
+          lang="javascript"
           theme="dracula"
           ref="solutionCodeEditor"
         ></aceeditor>
+      </div>
+    </div>
+    <div class="mt-3">
+      <p>Pistas</p>
+      <div class="new-exercise__split-50">
+        <div class="mr-3 input-deco input-deco--border">
+          <b-form-textarea
+            id="new-exercise-statement"
+            size="lg"
+            placeholder="Pista 1"
+            v-model="clue1"
+          ></b-form-textarea>
+        </div>
+        <div class="new-exercise__code-editor">
+          <aceeditor
+            v-model="clueCode1"
+            @init="editorInit"
+            lang="javascript"
+            theme="dracula"
+          ></aceeditor>
+        </div>
+      </div>
+      <div class="mt-3 new-exercise__split-50">
+        <div class="mr-3 input-deco input-deco--border">
+          <b-form-textarea
+            id="new-exercise-statement"
+            size="lg"
+            placeholder="Pista 2"
+            v-model="clue2"
+          ></b-form-textarea>
+        </div>
+        <div class="new-exercise__code-editor">
+          <aceeditor
+            v-model="clueCode2"
+            @init="editorInit"
+            lang="javascript"
+            theme="dracula"
+          ></aceeditor>
+        </div>
       </div>
     </div>
 
@@ -144,7 +185,7 @@
             <aceeditor
               v-model="currentTestCode"
               @init="editorInit"
-              lang="typescript"
+              lang="javascript"
               theme="dracula"
               ref="testCodeEditor"
             ></aceeditor>
