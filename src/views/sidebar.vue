@@ -18,10 +18,12 @@
       id="sidebar-analytics"
       class="sidebar__icon"
       :icon="['fas', 'chart-bar']"
+      @click="openModalAnalytics"
     />
     <b-tooltip target="sidebar-analytics" triggers="hover"
       >Estadisticas</b-tooltip
     >
+    <analytics></analytics>
 
     <!-- Search -->
     <font-awesome-icon
