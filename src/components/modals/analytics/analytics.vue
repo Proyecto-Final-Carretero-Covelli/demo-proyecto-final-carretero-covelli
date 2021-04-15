@@ -12,7 +12,7 @@
     <template v-slot:modal-title>Estadisticas</template>
 
     <div>
-      Chart con estadisticas
+      <BarChart />
     </div>
   </b-modal>
 </template>

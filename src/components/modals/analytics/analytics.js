@@ -1,5 +1,7 @@
+import BarChart from "../../charts/bar";
+
 export default {
-  components: {},
+  components: { BarChart },
   data() {
     return {};
   },
