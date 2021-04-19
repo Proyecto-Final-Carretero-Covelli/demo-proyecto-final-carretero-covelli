@@ -31,11 +31,19 @@ export default {
           }
         }
 
-        const testHasPassed = test.imgInfo === TEST_FLAG_INFO.PASSED;
+        const testHasPassed =
+          test.imgInfo === TEST_FLAG_INFO.PASSED ? "passed" : "notPassed";
 
         firebaseUtils.updateUserStatistics(
           testHasPassed,
           this._getValueToUpdateUserStatistics(testHasPassed)
+        );
+
+        const currentExercise = this.$store.getters.getCurrentExercise;
+        firebaseUtils.updateExerciseStadistics(
+          testHasPassed,
+          currentExercise.folderId,
+          currentExercise.id
         );
 
         this.$forceUpdate();

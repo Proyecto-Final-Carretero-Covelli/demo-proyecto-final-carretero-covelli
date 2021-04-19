@@ -74,9 +74,8 @@ export const firebaseUtils = {
 
   getCurrentUser: function() {
     return new Promise((resolve) => {
-      
       const currentUser = firebase.auth().currentUser;
-      
+
       if (currentUser) {
         const userId = currentUser.providerData[0].uid;
         const user = app
@@ -87,7 +86,6 @@ export const firebaseUtils = {
       } else {
         resolve();
       }
-
     });
   },
 
@@ -128,17 +126,21 @@ export const firebaseUtils = {
 
   updateUserStatistics: function(passedFlag, newValue) {
     const userId = firebase.auth().currentUser.providerData[0].uid;
-    if (passedFlag) {
-      app
-        .database()
-        .ref(`users/${userId}/statistics/passed`)
-        .set(newValue);
-    } else {
-      app
-        .database()
-        .ref(`users/${userId}/statistics/notPassed`)
-        .set(newValue);
-    }
+    app
+      .database()
+      .ref(`users/${userId}/statistics/${passedFlag}`)
+      .set(newValue);
+  },
+
+  updateExerciseStadistics: function(passedFlag, folderId, exerciseId) {
+    const updates = {};
+    updates[
+      `folders/${folderId}/exercises/${exerciseId}/stadistics/${passedFlag}`
+    ] = firebase.database.ServerValue.increment(1);
+    firebase
+      .database()
+      .ref()
+      .update(updates);
   },
 
   parseExercices(folders) {
@@ -156,6 +158,7 @@ export const firebaseUtils = {
           id: exercise["id"],
           label: exercise["name"],
           exercise: exercise,
+          folderId: idFolder,
         });
       }
       result.push(newFolder);

@@ -26,6 +26,7 @@ export default {
     selectExercise(selectedExercise) {
       if (!selectedExercise.children) {
         let exercise = selectedExercise.exercise;
+        exercise.folderId = selectedExercise.folderId;
         if (exercise.suiteTest)
           Object.keys(exercise.suiteTest).forEach((testId) => {
             this._setTestFlagIconInfo(exercise.suiteTest[testId], exercise);

@@ -1,1 +1,27 @@
 @import "../../../scss/variables";
+
+.analytics {
+  background-color: $primary !important;
+  color: $text-white !important;
+  width: 100%;
+  max-width: 800px;
+
+  .close {
+    color: white;
+    text-shadow: none;
+
+    &:hover {
+      color: $red !important;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}

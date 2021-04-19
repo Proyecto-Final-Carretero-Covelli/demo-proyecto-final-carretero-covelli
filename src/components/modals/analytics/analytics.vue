@@ -4,14 +4,13 @@
     size="xl"
     content-class="analytics"
     body-class="analytics"
-    @hidden="hiddenEvent"
     hide-footer
     scrollable
     centered
   >
     <template v-slot:modal-title>Estadisticas</template>
 
-    <div>
+    <div class="analytics__body">
       <BarChart />
     </div>
   </b-modal>
