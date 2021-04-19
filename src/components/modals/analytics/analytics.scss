@@ -20,8 +20,37 @@
 
   &__body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
+  }
+
+  &__resume {
+    margin: 1rem 0;
+    display: flex;
+
+    &__item {
+      background-color: $primary-light;
+      padding: 1rem;
+      margin: 0 1rem;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &--green {
+        background-color: #009c70;
+      }
+
+      &--red {
+        background-color: #db4b16;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
   }
 }

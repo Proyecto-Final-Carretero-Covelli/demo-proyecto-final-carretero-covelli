@@ -1,25 +1,27 @@
-import { Bar } from "vue-chartjs";
+import { Bar, mixins } from "vue-chartjs";
+const { reactiveProp } = mixins;
 
 export default {
   extends: Bar,
+  mixins: [reactiveProp],
   data: () => ({
-    chartdata: {
-      labels: ["January", "February"],
-      datasets: [
-        {
-          label: "Data One",
-          backgroundColor: "#f87979",
-          data: [40, 20],
-        },
-      ],
-    },
     options: {
       responsive: false,
       maintainAspectRatio: true,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              min: 0,
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
     },
   }),
 
   mounted() {
-    this.renderChart(this.chartdata, this.options);
+    this.renderChart(this.chartData, this.options);
   },
 };

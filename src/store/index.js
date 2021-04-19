@@ -125,6 +125,9 @@ export default new Vuex.Store({
     setCurrentExercise: (state, value) => {
       state.currentExercise = value;
     },
+    setCurrentExerciseStadistics: (state, value) => {
+      state.currentExercise.stadistics = value;
+    },
     setTitle: (state, title) => {
       state.title = title;
     },
@@ -241,6 +244,17 @@ export default new Vuex.Store({
       context.state.firebaseUtils.getFolders().then(function(data) {
         context.commit("setFolders", firebaseUtils.parseFolders(data.val()));
       });
+    },
+
+    refreshCurrentExerciseStadistics: (context) => {
+      context.state.firebaseUtils
+        .refreshCurrentExerciseStadistics(
+          context.getters.getCurrentExercise.folderId,
+          context.getters.getCurrentExercise.id
+        )
+        .then(function(data) {
+          context.commit("setCurrentExerciseStadistics", data.val());
+        });
     },
 
     selectExercise: (context, exercise) => {

@@ -1,5 +1,27 @@
 <template>
   <div class="sidebar">
+    <!-- New Exercise -->
+    <font-awesome-icon
+      id="sidebar-new-exercise"
+      class="sidebar__icon"
+      :icon="['far', 'plus-square']"
+      @click="openModalNewExercise"
+    />
+    <b-tooltip target="sidebar-new-exercise" triggers="hover"
+      >Crear Ejercicio</b-tooltip
+    >
+    <new-exercise></new-exercise>
+
+    <!-- Search -->
+    <font-awesome-icon
+      id="sidebar-search"
+      class="sidebar__icon"
+      :icon="['fas', 'search']"
+      @click="openModalSearch"
+    />
+    <b-tooltip target="sidebar-search" triggers="hover">Buscar</b-tooltip>
+    <search></search>
+
     <!-- Solution -->
     <font-awesome-icon
       id="sidebar-solution"
@@ -17,6 +39,7 @@
     <font-awesome-icon
       id="sidebar-analytics"
       class="sidebar__icon"
+      :class="{ disabled: !selectedExerciseStadistics }"
       :icon="['fas', 'chart-bar']"
       @click="openModalAnalytics"
     />
@@ -24,28 +47,6 @@
       >Estadisticas</b-tooltip
     >
     <analytics></analytics>
-
-    <!-- Search -->
-    <font-awesome-icon
-      id="sidebar-search"
-      class="sidebar__icon"
-      :icon="['fas', 'search']"
-      @click="openModalSeach"
-    />
-    <b-tooltip target="sidebar-search" triggers="hover">Buscar</b-tooltip>
-    <search></search>
-
-    <!-- New Exercise -->
-    <font-awesome-icon
-      id="sidebar-new-exercise"
-      class="sidebar__icon"
-      :icon="['far', 'plus-square']"
-      @click="openModalNewExercise"
-    />
-    <b-tooltip target="sidebar-new-exercise" triggers="hover"
-      >Crear Ejercicio</b-tooltip
-    >
-    <new-exercise></new-exercise>
 
     <!-- Config -->
     <font-awesome-icon

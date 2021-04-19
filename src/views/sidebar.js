@@ -15,6 +15,12 @@ export default {
           !!this.$store.getters.getCurrentExercise.solution)
       );
     },
+    selectedExerciseStadistics() {
+      return (
+        this.$store.getters.getTitle &&
+        !!this.$store.getters.getCurrentExercise.stadistics
+      );
+    },
   },
 
   methods: {
@@ -23,7 +29,7 @@ export default {
       this.$store.dispatch("updateFolders");
     },
 
-    openModalSeach() {
+    openModalSearch() {
       this.$bvModal.show("modal-search");
       this.$store.dispatch("updateExercices");
     },
@@ -33,7 +39,10 @@ export default {
     },
 
     openModalAnalytics() {
-      this.$bvModal.show("modal-analytics");
+      if (this.selectedExerciseStadistics) {
+        this.$bvModal.show("modal-analytics");
+        this.$store.dispatch("refreshCurrentExerciseStadistics");
+      }
     },
 
     seeSolution() {

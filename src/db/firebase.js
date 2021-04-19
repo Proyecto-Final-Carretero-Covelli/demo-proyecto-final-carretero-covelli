@@ -143,6 +143,13 @@ export const firebaseUtils = {
       .update(updates);
   },
 
+  refreshCurrentExerciseStadistics: function(folderId, exerciseId) {
+    return app
+      .database()
+      .ref(`folders/${folderId}/exercises/${exerciseId}/stadistics`)
+      .once("value");
+  },
+
   parseExercices(folders) {
     let result = [];
     for (const idFolder in folders) {
