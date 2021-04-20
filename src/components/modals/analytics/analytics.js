@@ -26,6 +26,28 @@ export default {
         ],
       };
     },
+    chartCurrentExerciseErrorStadistics() {
+      return {
+        labels: ["Ejecuciones"],
+        datasets: [
+          {
+            label: "Errores de referencia",
+            backgroundColor: "#009c70",
+            data: [this.currentExerciseStadistics?.ReferenceError],
+          },
+          {
+            label: "Error de Sintaxis",
+            backgroundColor: "#db4b16",
+            data: [this.currentExerciseStadistics?.SyntaxError],
+          },
+          {
+            label: "Operación invalida",
+            backgroundColor: "#db4b16",
+            data: [this.currentExerciseStadistics?.TypeError],
+          },
+        ],
+      };
+    },
   },
   methods: {},
   mounted() {},

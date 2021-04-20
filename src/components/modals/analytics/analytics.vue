@@ -11,24 +11,27 @@
     <template v-slot:modal-title>Estadisticas</template>
 
     <div class="analytics__body" v-if="currentExerciseStadistics">
-      <div class="analytics__resume">
-        <div class="analytics__resume__item">
+      <div class="analytics__suite-test">
+        <div class="analytics__suite-test__item">
           <p>
             Total
           </p>
           {{
-            currentExerciseStadistics.passed ||
-              0 + currentExerciseStadistics.notPassed ||
-              0
+            (currentExerciseStadistics.passed || 0) +
+              (currentExerciseStadistics.notPassed || 0)
           }}
         </div>
-        <div class="analytics__resume__item analytics__resume__item--green">
+        <div
+          class="analytics__suite-test__item analytics__suite-test__item--green"
+        >
           <p>
             Satisfactorios
           </p>
           {{ currentExerciseStadistics.passed || 0 }}
         </div>
-        <div class="analytics__resume__item analytics__resume__item--red">
+        <div
+          class="analytics__suite-test__item analytics__suite-test__item--red"
+        >
           <p>
             Rechazados
           </p>
@@ -36,6 +39,38 @@
         </div>
       </div>
       <BarChart :chart-data="chartCurrentExerciseStadistics" />
+
+      <div class="analytics__suite-test">
+        <div class="analytics__suite-test__item">
+          <p>
+            Total
+          </p>
+          {{
+            (currentExerciseStadistics.ReferenceError || 0) +
+              (currentExerciseStadistics.SyntaxError || 0) +
+              (currentExerciseStadistics.TypeError || 0)
+          }}
+        </div>
+        <div class="analytics__suite-test__item">
+          <p>
+            Variable no declarada o inaccesible (ReferenceError)
+          </p>
+          {{ currentExerciseStadistics.ReferenceError || 0 }}
+        </div>
+        <div class="analytics__suite-test__item">
+          <p>
+            Error de Sintaxis
+          </p>
+          {{ currentExerciseStadistics.SyntaxError || 0 }}
+        </div>
+        <div class="analytics__suite-test__item">
+          <p>
+            No se pudo realizar la operación (TypeError)
+          </p>
+          {{ currentExerciseStadistics.TypeError || 0 }}
+        </div>
+      </div>
+      <BarChart :chart-data="chartCurrentExerciseErrorStadistics" />
     </div>
     <div class="analytics__without-data" v-if="!currentExerciseStadistics">
       <p>
