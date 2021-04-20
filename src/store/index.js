@@ -47,6 +47,7 @@ export default new Vuex.Store({
     declaredVariables: [],
     firebaseUtils: firebaseUtils,
     currentExercise: {},
+    currentExerciseStadistics: {},
     currentUser: undefined,
     folders: [],
     exercises: [],
@@ -78,6 +79,9 @@ export default new Vuex.Store({
     },
     getCurrentExercise: (state) => {
       return state.currentExercise;
+    },
+    getCurrentExerciseStadistics: (state) => {
+      return state.currentExerciseStadistics;
     },
     getCurrentUser: (state) => {
       return state.currentUser;
@@ -126,7 +130,7 @@ export default new Vuex.Store({
       state.currentExercise = value;
     },
     setCurrentExerciseStadistics: (state, value) => {
-      state.currentExercise.stadistics = value;
+      state.currentExerciseStadistics = value;
     },
     setTitle: (state, title) => {
       state.title = title;
@@ -259,6 +263,7 @@ export default new Vuex.Store({
 
     selectExercise: (context, exercise) => {
       context.commit("setCurrentExercise", exercise);
+      context.commit("setCurrentExerciseStadistics", exercise.stadistics);
       context.commit("setTitle", exercise.name);
       context.commit("setTitleText", exercise.statement);
       context.commit("setImplementationEditor", exercise.initialCode);
@@ -268,6 +273,7 @@ export default new Vuex.Store({
 
     closeExercise: (context) => {
       context.commit("setCurrentExercise", {});
+      context.commit("setCurrentExerciseStadistics", {});
       context.commit("setTitle", null);
       context.commit("setTitleText", null);
       context.commit("setImplementationEditor", "");

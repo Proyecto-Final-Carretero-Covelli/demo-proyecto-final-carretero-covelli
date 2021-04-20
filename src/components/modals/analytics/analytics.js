@@ -7,7 +7,7 @@ export default {
   },
   computed: {
     currentExerciseStadistics() {
-      return this.$store.getters.getCurrentExercise.stadistics;
+      return this.$store.getters.getCurrentExerciseStadistics;
     },
     chartCurrentExerciseStadistics() {
       return {

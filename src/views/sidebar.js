@@ -18,7 +18,7 @@ export default {
     selectedExerciseStadistics() {
       return (
         this.$store.getters.getTitle &&
-        !!this.$store.getters.getCurrentExercise.stadistics
+        !!this.$store.getters.getCurrentExerciseStadistics
       );
     },
   },

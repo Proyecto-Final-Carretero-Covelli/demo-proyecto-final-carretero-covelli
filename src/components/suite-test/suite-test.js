@@ -46,6 +46,7 @@ export default {
           currentExercise.id
         );
 
+        this.$store.dispatch("refreshCurrentExerciseStadistics");
         this.$forceUpdate();
       });
     },
