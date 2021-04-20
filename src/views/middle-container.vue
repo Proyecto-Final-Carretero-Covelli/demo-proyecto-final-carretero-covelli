@@ -59,8 +59,8 @@
               <!-- Structures View + Suite Test + Console -->
               <template slot="paneR">
                 <split-pane
-                  :min-percent="6"
-                  :default-percent="94"
+                  :min-percent="8"
+                  :default-percent="92"
                   split="horizontal"
                 >
                   <template slot="paneL" style="overflow: hidden">

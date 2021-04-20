@@ -156,8 +156,8 @@ export default new Vuex.Store({
     setRunningCode: (state, isRunning) => {
       state.isRunningCode = isRunning;
     },
-    appendErrorToConsole: (state, error) => {
-      state.consoleOutput += "<p>" + error + "</p>";
+    appendToConsole: (state, msg) => {
+      state.consoleOutput += "<p class='" + msg.type + "'>" + msg.value + "</p>";
     },
   },
 

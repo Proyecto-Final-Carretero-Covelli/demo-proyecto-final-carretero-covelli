@@ -71,6 +71,10 @@ export class Debugger {
               const currentContext = contextStack.shift();
               currentContext.pos = self.getHighlightPosition(currentContext.node);
               self.setVariables(currentContext);
+
+              if (currentContext.node.type === 'CallExpression') {
+                self.appendLog(currentContext.node.arguments[0]);
+              }
           } else {
               clearInterval(interval);
               self.setVariables(null, true);
@@ -86,12 +90,43 @@ export class Debugger {
     const contextStack = this.interpreter.scope.context.exports.contextStack;
     const result = this.interpreter.scope.context["resultado"];
 
+    const logSentences = contextStack.filter(context => context.node.type === 'CallExpression').map(log => log.node.arguments[0]);
+    logSentences.forEach(sentence => this.appendLog(sentence));
+
     if (contextStack && contextStack.length) {
       return {
         value: result ? result.value : null,
         context: contextStack[contextStack.length - 1]
       }
     }
+  }
+
+  appendLog(sentence) {
+    const log = {value: ''};
+    this.addConsoleLog(sentence, log);
+
+    if (log.value) {
+      this.storeContext.commit("appendToConsole", {value: log.value, type: 'log'});
+    }
+  }
+
+  addConsoleLog(node, log) {
+    if (node) {
+
+      this.getNodeValue(node, log);
+      this.addConsoleLog(node.left, log);
+      this.addConsoleLog(node.right, log);
+    }
+  }
+
+  getNodeValue(node, log) {
+
+    if (node.type === 'Literal') {
+      log.value += node.value;
+    } else if (node.type === 'Identifier') {
+      log.value += this.interpreter.scope.context[node.name].value;
+    }
+    
   }
 
   setVariables(svalContext, isLastExecution) {
@@ -132,7 +167,7 @@ export class Debugger {
       return true;
     } catch (error) {
       alert("Error al interpretar el código ingresado. Para más detalles por favor revisar la consola.");
-      this.storeContext.commit("appendErrorToConsole", error);
+      this.storeContext.commit("appendToConsole", {value: error, type: 'error'});
 
       return false;
     }
@@ -152,6 +187,11 @@ export class Debugger {
       const currentContext = this.contextStack.shift();
       currentContext.pos = this.getHighlightPosition(currentContext.node);
       this.setVariables(currentContext);
+
+      if (currentContext.node.type === 'CallExpression') {
+        this.appendLog(currentContext.node.arguments[0]);
+      }
+
     } else {
       this.setVariables(null, true);
       this.storeContext.state.isDebugging = false;
