@@ -38,7 +38,7 @@
           {{ currentExerciseStadistics.notPassed || 0 }}
         </div>
       </div>
-      <BarChart :chart-data="chartCurrentExerciseStadistics" />
+      <Doughnut :chart-data="chartCurrentExerciseStadistics" />
 
       <div class="analytics__suite-test">
         <div class="analytics__suite-test__item">

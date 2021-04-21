@@ -1,7 +1,8 @@
-import BarChart from "../../charts/bar";
+import BarChart from "../../charts/bar/bar";
+import Doughnut from "../../charts/doughtnut/doughtnut";
 
 export default {
-  components: { BarChart },
+  components: { BarChart, Doughnut },
   data() {
     return {};
   },
@@ -32,7 +33,7 @@ export default {
         datasets: [
           {
             label: "Errores de referencia",
-            backgroundColor: "#009c70",
+            backgroundColor: "#db4b16",
             data: [this.currentExerciseStadistics?.ReferenceError],
           },
           {
