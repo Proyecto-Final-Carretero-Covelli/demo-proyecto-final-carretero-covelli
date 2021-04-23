@@ -1,12 +1,21 @@
 import * as firebase from "firebase";
 
 const app = firebase.initializeApp({
+  // SDK vue-tesis-carretero-covelli
   apiKey: "AIzaSyDnyykVGqpifKz2ZF98lZuxTgXNVlmCKpo",
   authDomain: "vue-tesis-carretero-covelli.firebaseapp.com",
   databaseURL: "https://vue-tesis-carretero-covelli.firebaseio.com/",
   projectId: "vue-tesis-carretero-covelli",
   storageBucket: "<BUCKET>.appspot.com",
   messagingSenderId: "<SENDER_ID>",
+
+  // SDK vide-tool, (!) remember to chage .firebaserc too
+  // apiKey: "AIzaSyA7YthBDYtFXWI1DKnM3GYAgcRVVvDxa-U",
+  // authDomain: "vide-tool.firebaseapp.com",
+  // databaseURL: "https://vide-tool-default-rtdb.firebaseio.com",
+  // projectId: "vide-tool",
+  // storageBucket: "<BUCKET>.appspot.com",
+  // messagingSenderId: "<SENDER_ID>",
 });
 
 export const firebaseUtils = {
@@ -74,9 +83,8 @@ export const firebaseUtils = {
 
   getCurrentUser: function() {
     return new Promise((resolve) => {
-      
       const currentUser = firebase.auth().currentUser;
-      
+
       if (currentUser) {
         const userId = currentUser.providerData[0].uid;
         const user = app
@@ -87,7 +95,6 @@ export const firebaseUtils = {
       } else {
         resolve();
       }
-
     });
   },
 
