@@ -34,6 +34,7 @@
 
     p {
       margin: 0px;
+      cursor: pointer;
     }
 
     &--shows:hover {
@@ -45,14 +46,12 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-left: 1rem;
 
     &-icon {
-      margin: 0px 6px;
+      margin: 0px 0.5rem;
 
       :hover {
-        -webkit-transform: scale(1.1);
-        -ms-transform: scale(1.1);
-        transform: scale(1.2);
         cursor: pointer;
       }
 
@@ -62,18 +61,39 @@
         }
       }
 
+      &--slow {
+        :hover {
+          color: $yellow;
+        }
+      }
+
+      &--debug {
+        :hover {
+          color: $secondary-light;
+        }
+      }
+
+      &--next-step {
+        :hover {
+          color: $yellow;
+        }
+      }
+
       &--stop {
         :hover {
           color: $red;
         }
       }
 
-      &--user {
-        height: 25px;
-        width: 25px;
-        border-radius: 20px;
+      &--running {
+        color: $yellow;
       }
     }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .btn-drop-down {
@@ -81,6 +101,7 @@
       background-color: transparent;
       border: none;
       box-shadow: none;
+      color: $border-grey;
     }
 
     .dropdown-menu {
