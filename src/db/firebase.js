@@ -136,17 +136,28 @@ export const firebaseUtils = {
 
   updateUserStatistics: function(passedFlag, newValue) {
     const userId = firebase.auth().currentUser.providerData[0].uid;
-    if (passedFlag) {
-      app
-        .database()
-        .ref(`users/${userId}/statistics/passed`)
-        .set(newValue);
-    } else {
-      app
-        .database()
-        .ref(`users/${userId}/statistics/notPassed`)
-        .set(newValue);
-    }
+    app
+      .database()
+      .ref(`users/${userId}/statistics/${passedFlag}`)
+      .set(newValue);
+  },
+
+  updateExerciseStadistics: function(passedFlag, folderId, exerciseId) {
+    const updates = {};
+    updates[
+      `folders/${folderId}/exercises/${exerciseId}/stadistics/${passedFlag}`
+    ] = firebase.database.ServerValue.increment(1);
+    firebase
+      .database()
+      .ref()
+      .update(updates);
+  },
+
+  refreshCurrentExerciseStadistics: function(folderId, exerciseId) {
+    return app
+      .database()
+      .ref(`folders/${folderId}/exercises/${exerciseId}/stadistics`)
+      .once("value");
   },
 
   parseExercices(folders) {
@@ -164,6 +175,7 @@ export const firebaseUtils = {
           id: exercise["id"],
           label: exercise["name"],
           exercise: exercise,
+          folderId: idFolder,
         });
       }
       result.push(newFolder);

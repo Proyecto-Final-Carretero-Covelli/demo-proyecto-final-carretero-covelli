@@ -2,9 +2,10 @@ import NewExercise from "../components/modals/new-exercise/new-exercise.vue";
 import Search from "../components/modals/search/search.vue";
 import Account from "../components/modals/account/account.vue";
 import Clue from "../components/modals/clue/clue.vue";
+import Analytics from "../components/modals/analytics/analytics.vue";
 
 export default {
-  components: { NewExercise, Search, Account, Clue },
+  components: { NewExercise, Search, Account, Clue, Analytics },
 
   computed: {
     cluesOrSolution() {
@@ -12,6 +13,12 @@ export default {
         this.$store.getters.getTitle &&
         (!!this.$store.getters.getCurrentExercise.clue ||
           !!this.$store.getters.getCurrentExercise.solution)
+      );
+    },
+    selectedExerciseStadistics() {
+      return (
+        this.$store.getters.getTitle &&
+        !!this.$store.getters.getCurrentExerciseStadistics
       );
     },
   },
@@ -22,13 +29,20 @@ export default {
       this.$store.dispatch("updateFolders");
     },
 
-    openModalSeach() {
+    openModalSearch() {
       this.$bvModal.show("modal-search");
       this.$store.dispatch("updateExercices");
     },
 
     openModalAccount() {
       this.$bvModal.show("modal-account");
+    },
+
+    openModalAnalytics() {
+      if (this.selectedExerciseStadistics) {
+        this.$bvModal.show("modal-analytics");
+        this.$store.dispatch("refreshCurrentExerciseStadistics");
+      }
     },
 
     seeSolution() {

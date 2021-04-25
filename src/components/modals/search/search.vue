@@ -1,7 +1,6 @@
 <template>
   <b-modal content-class="search" id="modal-search" size="xl" scrollable>
     <template v-slot:modal-title>Buscar Ejercicios</template>
-    <!-- <div>{{ folders }}</div> -->
     <div class="m-3">
       <treeselect
         v-model="value"

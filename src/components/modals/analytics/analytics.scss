@@ -1,0 +1,69 @@
+@import "../../../scss/variables";
+
+.analytics {
+  background-color: $primary !important;
+  color: $text-white !important;
+  width: 100%;
+  max-width: 800px;
+
+  .close {
+    color: white;
+    text-shadow: none;
+
+    &:hover {
+      color: $red !important;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__suite-test {
+    margin: 1rem 0 2rem 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+
+    &__item {
+      background-color: $primary-light;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+
+      p {
+        font-weight: 500;
+        font-size: 20px;
+        margin: 0 0.25rem 0 0;
+      }
+
+      &--green {
+        background-color: #006d45;
+      }
+
+      &--red {
+        background-color: #db4b16;
+      }
+      &--purple {
+        background-color: #9c27b0;
+      }
+      &--pink {
+        background-color: #c2185b;
+      }
+      &--violet {
+        background-color: #5e35b1;
+      }
+    }
+  }
+}
