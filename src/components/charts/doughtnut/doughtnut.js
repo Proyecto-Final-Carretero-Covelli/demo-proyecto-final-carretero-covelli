@@ -6,18 +6,14 @@ export default {
   mixins: [reactiveProp],
   data: () => ({
     options: {
+      legend: {
+        labels: {
+          fontColor: "#f5f5f5",
+          fontSize: 12,
+        },
+      },
       responsive: false,
       maintainAspectRatio: true,
-      //   scales: {
-      //     yAxes: [
-      //       {
-      //         ticks: {
-      //           min: 0,
-      //           beginAtZero: true,
-      //         },
-      //       },
-      //     ],
-      //   },
     },
   }),
 

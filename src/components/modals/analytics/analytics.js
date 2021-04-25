@@ -12,38 +12,36 @@ export default {
     },
     chartCurrentExerciseStadistics() {
       return {
-        labels: ["Suite Test"],
+        labels: ["Satisfactorios", "Rechazados"],
         datasets: [
           {
-            label: "Aprobados",
-            backgroundColor: "#009c70",
-            data: [this.currentExerciseStadistics?.passed],
-          },
-          {
-            label: "Rechazados",
-            backgroundColor: "#db4b16",
-            data: [this.currentExerciseStadistics?.notPassed],
+            label: ["Satisfactorios", "Rechazados"],
+            backgroundColor: ["#006d45", "#db4b16"],
+            data: [
+              this.currentExerciseStadistics?.passed,
+              this.currentExerciseStadistics?.notPassed,
+            ],
           },
         ],
       };
     },
     chartCurrentExerciseErrorStadistics() {
       return {
-        labels: ["Ejecuciones"],
+        labels: ["Número de Errores en Ejecuciones"],
         datasets: [
           {
             label: "Errores de referencia",
-            backgroundColor: "#db4b16",
+            backgroundColor: "#9C27B0",
             data: [this.currentExerciseStadistics?.ReferenceError],
           },
           {
             label: "Error de Sintaxis",
-            backgroundColor: "#db4b16",
+            backgroundColor: "#C2185B",
             data: [this.currentExerciseStadistics?.SyntaxError],
           },
           {
             label: "Operación invalida",
-            backgroundColor: "#db4b16",
+            backgroundColor: "#5E35B1",
             data: [this.currentExerciseStadistics?.TypeError],
           },
         ],

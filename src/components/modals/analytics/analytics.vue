@@ -11,66 +11,83 @@
     <template v-slot:modal-title>Estadisticas</template>
 
     <div class="analytics__body" v-if="currentExerciseStadistics">
+      <h4>
+        Estadisticas Suite de Test
+      </h4>
       <div class="analytics__suite-test">
-        <div class="analytics__suite-test__item">
-          <p>
-            Total
-          </p>
-          {{
-            (currentExerciseStadistics.passed || 0) +
-              (currentExerciseStadistics.notPassed || 0)
-          }}
+        <div>
+          <div
+            class="analytics__suite-test__item analytics__suite-test__item--green"
+          >
+            <p>
+              Satisfactorios:
+            </p>
+            {{ currentExerciseStadistics.passed || 0 }}
+          </div>
+          <div
+            class="analytics__suite-test__item analytics__suite-test__item--red"
+          >
+            <p>
+              Rechazados:
+            </p>
+            {{ currentExerciseStadistics.notPassed || 0 }}
+          </div>
+          <div class="analytics__suite-test__item">
+            <p>
+              Total:
+            </p>
+            {{
+              (currentExerciseStadistics.passed || 0) +
+                (currentExerciseStadistics.notPassed || 0)
+            }}
+          </div>
         </div>
-        <div
-          class="analytics__suite-test__item analytics__suite-test__item--green"
-        >
-          <p>
-            Satisfactorios
-          </p>
-          {{ currentExerciseStadistics.passed || 0 }}
-        </div>
-        <div
-          class="analytics__suite-test__item analytics__suite-test__item--red"
-        >
-          <p>
-            Rechazados
-          </p>
-          {{ currentExerciseStadistics.notPassed || 0 }}
-        </div>
+        <Doughnut :chart-data="chartCurrentExerciseStadistics" />
       </div>
-      <Doughnut :chart-data="chartCurrentExerciseStadistics" />
 
+      <h4>
+        Estadisticas Errores en Ejecuciones
+      </h4>
       <div class="analytics__suite-test">
-        <div class="analytics__suite-test__item">
-          <p>
-            Total
-          </p>
-          {{
-            (currentExerciseStadistics.ReferenceError || 0) +
-              (currentExerciseStadistics.SyntaxError || 0) +
-              (currentExerciseStadistics.TypeError || 0)
-          }}
+        <div style="max-width: 30%">
+          <div
+            class="analytics__suite-test__item analytics__suite-test__item--purple"
+          >
+            <p>
+              Error de referencia:
+            </p>
+            {{ currentExerciseStadistics.ReferenceError || 0 }}
+          </div>
+          <div
+            class="analytics__suite-test__item analytics__suite-test__item--pink"
+          >
+            <p>
+              Error de Sintaxis:
+            </p>
+            {{ currentExerciseStadistics.SyntaxError || 0 }}
+          </div>
+          <div
+            class="analytics__suite-test__item analytics__suite-test__item--violet"
+          >
+            <p>
+              Operación invalida:
+            </p>
+            {{ currentExerciseStadistics.TypeError || 0 }}
+          </div>
+          <div class="analytics__suite-test__item">
+            <p>
+              Total:
+            </p>
+            {{
+              (currentExerciseStadistics.ReferenceError || 0) +
+                (currentExerciseStadistics.SyntaxError || 0) +
+                (currentExerciseStadistics.TypeError || 0)
+            }}
+          </div>
         </div>
-        <div class="analytics__suite-test__item">
-          <p>
-            Variable no declarada o inaccesible (ReferenceError)
-          </p>
-          {{ currentExerciseStadistics.ReferenceError || 0 }}
-        </div>
-        <div class="analytics__suite-test__item">
-          <p>
-            Error de Sintaxis
-          </p>
-          {{ currentExerciseStadistics.SyntaxError || 0 }}
-        </div>
-        <div class="analytics__suite-test__item">
-          <p>
-            No se pudo realizar la operación (TypeError)
-          </p>
-          {{ currentExerciseStadistics.TypeError || 0 }}
-        </div>
+
+        <BarChart :chart-data="chartCurrentExerciseErrorStadistics" />
       </div>
-      <BarChart :chart-data="chartCurrentExerciseErrorStadistics" />
     </div>
     <div class="analytics__without-data" v-if="!currentExerciseStadistics">
       <p>
