@@ -35,9 +35,10 @@ export const firebaseUtils = {
   getFolderIfExist: async function(folderName) {
     const data = await this.getFolders();
     let folderId = null;
-    Object.entries(data.val()).map((folder) => {
-      if (folderName == folder[1].name) folderId = folder[0];
-    });
+    if (data.val())
+      Object.entries(data.val()).map((folder) => {
+        if (folderName == folder[1].name) folderId = folder[0];
+      });
     return folderId;
   },
 
