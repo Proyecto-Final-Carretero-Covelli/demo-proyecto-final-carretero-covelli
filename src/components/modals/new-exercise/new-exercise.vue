@@ -13,7 +13,7 @@
           <b-form-input
             id="new-exercise-folder"
             :state="null"
-            placeholder="Carpeta"
+            placeholder="Carpeta *"
             v-model="folder"
             @keyup.enter="openSearchDropdown"
             @keyup.esc="closeSearchDropdown"
@@ -55,7 +55,7 @@
         <b-form-input
           id="new-exercise-title"
           :state="null"
-          placeholder="Título"
+          placeholder="Título *"
           v-model="title"
         ></b-form-input>
       </div>
@@ -65,10 +65,13 @@
       <b-form-textarea
         id="new-exercise-statement"
         size="lg"
-        placeholder="Consigna Ejercicio"
+        placeholder="Consigna Ejercicio *"
         v-model="statement"
       ></b-form-textarea>
     </div>
+    <p class="new-exercise__required-message">
+      <strong>*</strong> Campo obligatorio
+    </p>
 
     <div class="mt-3">
       <p>Código Inicial</p>

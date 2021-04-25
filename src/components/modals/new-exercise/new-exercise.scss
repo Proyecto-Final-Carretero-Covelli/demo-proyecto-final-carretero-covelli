@@ -50,6 +50,12 @@
     width: 49%;
   }
 
+  &__required-message {
+    margin: 0.5rem 0 0 0.5rem;
+    color: #7b8288;
+    font-size: 12px;
+  }
+
   &__code-editor {
     height: 300px;
   }
