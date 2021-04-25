@@ -1,17 +1,102 @@
 <template>
   <div class="top-header">
-    <div class="w-25">
+    <div class="d-flex w-25">
       <img class="top-header__logo" src="../assets/logo-small-light.png" />
-      <b-dropdown
-        v-if="$store.getters.getTitle !== null"
-        id="dropdown-1"
-        text="Archivo"
-        class="m-md-2 btn-drop-down"
-      >
-        <b-dropdown-item @click="closeExercise"
-          >Cerrar Ejercicio</b-dropdown-item
+      <div class="top-header__controll">
+        <div
+          id="play-controll"
+          class="top-header__controll-icon top-header__controll-icon--play"
+          @click="$store.dispatch('play')"
         >
-      </b-dropdown>
+          <font-awesome-icon :icon="['fas', 'play']" />
+          <b-tooltip
+            target="play-controll"
+            triggers="hover"
+            :delay="tooltipDelay"
+            >Ejecutar</b-tooltip
+          >
+        </div>
+
+        <div v-if="$store.getters.isDebugging" class="d-flex">
+          <div
+            id="next-step-controll"
+            class="top-header__controll-icon top-header__controll-icon--next-step"
+            @click="$store.dispatch('nextStep')"
+          >
+            <font-awesome-icon :icon="['fas', 'arrow-right']" />
+          </div>
+
+          <b-tooltip
+            target="next-step-controll"
+            triggers="hover"
+            :delay="tooltipDelay"
+            >Siguiente instrucción</b-tooltip
+          >
+
+          <div
+            id="stop-controll"
+            class="top-header__controll-icon top-header__controll-icon--stop"
+            @click="$store.dispatch('stop')"
+          >
+            <font-awesome-icon :icon="['fas', 'stop']" />
+          </div>
+
+          <b-tooltip
+            target="stop-controll"
+            triggers="hover"
+            :delay="tooltipDelay"
+            >Detener ejecución</b-tooltip
+          >
+        </div>
+
+        <div v-else class="d-flex">
+          <div
+            id="slow-mode-controll"
+            class="top-header__controll-icon  top-header__controll-icon--slow"
+            :class="{
+              'top-header__controll-icon--running':
+                $store.getters.isRunningCode,
+            }"
+            @click="$store.dispatch('runInSlowMode')"
+          >
+            <font-awesome-icon :icon="['fas', 'clock']" />
+          </div>
+
+          <b-tooltip
+            target="slow-mode-controll"
+            triggers="hover"
+            :delay="tooltipDelay"
+            >Ejecutar (Modo Lento)
+          </b-tooltip>
+          <div
+            id="debug-mode-controll"
+            class="top-header__controll-icon  top-header__controll-icon--debug"
+            @click="$store.dispatch('runInDebugMode')"
+          >
+            <font-awesome-icon :icon="['fas', 'bug']" />
+          </div>
+
+          <b-tooltip
+            target="debug-mode-controll"
+            triggers="hover"
+            :delay="tooltipDelay"
+            >Ejecutar (Modo Manual)
+          </b-tooltip>
+        </div>
+
+        <div
+          v-if="$store.getters.isRunningCode"
+          class="top-header__controll-icon"
+        >
+          <span> Ejecutando... </span>
+          <b-spinner
+            small
+            type="grow"
+            label="Loading..."
+            class="top-header__controll-icon"
+          ></b-spinner>
+        </div>
+      </div>
     </div>
 
     <div class="top-header__title w-50">
@@ -19,7 +104,7 @@
         v-if="$store.getters.getTitle !== null"
         class="d-flex justify-content-center align-items-center"
       >
-        <p>{{ $store.getters.getTitle }}</p>
+        <p @click="toggleTitleShow">{{ $store.getters.getTitle }}</p>
         <font-awesome-icon
           v-if="
             $store.getters.getResizeTitle &&
@@ -41,51 +126,18 @@
       </div>
     </div>
 
-    <div class="top-header__controll w-25">
-      <div
-        v-if="$store.getters.isRunningCode"
-        class="top-header__controll-icon"
+    <div class="top-header__right w-25">
+      <b-dropdown
+        v-if="$store.getters.getTitle !== null"
+        id="dropdown-1"
+        text="Opciones"
+        class="m-md-2 btn-drop-down"
+        right
       >
-        <span> Cargando... </span>
-        <b-spinner
-          small
-          type="grow"
-          label="Loading..."
-          class="top-header__controll-icon"
-        ></b-spinner>
-      </div>
-
-      <font-awesome-icon
-        class="top-header__controll-icon top-header__controll-icon--play"
-        :icon="['fas', 'play']"
-        @click="$store.dispatch('play')"
-      />
-
-      <div v-if="$store.getters.isDebugging">
-        <font-awesome-icon
-          class="top-header__controll-icon"
-          :icon="['fas', 'arrow-right']"
-          @click="$store.dispatch('nextStep')"
-        />
-        <font-awesome-icon
-          class="top-header__controll-icon top-header__controll-icon--stop"
-          :icon="['fas', 'stop']"
-          @click="$store.dispatch('stop')"
-        />
-      </div>
-
-      <div v-else>
-        <font-awesome-icon
-          class="top-header__controll-icon"
-          :icon="['fas', 'clock']"
-          @click="$store.dispatch('runInSlowMode')"
-        />
-        <font-awesome-icon
-          class="top-header__controll-icon"
-          :icon="['fas', 'bug']"
-          @click="$store.dispatch('runInDebugMode')"
-        />
-      </div>
+        <b-dropdown-item @click="closeExercise"
+          >Cerrar Ejercicio</b-dropdown-item
+        >
+      </b-dropdown>
     </div>
   </div>
 </template>
