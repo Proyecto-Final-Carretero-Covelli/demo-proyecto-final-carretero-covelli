@@ -53,11 +53,11 @@
 
 .myMarker {
   position: absolute;
-  background: rgba(255, 98, 221, 0.3);
+  background: $editor-selector;
   z-index: 20;
 }
 
-.hoverable:hover{
+.hoverable:hover {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.2);

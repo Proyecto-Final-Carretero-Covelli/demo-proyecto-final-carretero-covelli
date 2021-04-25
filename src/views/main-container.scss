@@ -44,3 +44,7 @@ a {
 .login-modal {
   color: black;
 }
+
+.ace-dracula .ace_marker-layer .ace_selection {
+  background: $editor-selector;
+}
