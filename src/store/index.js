@@ -157,7 +157,8 @@ export default new Vuex.Store({
       state.isRunningCode = isRunning;
     },
     appendToConsole: (state, msg) => {
-      state.consoleOutput += "<p class='" + msg.type + "'>" + msg.value + "</p>";
+      state.consoleOutput +=
+        "<p class='" + msg.type + "'>" + msg.value + "</p>";
     },
   },
 
@@ -270,9 +271,18 @@ export default new Vuex.Store({
       context.commit("setCurrentExerciseStadistics", exercise.stadistics);
       context.commit("setTitle", exercise.name);
       context.commit("setTitleText", exercise.statement);
-      context.commit("setImplementationEditor", exercise.initialCode);
-      context.commit("setVariablesEditor", "");
+      context.commit("setImplementationEditor", "");
+      context.commit("setVariablesEditor", exercise.initialCode);
       context.commit("setDeclaredVariables", []);
+    },
+
+    selectTest: (context, testCode) => {
+      context.commit(
+        "setVariablesEditor",
+        context.getters.getCurrentExercise.initialCode
+          ? context.getters.getCurrentExercise.initialCode + "\n\r" + testCode
+          : testCode
+      );
     },
 
     closeExercise: (context) => {

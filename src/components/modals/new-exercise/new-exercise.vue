@@ -166,13 +166,23 @@
             v-else
             class="w-100 h-100 d-flex justify-content-center align-items-center"
           >
-            <div class="d-flex justify-content-center align-items-center">
-              <font-awesome-icon
-                class="mr-2"
-                :icon="['fas', 'info-circle']"
-                size="lg"
-              />
-              <p class="m-0">Sin Tests</p>
+            <div
+              class="d-flex justify-content-center align-items-center flex-column"
+            >
+              <div class="d-flex justify-content-center align-items-center">
+                <font-awesome-icon
+                  class="mr-2"
+                  :icon="['fas', 'info-circle']"
+                  size="lg"
+                />
+                <p class="m-0">Sin Tests</p>
+              </div>
+
+              <p class="mt-3 text-center">
+                Recorda que para utilizar la suite de test, la variable
+                "resultado" debe ser declarada e inicializada en el código
+                inicial.
+              </p>
             </div>
           </div>
         </div>
