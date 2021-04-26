@@ -116,7 +116,7 @@ export default {
 
     deleteTest(indexTest) {
       this.tests.splice(indexTest, 1);
-      if (this.currentIndexTest == indexTest) {
+      if (this.currentIndexTest === indexTest) {
         this.currentIndexTest = -1;
         this.currentTestCode = "";
         this.currentTestName = "";
@@ -288,14 +288,6 @@ export default {
   mounted() {
     this.$root.$on("bv::modal::show", () => {
       this.resetModal();
-
-      //Inicialización generación de test
-      this.folder = "TEST FOLDER";
-      this.solutionCode = "let resultado = [a, b];";
-      this.tests = [
-        { name: "TEST 1", test: "let a = 1; let b = 1;" },
-        { name: "TEST 2", test: "let a = 2; let b = 2;" },
-      ];
     });
 
     // this.$root.$on("bv::modal::shown", () => {

@@ -158,7 +158,7 @@
               <font-awesome-icon
                 class="new-exercise__test--item--delete"
                 :icon="['fas', 'trash-alt']"
-                @click="deleteTest(i)"
+                @click.prevent.stop="deleteTest(i)"
               />
             </div>
           </template>
