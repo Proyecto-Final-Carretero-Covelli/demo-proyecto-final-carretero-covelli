@@ -97,13 +97,17 @@ export default {
     },
 
     addTest() {
-      if (this.currentTestName !== "") {
+      if (this.currentTestName !== "" && this.currentTestCode !== "") {
         this.tests = [
           ...this.tests,
           { name: this.currentTestName, test: this.currentTestCode },
         ];
         this.currentTestCode = "";
         this.currentTestName = "";
+      } else if (this.currentTestName === "") {
+        this.showToastMissingTestName();
+      } else {
+        this.showToastMissingTestCode();
       }
     },
 
@@ -131,7 +135,7 @@ export default {
     },
 
     saveEdit() {
-      if (this.currentTestName !== "") {
+      if (this.currentTestName !== "" && this.currentTestCode !== "") {
         this.tests.splice(this.currentIndexTest, 1, {
           name: this.currentTestName,
           test: this.currentTestCode,
@@ -140,6 +144,10 @@ export default {
         this.currentTestName = "";
         this.currentTestCode = "";
         this.editTestMode = false;
+      } else if (this.currentTestName === "") {
+        this.showToastMissingTestName();
+      } else {
+        this.showToastMissingTestCode();
       }
     },
 
@@ -155,7 +163,7 @@ export default {
               let errorInResultGeneration = false;
 
               this.tests.forEach((test, i) => {
-                if (resultSuiteTests[i] !== null) {
+                if (resultSuiteTests[i] !== (null || undefined)) {
                   if (
                     Array.isArray(resultSuiteTests[i]) &&
                     resultSuiteTests[i].length == 0
@@ -283,6 +291,30 @@ export default {
         autoHideDelay: delayHide,
       });
     },
+
+    showToastMissingTestName() {
+      this.$bvToast.toast(
+        "Para agregar/modificar el test es necesario indicar un nombre identificatorio.",
+        {
+          title: "Nombre identificatio faltante.",
+          variant: "danger",
+          solid: true,
+          bodyClass: "new-exercise__toast-error--body",
+          headerClass: "new-exercise__toast-error--header",
+          autoHideDelay: 5000,
+        }
+      );
+    },
+    showToastMissingTestCode() {
+      this.$bvToast.toast("El código del test no puede estar vacio.", {
+        title: "Código test faltante.",
+        variant: "danger",
+        solid: true,
+        bodyClass: "new-exercise__toast-error--body",
+        headerClass: "new-exercise__toast-error--header",
+        autoHideDelay: 5000,
+      });
+    },
   },
 
   mounted() {
@@ -290,10 +322,10 @@ export default {
       this.resetModal();
     });
 
-    // this.$root.$on("bv::modal::shown", () => {
-    //   this.$refs.testCodeEditor.editor.setShowPrintMargin(false);
-    //   this.$refs.solutionCodeEditor.editor.setShowPrintMargin(false);
-    //   this.$refs.initialCodeEditor.editor.setShowPrintMargin(false);
-    // });
+    this.$root.$on("bv::modal::shown", () => {
+      this.$refs.testCodeEditor?.editor?.setShowPrintMargin(false);
+      this.$refs.solutionCodeEditor?.editor?.setShowPrintMargin(false);
+      this.$refs.initialCodeEditor?.editor?.setShowPrintMargin(false);
+    });
   },
 };
