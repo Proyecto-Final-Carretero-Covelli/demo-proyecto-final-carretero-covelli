@@ -4,7 +4,7 @@ import _ from "lodash";
 export default {
   methods: {
     selectTest(test) {
-      this.$store.commit("setVariablesEditor", test.test);
+      this.$store.dispatch("selectTest", test.test);
     },
 
     onPlayTestClicked(test, evt) {
@@ -12,7 +12,7 @@ export default {
         evt.stopPropagation();
       }
 
-      this.$store.commit("setVariablesEditor", test.test);
+      this.$store.dispatch("selectTest", test.test);
 
       const TEST_FLAG_INFO = this.$store.getters.getConstants.TEST_FLAG_INFO;
 
