@@ -100,7 +100,11 @@ export class Debugger {
 
     const logSentences = contextStack
       .filter((context) => context.node.type === "CallExpression")
-      .map((log) => log.node.arguments[0]);
+      .map((log) => ({
+        log: log.node.arguments[0],
+        variables: log.variables
+      }));
+
     logSentences.forEach((sentence) => this.appendLog(sentence));
 
     if (contextStack && contextStack.length) {
@@ -112,8 +116,11 @@ export class Debugger {
   }
 
   appendLog(sentence) {
-    const log = { value: "" };
-    this.addConsoleLog(sentence, log);
+    const log = { 
+      value: "",
+      variables: sentence.variables 
+    };
+    this.addConsoleLog(sentence.log, log);
 
     if (log.value) {
       this.storeContext.commit("appendToConsole", {
@@ -135,7 +142,8 @@ export class Debugger {
     if (node.type === "Literal") {
       log.value += node.value;
     } else if (node.type === "Identifier") {
-      log.value += this.interpreter.scope.context[node.name].value;
+      const identifier = log.variables.find(variable => variable.name === node.name);
+      log.value += identifier.value;
     }
   }
 
