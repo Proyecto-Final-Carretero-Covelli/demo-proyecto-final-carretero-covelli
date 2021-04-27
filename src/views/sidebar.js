@@ -4,6 +4,8 @@ import Account from "../components/modals/account/account.vue";
 import Clue from "../components/modals/clue/clue.vue";
 import Analytics from "../components/modals/analytics/analytics.vue";
 
+const ADMIN_USERS = ['santii.carre@gmail.com', 'covellitomas@gmail.com'];
+
 export default {
   components: { NewExercise, Search, Account, Clue, Analytics },
 
@@ -21,12 +23,17 @@ export default {
         !!this.$store.getters.getCurrentExerciseStadistics
       );
     },
+    isAdminUser() {
+      return this.$store.getters.getCurrentUser && ADMIN_USERS.includes(this.$store.getters.getCurrentUser.email);
+    }
   },
 
   methods: {
     openModalNewExercise() {
-      this.$bvModal.show("modal-new-exercise");
-      this.$store.dispatch("updateFolders");
+      if (this.isAdminUser) {
+        this.$bvModal.show("modal-new-exercise");
+        this.$store.dispatch("updateFolders");
+      }
     },
 
     openModalSearch() {

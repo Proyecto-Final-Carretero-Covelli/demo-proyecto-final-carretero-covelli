@@ -4,6 +4,7 @@
     <font-awesome-icon
       id="sidebar-new-exercise"
       class="sidebar__icon"
+      :class="{ disabled: !isAdminUser }"
       :icon="['far', 'plus-square']"
       @click="openModalNewExercise"
     />
