@@ -82,8 +82,11 @@ export class Debugger {
           currentContext.pos = self.getHighlightPosition(currentContext.node);
           self.setVariables(currentContext);
 
-          if (currentContext.node.type === "CallExpression") {
-            self.appendLog(currentContext.node.arguments[0]);
+          if (self.isConsoleLogStatement(currentContext)) {
+            self.appendLog({
+              log: currentContext.node.arguments[0],
+              variables: currentContext.variables
+            });
           }
         } else {
           clearInterval(interval);
@@ -93,17 +96,21 @@ export class Debugger {
     }
   }
 
+  isConsoleLogStatement(context) {
+    const callee = context.node.callee;
+      return context.node.type === 'CallExpression' && callee && callee.object && 
+        callee.property && callee.object.name === 'console' && callee.property.name === 'log';
+  }
+
   runAllCode() {
     this.runInterpreter();
     const contextStack = this.interpreter.scope.context.exports.contextStack;
-    const result = this.interpreter.scope.context["resultado"];
+    const result = this.interpreter.scope.context['resultado'];
 
-    const logSentences = contextStack
-      .filter((context) => context.node.type === "CallExpression")
-      .map((log) => ({
-        log: log.node.arguments[0],
-        variables: log.variables
-      }));
+    const logSentences = contextStack.filter(this.isConsoleLogStatement).map((log) => ({
+      log: log.node.arguments[0],
+      variables: log.variables
+    }));
 
     logSentences.forEach((sentence) => this.appendLog(sentence));
 
@@ -227,8 +234,11 @@ export class Debugger {
       currentContext.pos = this.getHighlightPosition(currentContext.node);
       this.setVariables(currentContext);
 
-      if (currentContext.node.type === "CallExpression") {
-        this.appendLog(currentContext.node.arguments[0]);
+      if (this.isConsoleLogStatement(currentContext)) {
+        this.appendLog({
+          log: currentContext.node.arguments[0],
+          variables: currentContext.variables
+        });
       }
     } else {
       this.setVariables(null, true);
