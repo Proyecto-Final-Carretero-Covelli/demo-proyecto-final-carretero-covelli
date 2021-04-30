@@ -98,18 +98,20 @@ export default {
 
       const currentExercise = this.$store.getters.getCurrentExercise;
       let text =
-        "Consigna:\n" +
+        "/* Consigna:\n" +
         (currentExercise.statement || "") +
-        "\n\nDeclaración:\n" +
+        "   */" +
+        "\n\n" +
         (this.$store.getters.getVariablesEditor || "") +
-        "\n\nImplementación:\n" +
+        "\n\n\n" +
         (this.$store.getters.getImplementationEditor || "");
 
       if (currentExercise.suiteTest && currentExercise.suiteTest.length) {
-        text += "\n\nReporte de Tests:\n";
+        text += "\n\n/* Reporte de Tests:\n";
         currentExercise.suiteTest.forEach((test) => {
           text += test.name + ": " + getState(test.imgInfo.state) + "\n";
         });
+        text += "*/";
       }
 
       const filename = currentExercise.name ? " - " + currentExercise.name : "";
