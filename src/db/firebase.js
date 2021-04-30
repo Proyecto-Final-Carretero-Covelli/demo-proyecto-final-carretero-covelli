@@ -9,7 +9,7 @@ const app = firebase.initializeApp({
   storageBucket: "<BUCKET>.appspot.com",
   messagingSenderId: "<SENDER_ID>",
 
-  // SDK vide-tool, (!) remember to chage .firebaserc too
+  // SDK vide-tool, (!) remember to chage .firebaserc to vide-tool too
   // apiKey: "AIzaSyA7YthBDYtFXWI1DKnM3GYAgcRVVvDxa-U",
   // authDomain: "vide-tool.firebaseapp.com",
   // databaseURL: "https://vide-tool-default-rtdb.firebaseio.com",
