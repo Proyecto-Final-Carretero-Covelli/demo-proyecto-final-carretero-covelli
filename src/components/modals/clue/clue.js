@@ -25,7 +25,7 @@ export default {
       this.index = index;
       this.selectedClueCode = this.clues[this.index].code;
     },
-    editorInit: function() {
+    editorInit: function(editor) {
       require("brace/ext/language_tools"); //language extension prerequsite...
       require("brace/mode/html");
       require("brace/mode/javascript");
@@ -34,6 +34,7 @@ export default {
       require("brace/theme/dracula");
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
+      editor?.setShowPrintMargin(false);
     },
     hiddenEvent() {
       this.index = null;
