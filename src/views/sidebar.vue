@@ -1,11 +1,12 @@
 <template>
   <div class="sidebar">
+
     <!-- New Exercise -->
     <font-awesome-icon
       id="sidebar-new-exercise"
       class="sidebar__icon"
-      :class="{ disabled: !isAdminUser }"
       :icon="['far', 'plus-square']"
+      v-if="isAdminUser"
       @click="openModalNewExercise"
     />
     <b-tooltip target="sidebar-new-exercise" triggers="hover"
@@ -41,6 +42,7 @@
       id="sidebar-analytics"
       class="sidebar__icon"
       :class="{ disabled: !selectedExerciseStadistics }"
+      v-if="isAdminUser"
       :icon="['fas', 'chart-bar']"
       @click="openModalAnalytics"
     />
