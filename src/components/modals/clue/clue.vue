@@ -32,7 +32,7 @@
           @init="editorInit"
           lang="javascript"
           theme="dracula"
-          ref="initialCodeEditor"
+          ref="clueCodeEditor"
         ></aceeditor>
       </div>
     </div>
