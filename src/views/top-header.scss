@@ -56,8 +56,12 @@
       }
 
       &--play {
-        :hover {
           color: $green-play;
+      }
+
+      &--play {
+        :hover {
+          color: white;
         }
       }
 
