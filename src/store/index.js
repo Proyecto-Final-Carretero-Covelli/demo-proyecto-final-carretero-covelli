@@ -27,6 +27,9 @@ const CONSTANTS = {
       tooltip: "Test aún no ejecutado",
     },
   },
+  INITAL_MESSAGE_VARIABLES_EDITOR: "// Código inicial\n",
+  INITAL_MESSAGE_IMPLEMENTATION_EDITOR:
+    "// Código implementación\n// Comenza tu implementación en este editor\n",
 };
 
 export default new Vuex.Store({
@@ -40,8 +43,8 @@ export default new Vuex.Store({
     editorContent: "",
     parsedNodes: [],
     debugger: undefined,
-    implementationEditor: "",
-    variablesEditor: "",
+    implementationEditor: CONSTANTS.INITAL_MESSAGE_IMPLEMENTATION_EDITOR,
+    variablesEditor: CONSTANTS.INITAL_MESSAGE_VARIABLES_EDITOR,
     implementationAceEditor: null,
     variablesAceEditor: null,
     declaredVariables: [],
@@ -271,13 +274,33 @@ export default new Vuex.Store({
       context.commit("setCurrentExerciseStadistics", exercise.stadistics);
       context.commit("setTitle", exercise.name);
       context.commit("setTitleText", exercise.statement);
-      context.commit("setImplementationEditor", "");
-      context.commit("setVariablesEditor", exercise.initialCode);
+      context.dispatch("setImplementationEditor", "");
+      context.dispatch(
+        "setVariablesEditor",
+        exercise.initialCode +
+          (exercise.suiteTest?.[0]?.test
+            ? "\n\r" + exercise.suiteTest?.[0]?.test
+            : "")
+      );
       context.commit("setDeclaredVariables", []);
     },
 
-    selectTest: (context, testCode) => {
+    setVariablesEditor: (context, newValue) => {
       context.commit(
+        "setVariablesEditor",
+        CONSTANTS.INITAL_MESSAGE_VARIABLES_EDITOR + "\n" + newValue + "\n"
+      );
+    },
+
+    setImplementationEditor: (context, newValue) => {
+      context.commit(
+        "setImplementationEditor",
+        CONSTANTS.INITAL_MESSAGE_IMPLEMENTATION_EDITOR + "\n" + newValue
+      );
+    },
+
+    selectTest: (context, testCode) => {
+      context.dispatch(
         "setVariablesEditor",
         context.getters.getCurrentExercise.initialCode
           ? context.getters.getCurrentExercise.initialCode + "\n\r" + testCode
@@ -290,8 +313,8 @@ export default new Vuex.Store({
       context.commit("setCurrentExerciseStadistics", {});
       context.commit("setTitle", null);
       context.commit("setTitleText", null);
-      context.commit("setImplementationEditor", "");
-      context.commit("setVariablesEditor", "");
+      context.dispatch("setImplementationEditor", "");
+      context.dispatch("setVariablesEditor", "");
       context.commit("setDeclaredVariables", []);
     },
   },

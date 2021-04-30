@@ -56,6 +56,7 @@ export default {
     implementationEditor.setShowPrintMargin(false);
 
     this.$store.commit("setVariablesAceEditor", variablesEditor);
+    // this.$store.dispatch("setVariablesEditor", "");
     this.$store.commit("setImplementationAceEditor", implementationEditor);
   },
 };
