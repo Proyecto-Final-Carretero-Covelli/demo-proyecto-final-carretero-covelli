@@ -83,10 +83,7 @@ export class Debugger {
           self.setVariables(currentContext);
 
           if (self.isConsoleLogStatement(currentContext)) {
-            self.appendLog({
-              log: currentContext.node.arguments[0],
-              variables: currentContext.variables
-            });
+            self.appendLog(currentContext);
           }
         } else {
           clearInterval(interval);
@@ -107,12 +104,11 @@ export class Debugger {
     const contextStack = this.interpreter.scope.context.exports.contextStack;
     const result = this.interpreter.scope.context['resultado'];
 
-    const logSentences = contextStack.filter(this.isConsoleLogStatement).map((log) => ({
-      log: log.node.arguments[0],
-      variables: log.variables
-    }));
-
-    logSentences.forEach((sentence) => this.appendLog(sentence));
+    contextStack.filter(
+      this.isConsoleLogStatement
+    ).forEach(
+      (sentence) => this.appendLog(sentence)
+    );
 
     if (contextStack && contextStack.length) {
       return {
@@ -123,34 +119,13 @@ export class Debugger {
   }
 
   appendLog(sentence) {
-    const log = { 
-      value: "",
-      variables: sentence.variables 
-    };
-    this.addConsoleLog(sentence.log, log);
+    const resultArgs = sentence.node.resultArgs;
 
-    if (log.value) {
+    if (resultArgs && resultArgs.length) {
       this.storeContext.commit("appendToConsole", {
-        value: log.value,
-        type: "log",
+        value: resultArgs.join(' '),
+        type: "log"
       });
-    }
-  }
-
-  addConsoleLog(node, log) {
-    if (node) {
-      this.getNodeValue(node, log);
-      this.addConsoleLog(node.left, log);
-      this.addConsoleLog(node.right, log);
-    }
-  }
-
-  getNodeValue(node, log) {
-    if (node.type === "Literal") {
-      log.value += node.value;
-    } else if (node.type === "Identifier") {
-      const identifier = log.variables.find(variable => variable.name === node.name);
-      log.value += identifier.value;
     }
   }
 
@@ -235,10 +210,7 @@ export class Debugger {
       this.setVariables(currentContext);
 
       if (this.isConsoleLogStatement(currentContext)) {
-        this.appendLog({
-          log: currentContext.node.arguments[0],
-          variables: currentContext.variables
-        });
+        this.appendLog(currentContext);
       }
     } else {
       this.setVariables(null, true);
