@@ -33,25 +33,30 @@
                   :min-percent="10"
                   :default-percent="50"
                   split="horizontal"
+                  @resize="heightUpdateFunction()"
                 >
                   <template slot="paneL">
-                    <aceeditor
-                      v-model="variablesEditor"
-                      @init="editorInit"
-                      lang="javascript"
-                      theme="dracula"
-                      ref="myVariablesEditor"
-                    ></aceeditor>
+                    <div class="editor-container">
+                      <aceeditor
+                        v-model="variablesEditor"
+                        @init="editorInit"
+                        lang="javascript"
+                        theme="dracula"
+                        ref="myVariablesEditor"
+                      ></aceeditor>
+                    </div>
                   </template>
 
                   <template slot="paneR">
-                    <aceeditor
-                      v-model="implementationEditor"
-                      @init="editorInit"
-                      lang="javascript"
-                      theme="dracula"
-                      ref="myImplementationEditor"
-                    ></aceeditor>
+                    <div class="editor-container">
+                      <aceeditor
+                        v-model="implementationEditor"
+                        @init="editorInit"
+                        lang="javascript"
+                        theme="dracula"
+                        ref="myImplementationEditor"
+                      ></aceeditor>
+                    </div>
                   </template>
                 </split-pane>
               </template>

@@ -25,6 +25,10 @@ export default {
       require("brace/snippets/typescript");
       require("brace/snippets/javascript"); //snippet
     },
+    heightUpdateFunction: function() {
+      this.$refs.myImplementationEditor.editor.resize();
+      this.$refs.myVariablesEditor.editor.resize();
+    }
   },
 
   computed: {
