@@ -83,3 +83,13 @@
   overflow: auto;
   max-height: 60vh;
 }
+
+.suite-test {
+  &__toast-error {
+    &--header {
+    }
+    &--body {
+      word-wrap: break-word;
+    }
+  }
+}

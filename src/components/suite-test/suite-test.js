@@ -46,6 +46,19 @@ export default {
           currentExercise.id
         );
 
+        testHasPassed === "notPassed" &&
+          this.$bvToast.toast(
+            `Se obtuvo en resultado "${result}". Se esperaba: "${test.result}"`,
+            {
+              title: `Resultado ${test.name}: No Aprobado`,
+              variant: "warning",
+              solid: true,
+              bodyClass: "suite-test__toast-error--body",
+              headerClass: "suite-test__toast-error--header",
+              autoHideDelay: 5000,
+            }
+          );
+
         this.$store.dispatch("refreshCurrentExerciseStadistics");
         this.$forceUpdate();
       });
