@@ -48,3 +48,17 @@ a {
 .ace-dracula .ace_marker-layer .ace_selection {
   background: $editor-selector !important;
 }
+
+/* Custom scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #c7c7c7;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(133, 133, 133);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
