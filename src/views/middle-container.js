@@ -59,6 +59,14 @@ export default {
     variablesEditor.setShowPrintMargin(false);
     implementationEditor.setShowPrintMargin(false);
 
+    variablesEditor.getSession().on('change', () => {
+      variablesEditor.resize();
+    });
+
+    implementationEditor.getSession().on('change', () => {
+      implementationEditor.resize();
+    });
+
     this.$store.commit("setVariablesAceEditor", variablesEditor);
     // this.$store.dispatch("setVariablesEditor", "");
     this.$store.commit("setImplementationAceEditor", implementationEditor);
