@@ -61,7 +61,6 @@ export class Debugger {
         startPos,
         "implementationAceEditor"
       );
-      range.clearVariablesEditorMarker = true;
     }
 
     return range;
@@ -130,36 +129,28 @@ export class Debugger {
   }
 
   setVariables(svalContext, isLastExecution) {
-    if (isLastExecution) {
-      if (this.storeContext.state.implementationEditor) {
-        this.storeContext.state.implementationAceEditor
-          .getSession()
-          .removeMarker(this.storeContext.currentMarker);
-      } else {
-        this.storeContext.state.variablesAceEditor
-          .getSession()
-          .removeMarker(this.storeContext.currentMarker);
-      }
-      this.storeContext.state.isRunningCode = false;
-      return;
-    }
 
-    const pos = svalContext.pos;
+    if (this.storeContext.state.implementationEditor) {
+      this.storeContext.state.implementationAceEditor
+        .getSession()
+        .removeMarker(this.storeContext.currentMarker);
+    } 
 
-    if (pos.clearVariablesEditorMarker) {
+    if (this.storeContext.state.variablesEditor) {
       this.storeContext.state.variablesAceEditor
         .getSession()
         .removeMarker(this.storeContext.currentMarker);
     }
 
-    if (this.storeContext.currentMarker) {
-      this.storeContext.state[pos.editor]
-        .getSession()
-        .removeMarker(this.storeContext.currentMarker);
+    if (isLastExecution) {
+      this.storeContext.state.isRunningCode = false;
+      return;
     }
 
+    const pos = svalContext.pos;
     let Range = ace.acequire("ace/range").Range;
     const newRange = new Range(pos.row, pos.start, pos.row, pos.end);
+
     this.storeContext.currentMarker = this.storeContext.state[pos.editor]
       .getSession()
       .addMarker(newRange, "myMarker", "text");
