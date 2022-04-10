@@ -5,16 +5,62 @@
   color: $text-white !important;
   height: 70vh;
 
-  &__google {
+  &__container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    img {
+      max-height: 100px;
+    }
+
+    h2 {
+      margin-left: 1rem;
+    }
+  }
+
+  &__body {
+    margin-bottom: 1rem;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0.5rem 1rem;
-    border-radius: 0.3rem;
-    background-color: $primary-down;
+    width: 100%;
 
-    &:hover {
-      background-color: $secondary-dark;
-      cursor: pointer;
+    h5 {
+      margin-top: 3rem 0 1rem;
+      font-weight: 300;
+    }
+
+    &__google {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border-radius: 0.3rem;
+      background-color: $primary-down;
+
+      &:hover {
+        background-color: $secondary-dark;
+        cursor: pointer;
+      }
+
+      p {
+        margin: 0 1rem 0 0;
+      }
     }
   }
 }
