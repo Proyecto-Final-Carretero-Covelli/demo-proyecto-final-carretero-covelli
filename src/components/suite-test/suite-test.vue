@@ -1,7 +1,7 @@
 <template>
   <b-tab
     :disabled="!$store.getters.getCurrentExercise.suiteTest"
-    class="container test-container"
+    class="suite-test container"
     title="Suite de test"
   >
     <div
@@ -11,7 +11,7 @@
       <div
         v-for="test in $store.getters.getCurrentExercise.suiteTest"
         :key="test.name"
-        class="test-card"
+        class="suite-test__card"
       >
         <div>
           <div :id="test.name">
@@ -19,19 +19,19 @@
               v-if="test.imgInfo.state == 'passed'"
               :icon="['fas', 'check']"
               size="lg"
-              class="test-card__state--passed"
+              class="suite-test__card__state--passed"
             />
             <font-awesome-icon
               v-if="test.imgInfo.state == 'not-passed'"
               :icon="['fas', 'ban']"
               size="lg"
-              class="test-card__state--not-passed"
+              class="suite-test__card__state--not-passed"
             />
             <font-awesome-icon
               v-if="test.imgInfo.state == 'not-executed'"
               :icon="['far', 'square']"
               size="lg"
-              class="test-card__state--not-executed"
+              class="suite-test__card__state--not-executed"
             />
           </div>
           <b-tooltip :target="test.name">
@@ -39,13 +39,13 @@
           </b-tooltip>
         </div>
 
-        <div class="test-card__name">
+        <div class="suite-test__card__name">
           <p @click="selectTest(test)">{{ test.name }}</p>
         </div>
 
         <div>
           <font-awesome-icon
-            class="card-play"
+            class="suite-test__card__play"
             :icon="['fas', 'play']"
             @click="onPlayTestClicked(test, $event)"
           />
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="mt-3 test-play-all" @click="onRunAllTestsClicked()">
+    <div class="suite-test__play-all" @click="onRunAllTestsClicked()">
       Ejecutar Todos
     </div>
   </b-tab>

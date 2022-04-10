@@ -21,22 +21,22 @@
 
           <font-awesome-icon
             v-if="!searchActive"
-            class="new-exercise__folder--icon"
+            class="new-exercise__folder__icon"
             :icon="['fas', 'search']"
             @click="searchFolder"
           />
           <font-awesome-icon
             v-if="searchActive"
-            class="new-exercise__folder--icon"
+            class="new-exercise__folder__icon"
             :icon="['fas', 'times']"
             @click="searchFolder"
           />
         </div>
-        <ul v-if="searchActive" class="new-exercise__folder--search-container">
+        <ul v-if="searchActive" class="new-exercise__folder__search-container">
           <li
             v-for="(folder, i) in filterFolders"
             :key="'filterFolders' + i"
-            class="new-exercise__folder--search-result"
+            class="new-exercise__folder__search-result"
             @click="selectFolder(folder.label)"
           >
             {{ folder.label }}
@@ -147,7 +147,7 @@
             <div
               v-for="(test, i) in tests"
               :key="'test-' + i"
-              class="d-flex mb-1 new-exercise__test--item"
+              class="d-flex mb-1 new-exercise__test__item"
               @click="showTest(i)"
             >
               <div class="d-flex">
@@ -156,7 +156,7 @@
               </div>
 
               <font-awesome-icon
-                class="new-exercise__test--item--delete"
+                class="new-exercise__test__item--delete"
                 :icon="['fas', 'trash-alt']"
                 @click.prevent.stop="deleteTest(i)"
               />
@@ -186,7 +186,7 @@
             </div>
           </div>
         </div>
-        <div class="w-50 pl-2 d-flex new-exercise__test--adder-container">
+        <div class="w-50 pl-2 d-flex new-exercise__test__adder-container">
           <b-form-input
             id="new-exercise-test-title"
             v-model="currentTestName"
@@ -207,7 +207,7 @@
             <b-button
               @click="addTest"
               variant="success"
-              class="new-exercise__test--adder-button"
+              class="new-exercise__test__adder-button"
               >Agregar Test</b-button
             >
           </template>
@@ -216,13 +216,13 @@
               <b-button
                 @click="cancelEdit"
                 variant="secondary"
-                class="new-exercise__test--adder-button mr-2"
+                class="new-exercise__test__adder-button mr-2"
                 >Cancelar</b-button
               >
               <b-button
                 @click="saveEdit"
                 variant="primary"
-                class="new-exercise__test--adder-button"
+                class="new-exercise__test__adder-button"
                 >Guardar</b-button
               >
             </div>

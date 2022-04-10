@@ -5,23 +5,24 @@
   width: 97.5%;
   height: 100%;
   overflow: auto;
-}
+  margin: 0.5rem;
 
-.console-content {
-  padding-top: 2%;
-  font-size: 0.9em;
-}
+  &__list {
+    padding-top: 2%;
+    font-size: 0.9em;
+  }
 
-.error {
-  color: red;
-}
+  &__trash-bin {
+    float: right;
+    margin-right: 1%;
+    cursor: pointer;
+  }
 
-.log {
-  color: greenyellow;
-}
+  .error {
+    color: red;
+  }
 
-.trash-bin {
-  float: right;
-  margin-right: 1%;
-  cursor: pointer;
+  .log {
+    color: greenyellow;
+  }
 }
