@@ -1,21 +1,14 @@
 @import "../../../scss/variables";
+@import "/src/mixins/modal-close.scss";
 
 .search {
   background-color: $primary !important;
   color: $text-white !important;
   height: calc(100vh - 3.5rem);
 
-  .close {
-    color: $text-white;
-    text-shadow: none;
-    &:hover {
-      color: $text-white;
-      opacity: 1 !important;
-    }
-  }
+  @include modal-close;
 
   .vue-treeselect {
-    //background-color: $primary !important;
     height: 100%;
     &__control,
     &__menu,
