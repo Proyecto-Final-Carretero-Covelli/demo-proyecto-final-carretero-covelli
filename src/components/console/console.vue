@@ -1,8 +1,12 @@
 <template>
-  <div class="m-2 console">
-    <font-awesome-icon :icon="['fas', 'trash-alt']" class="trash-bin" @click="$store.dispatch('clearConsole')" />
+  <div class="console">
+    <font-awesome-icon
+      :icon="['fas', 'trash-alt']"
+      class="console__trash-bin"
+      @click="$store.dispatch('clearConsole')"
+    />
     Consola
-    <div class="console-content">
+    <div class="console__list">
       <span v-html="$store.getters.getConsoleOutput"></span>
     </div>
   </div>
