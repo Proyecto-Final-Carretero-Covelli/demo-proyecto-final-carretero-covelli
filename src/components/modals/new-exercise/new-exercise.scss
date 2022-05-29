@@ -18,7 +18,7 @@
   &__folder {
     width: 49%;
 
-    &--icon {
+    &__icon {
       color: $border-grey;
       height: 15px;
       width: 15px;
@@ -29,7 +29,7 @@
       }
     }
 
-    &--search-container {
+    &__search-container {
       padding: 0;
       margin: 0;
       height: 120px;
@@ -38,7 +38,7 @@
       padding-top: 0.5rem;
     }
 
-    &--search-result {
+    &__search-result {
       &:hover {
         color: $secondary;
         cursor: pointer;
@@ -61,15 +61,15 @@
   }
 
   &__test {
-    &--adder-container {
+    &__adder-container {
       flex-direction: column;
     }
 
-    &--adder-button {
+    &__adder-button {
       align-self: flex-end;
     }
 
-    &--item {
+    &__item {
       justify-content: space-between;
       align-items: center;
       background-color: $primary-dark;
@@ -118,7 +118,6 @@
   }
 
   .vue-treeselect {
-    //background-color: $primary !important;
     height: 100%;
     &__control,
     &__menu,
@@ -161,7 +160,6 @@
 
   &:focus-within {
     box-shadow: none !important;
-    // border: 1px $secondary solid !important;
     background-color: $primary-down;
   }
   &:hover {
