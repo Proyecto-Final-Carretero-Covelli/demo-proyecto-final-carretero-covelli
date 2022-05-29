@@ -4,7 +4,7 @@ import Account from "../components/modals/account/account.vue";
 import Clue from "../components/modals/clue/clue.vue";
 import Analytics from "../components/modals/analytics/analytics.vue";
 
-const ADMIN_USERS = ['santii.carre@gmail.com', 'covellitomas@gmail.com'];
+const ADMIN_USERS = ["santii.carre@gmail.com", "covellitomas@gmail.com"];
 
 export default {
   components: { NewExercise, Search, Account, Clue, Analytics },
@@ -17,15 +17,18 @@ export default {
           !!this.$store.getters.getCurrentExercise.solution)
       );
     },
-    selectedExerciseStadistics() {
+    selectedExerciseStatistics() {
       return (
         this.$store.getters.getTitle &&
-        !!this.$store.getters.getCurrentExerciseStadistics
+        !!this.$store.getters.getCurrentExerciseStatistics
       );
     },
     isAdminUser() {
-      return this.$store.getters.getCurrentUser && ADMIN_USERS.includes(this.$store.getters.getCurrentUser.email);
-    }
+      return (
+        this.$store.getters.getCurrentUser &&
+        ADMIN_USERS.includes(this.$store.getters.getCurrentUser.email)
+      );
+    },
   },
 
   methods: {
@@ -46,9 +49,9 @@ export default {
     },
 
     openModalAnalytics() {
-      if (this.selectedExerciseStadistics) {
+      if (this.selectedExerciseStatistics) {
         this.$bvModal.show("modal-analytics");
-        this.$store.dispatch("refreshCurrentExerciseStadistics");
+        this.$store.dispatch("refreshCurrentExerciseStatistics");
       }
     },
 

@@ -50,7 +50,7 @@ export default new Vuex.Store({
     declaredVariables: [],
     firebaseUtils: firebaseUtils,
     currentExercise: {},
-    currentExerciseStadistics: {},
+    currentExerciseStatistics: {},
     currentUser: undefined,
     folders: [],
     exercises: [],
@@ -83,8 +83,8 @@ export default new Vuex.Store({
     getCurrentExercise: (state) => {
       return state.currentExercise;
     },
-    getCurrentExerciseStadistics: (state) => {
-      return state.currentExerciseStadistics;
+    getCurrentExerciseStatistics: (state) => {
+      return state.currentExerciseStatistics;
     },
     getCurrentUser: (state) => {
       return state.currentUser;
@@ -132,8 +132,8 @@ export default new Vuex.Store({
     setCurrentExercise: (state, value) => {
       state.currentExercise = value;
     },
-    setCurrentExerciseStadistics: (state, value) => {
-      state.currentExerciseStadistics = value;
+    setCurrentExerciseStatistics: (state, value) => {
+      state.currentExerciseStatistics = value;
     },
     setTitle: (state, title) => {
       state.title = title;
@@ -258,20 +258,20 @@ export default new Vuex.Store({
       });
     },
 
-    refreshCurrentExerciseStadistics: (context) => {
+    refreshCurrentExerciseStatistics: (context) => {
       context.state.firebaseUtils
-        .refreshCurrentExerciseStadistics(
+        .refreshCurrentExerciseStatistics(
           context.getters.getCurrentExercise.folderId,
           context.getters.getCurrentExercise.id
         )
         .then(function(data) {
-          context.commit("setCurrentExerciseStadistics", data.val());
+          context.commit("setCurrentExerciseStatistics", data.val());
         });
     },
 
     selectExercise: (context, exercise) => {
       context.commit("setCurrentExercise", exercise);
-      context.commit("setCurrentExerciseStadistics", exercise.stadistics);
+      context.commit("setCurrentExerciseStatistics", exercise.statistics);
       context.commit("setTitle", exercise.name);
       context.commit("setTitleText", exercise.statement);
       context.dispatch("setImplementationEditor", "");
@@ -310,7 +310,7 @@ export default new Vuex.Store({
 
     closeExercise: (context) => {
       context.commit("setCurrentExercise", {});
-      context.commit("setCurrentExerciseStadistics", {});
+      context.commit("setCurrentExerciseStatistics", {});
       context.commit("setTitle", null);
       context.commit("setTitleText", null);
       context.dispatch("setImplementationEditor", "");

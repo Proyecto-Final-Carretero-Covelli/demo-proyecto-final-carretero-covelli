@@ -7,10 +7,10 @@ export default {
     return {};
   },
   computed: {
-    currentExerciseStadistics() {
-      return this.$store.getters.getCurrentExerciseStadistics;
+    currentExerciseStatistics() {
+      return this.$store.getters.getCurrentExerciseStatistics;
     },
-    chartCurrentExerciseStadistics() {
+    chartCurrentExerciseStatistics() {
       return {
         labels: ["Satisfactorios", "Rechazados"],
         datasets: [
@@ -18,31 +18,31 @@ export default {
             label: ["Satisfactorios", "Rechazados"],
             backgroundColor: ["#006d45", "#db4b16"],
             data: [
-              this.currentExerciseStadistics?.passed,
-              this.currentExerciseStadistics?.notPassed,
+              this.currentExerciseStatistics?.passed,
+              this.currentExerciseStatistics?.notPassed,
             ],
           },
         ],
       };
     },
-    chartCurrentExerciseErrorStadistics() {
+    chartCurrentExerciseErrorStatistics() {
       return {
         labels: ["Número de Errores en Ejecuciones"],
         datasets: [
           {
             label: "Errores de referencia",
             backgroundColor: "#9C27B0",
-            data: [this.currentExerciseStadistics?.ReferenceError],
+            data: [this.currentExerciseStatistics?.ReferenceError],
           },
           {
             label: "Error de Sintaxis",
             backgroundColor: "#C2185B",
-            data: [this.currentExerciseStadistics?.SyntaxError],
+            data: [this.currentExerciseStatistics?.SyntaxError],
           },
           {
             label: "Operación invalida",
             backgroundColor: "#5E35B1",
-            data: [this.currentExerciseStadistics?.TypeError],
+            data: [this.currentExerciseStatistics?.TypeError],
           },
         ],
       };

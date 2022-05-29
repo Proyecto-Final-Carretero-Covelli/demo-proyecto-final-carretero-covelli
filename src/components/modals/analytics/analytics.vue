@@ -10,7 +10,7 @@
   >
     <template v-slot:modal-title>Estadisticas</template>
 
-    <div class="analytics__body" v-if="currentExerciseStadistics">
+    <div class="analytics__body" v-if="currentExerciseStatistics">
       <h4>
         Estadisticas Suite de Test
       </h4>
@@ -22,7 +22,7 @@
             <p>
               Satisfactorios:
             </p>
-            {{ currentExerciseStadistics.passed || 0 }}
+            {{ currentExerciseStatistics.passed || 0 }}
           </div>
           <div
             class="analytics__suite-test__item analytics__suite-test__item--red"
@@ -30,19 +30,19 @@
             <p>
               Rechazados:
             </p>
-            {{ currentExerciseStadistics.notPassed || 0 }}
+            {{ currentExerciseStatistics.notPassed || 0 }}
           </div>
           <div class="analytics__suite-test__item">
             <p>
               Total:
             </p>
             {{
-              (currentExerciseStadistics.passed || 0) +
-                (currentExerciseStadistics.notPassed || 0)
+              (currentExerciseStatistics.passed || 0) +
+                (currentExerciseStatistics.notPassed || 0)
             }}
           </div>
         </div>
-        <Doughnut :chart-data="chartCurrentExerciseStadistics" />
+        <Doughnut :chart-data="chartCurrentExerciseStatistics" />
       </div>
 
       <h4>
@@ -56,7 +56,7 @@
             <p>
               Error de referencia:
             </p>
-            {{ currentExerciseStadistics.ReferenceError || 0 }}
+            {{ currentExerciseStatistics.ReferenceError || 0 }}
           </div>
           <div
             class="analytics__suite-test__item analytics__suite-test__item--pink"
@@ -64,7 +64,7 @@
             <p>
               Error de Sintaxis:
             </p>
-            {{ currentExerciseStadistics.SyntaxError || 0 }}
+            {{ currentExerciseStatistics.SyntaxError || 0 }}
           </div>
           <div
             class="analytics__suite-test__item analytics__suite-test__item--violet"
@@ -72,24 +72,24 @@
             <p>
               Operación invalida:
             </p>
-            {{ currentExerciseStadistics.TypeError || 0 }}
+            {{ currentExerciseStatistics.TypeError || 0 }}
           </div>
           <div class="analytics__suite-test__item">
             <p>
               Total:
             </p>
             {{
-              (currentExerciseStadistics.ReferenceError || 0) +
-                (currentExerciseStadistics.SyntaxError || 0) +
-                (currentExerciseStadistics.TypeError || 0)
+              (currentExerciseStatistics.ReferenceError || 0) +
+                (currentExerciseStatistics.SyntaxError || 0) +
+                (currentExerciseStatistics.TypeError || 0)
             }}
           </div>
         </div>
 
-        <BarChart :chart-data="chartCurrentExerciseErrorStadistics" />
+        <BarChart :chart-data="chartCurrentExerciseErrorStatistics" />
       </div>
     </div>
-    <div class="analytics__without-data" v-if="!currentExerciseStadistics">
+    <div class="analytics__without-data" v-if="!currentExerciseStatistics">
       <p>
         Lo sentimos no hay estadisticas disponibles.
       </p>

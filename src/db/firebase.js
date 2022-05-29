@@ -142,10 +142,10 @@ export const firebaseUtils = {
       .set(newValue);
   },
 
-  updateExerciseStadistics: function(passedFlag, folderId, exerciseId) {
+  updateExerciseStatistics: function(passedFlag, folderId, exerciseId) {
     const updates = {};
     updates[
-      `folders/${folderId}/exercises/${exerciseId}/stadistics/${passedFlag}`
+      `folders/${folderId}/exercises/${exerciseId}/statistics/${passedFlag}`
     ] = firebase.database.ServerValue.increment(1);
     firebase
       .database()
@@ -153,10 +153,10 @@ export const firebaseUtils = {
       .update(updates);
   },
 
-  refreshCurrentExerciseStadistics: function(folderId, exerciseId) {
+  refreshCurrentExerciseStatistics: function(folderId, exerciseId) {
     return app
       .database()
-      .ref(`folders/${folderId}/exercises/${exerciseId}/stadistics`)
+      .ref(`folders/${folderId}/exercises/${exerciseId}/statistics`)
       .once("value");
   },
 

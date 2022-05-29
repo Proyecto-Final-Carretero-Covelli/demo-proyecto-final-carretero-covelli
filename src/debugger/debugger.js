@@ -94,20 +94,24 @@ export class Debugger {
 
   isConsoleLogStatement(context) {
     const callee = context.node.callee;
-      return context.node.type === 'CallExpression' && callee && callee.object && 
-        callee.property && callee.object.name === 'console' && callee.property.name === 'log';
+    return (
+      context.node.type === "CallExpression" &&
+      callee &&
+      callee.object &&
+      callee.property &&
+      callee.object.name === "console" &&
+      callee.property.name === "log"
+    );
   }
 
   runAllCode() {
     this.runInterpreter();
     const contextStack = this.interpreter.scope.context.exports.contextStack;
-    const result = this.interpreter.scope.context['resultado'];
+    const result = this.interpreter.scope.context["resultado"];
 
-    contextStack.filter(
-      this.isConsoleLogStatement
-    ).forEach(
-      (sentence) => this.appendLog(sentence)
-    );
+    contextStack
+      .filter(this.isConsoleLogStatement)
+      .forEach((sentence) => this.appendLog(sentence));
 
     if (contextStack && contextStack.length) {
       return {
@@ -122,19 +126,18 @@ export class Debugger {
 
     if (resultArgs && resultArgs.length) {
       this.storeContext.commit("appendToConsole", {
-        value: resultArgs.join(' '),
-        type: "log"
+        value: resultArgs.join(" "),
+        type: "log",
       });
     }
   }
 
   setVariables(svalContext, isLastExecution) {
-
     if (this.storeContext.state.implementationEditor) {
       this.storeContext.state.implementationAceEditor
         .getSession()
         .removeMarker(this.storeContext.currentMarker);
-    } 
+    }
 
     if (this.storeContext.state.variablesEditor) {
       this.storeContext.state.variablesAceEditor
@@ -170,7 +173,7 @@ export class Debugger {
         this.storeContext.state.currentExercise.id &&
         this.storeContext.state.currentExercise.folderId
       )
-        firebaseUtils.updateExerciseStadistics(
+        firebaseUtils.updateExerciseStatistics(
           error.toString().split(":")[0],
           this.storeContext.state.currentExercise.folderId,
           this.storeContext.state.currentExercise.id

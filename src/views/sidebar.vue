@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar">
-
     <!-- New Exercise -->
     <font-awesome-icon
       id="sidebar-new-exercise"
@@ -41,7 +40,7 @@
     <font-awesome-icon
       id="sidebar-analytics"
       class="sidebar__icon"
-      :class="{ disabled: !selectedExerciseStadistics }"
+      :class="{ disabled: !selectedExerciseStatistics }"
       v-if="isAdminUser"
       :icon="['fas', 'chart-bar']"
       @click="openModalAnalytics"

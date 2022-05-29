@@ -40,7 +40,7 @@ export default {
         );
 
         const currentExercise = this.$store.getters.getCurrentExercise;
-        firebaseUtils.updateExerciseStadistics(
+        firebaseUtils.updateExerciseStatistics(
           testHasPassed,
           currentExercise.folderId,
           currentExercise.id
@@ -59,7 +59,7 @@ export default {
             }
           );
 
-        this.$store.dispatch("refreshCurrentExerciseStadistics");
+        this.$store.dispatch("refreshCurrentExerciseStatistics");
         this.$forceUpdate();
       });
     },
