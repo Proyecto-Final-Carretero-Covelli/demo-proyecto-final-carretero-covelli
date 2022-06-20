@@ -4,7 +4,7 @@ import Account from "../components/modals/account/account.vue";
 import Clue from "../components/modals/clue/clue.vue";
 import Analytics from "../components/modals/analytics/analytics.vue";
 
-const ADMIN_USERS = ["santii.carre@gmail.com", "covellitomas@gmail.com"];
+// const ADMIN_USERS = ["santii.carre@gmail.com", "covellitomas@gmail.com"];
 
 export default {
   components: { NewExercise, Search, Account, Clue, Analytics },
@@ -24,10 +24,12 @@ export default {
       );
     },
     isAdminUser() {
-      return (
-        this.$store.getters.getCurrentUser &&
-        ADMIN_USERS.includes(this.$store.getters.getCurrentUser.email)
-      );
+      // Disabled feature for demo
+      return true;
+      // return (
+      //   this.$store.getters.getCurrentUser &&
+      //   ADMIN_USERS.includes(this.$store.getters.getCurrentUser.email)
+      // );
     },
   },
 
