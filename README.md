@@ -17,3 +17,7 @@ Esto último por lo tanto permite a los usuarios investigar los fallos en sus pr
 
 ## Informe Proyecto Final 
 ...
+
+## Autores
+- Santiago Carretero
+- Tomás Covelli
