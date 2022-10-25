@@ -1,37 +1,19 @@
-# demo-proyecto-final-carretero-covelli
+# Proyecto Final - Ingeniería de Sistemas UNICEN
 
-## Deploy Firebase 
-https://vue-tesis-carretero-covelli.web.app/
+## Introducción
+Herramienta para aprender a programar con validación automática y representación gráfica de estructuras de datos.
 
-#### Siguiendo el instructivo
-https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4
+## Sitio Web
+https://vide-tool.web.app/
 
-## Vue
-### Project setup
-```
-npm install
-```
+![image](https://user-images.githubusercontent.com/20425026/197671456-5a880c41-5b5a-4056-9a35-6633b4d5459b.png)
 
-#### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Descripción
+En este trabajo final se desarrolla una herramienta llamada VIDE (Visual Integrated Development Environment), la cual provee las funcionalidades necesarias para diseñar y resolver incisos prácticos de programación básica, validando automáticamente cada solución propuesta sobre distintos casos de test definidos por el autor del inciso y exhibiendo modelos concretos visuales de las estructuras de datos utilizadas en las distintas soluciones propuestas. Además la misma cuenta también con una funcionalidad que permite observar la solución desarrollada de las siguientes formas:
+ - Ejecución en modo lento: donde se ejecuta cada instrucción con un intervalo de tiempo, posibilitando observar también las estructuras de datos que se van creando a medida que se ejecuta el código, de una forma más pausada y didáctica.
+ - Ejecución en modo debugger o depurador: en el que el usuario de la herramienta cuenta con la posibilidad de avanzar instrucción por instrucción con el objetivo de probar y depurar los errores cometidos durante el desarrollo de la solución provista.
 
-#### Compiles and minifies for production
-```
-npm run build
-```
+Esto último por lo tanto permite a los usuarios investigar los fallos en sus programas y encontrar no solo el lugar, sino también el instante en el que surge cada error, permitiendo solucionarlos de forma rápida y focalizada.
 
-#### Lints and fixes files
-```
-npm run lint
-```
-
-## Firebase
-#### Deploy
-```
-npm run build && firebase deploy
-```
-
-#### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Informe Proyecto Final 
+...
