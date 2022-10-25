@@ -20,5 +20,15 @@ export default {
       }
     });
 
+    this.$bvToast.toast(
+      `La funciones de "creación de ejercicios" y "estadísticas" fueron deshabilitadas con el objetivo de preservar el experimento realizado para el Trabajo Final 
+    la carrera de Ingeniería de Sistemas UNICEN - Carretero-Covelli`,
+      {
+        title: " ⚠ Advertencia ⚠",
+        variant: "warning",
+        solid: true,
+        autoHideDelay: 1000000,
+      }
+    );
   },
 };
