@@ -6,7 +6,7 @@ Herramienta para aprender a programar con validación automática y representaci
 
 ## Sitio Web
 
-https://vide-tool.web.app/
+💻 https://vide-tool.web.app/
 
 ![image](https://user-images.githubusercontent.com/20425026/197671456-5a880c41-5b5a-4056-9a35-6633b4d5459b.png)
 
@@ -21,7 +21,7 @@ Esto último por lo tanto permite a los usuarios investigar los fallos en sus pr
 
 ## Informe Proyecto Final
 
-...
+📄 [Informe Trabajo Final - Ingeniería de Sistemas - UNICEN - Carretero-Covelli.pdf](https://drive.google.com/file/d/1Ye6d0RsJxU_-ZmsiS7E3eyaup81yYS4r/view?usp=share_link)
 
 ## Autores
 
